@@ -48,7 +48,8 @@
                 android:textAlignment="center"
                 android:layout_gravity="center"
                 android:text="Великое писание об аниме девочках"
-                android:textSize="15sp"/>
+                android:textSize="15sp"
+                android:id="@+id/bookNameTextView"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

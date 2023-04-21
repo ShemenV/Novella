@@ -8,7 +8,9 @@ import com.example.novella.Data.Room.Repository.BookRepositoryImpl
 import com.example.novella.Domain.Repositories.BookRepository
 import com.example.novella.Presentation.Activities.MainActivity
 import com.example.novella.Presentation.Fragments.MainFragment
+import com.example.novella.Presentation.Fragments.ViewModels.MainFragmentViewModel
 import org.koin.android.ext.koin.androidApplication
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 var dataModule = module {
@@ -17,9 +19,10 @@ var dataModule = module {
         Room.databaseBuilder(
             androidApplication(),
             AppDatabase::class.java,
-            "novella.db"
+            "novella1.db"
         )
             .createFromAsset("Novella.db")
+            .fallbackToDestructiveMigration()
             .build()
     }
 
@@ -33,5 +36,8 @@ var dataModule = module {
     }
 
 
+    viewModel<MainFragmentViewModel>{
+        MainFragmentViewModel(bookRepositoryImpl = get())
+    }
 
 }
