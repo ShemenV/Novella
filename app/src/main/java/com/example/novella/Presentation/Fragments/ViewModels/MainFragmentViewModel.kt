@@ -14,13 +14,11 @@ import kotlinx.coroutines.launch
 class MainFragmentViewModel(private val bookRepositoryImpl: BookRepositoryImpl): ViewModel() {
 
 
-    val G: MutableLiveData<List<Book?>?> = MutableLiveData<List<Book?>?>()
+    val G: MutableLiveData<List<Book?>> = MutableLiveData<List<Book?>>()
 
     fun A(){
        viewModelScope.launch {
            G.value = bookRepositoryImpl.getBooks()
-           Log.e("vm",G.toString())
-           Log.e("bfdbdfb",G.toString())
        }
     }
 
