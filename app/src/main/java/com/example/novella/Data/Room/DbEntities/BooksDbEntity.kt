@@ -14,7 +14,7 @@ data class BooksDbEntity(
     @ColumnInfo(name = "Author") val author: String?,
     @ColumnInfo(name = "PageCount") val pageCount: Int,
     @ColumnInfo(name = "Description") val description: String?,
-    @ColumnInfo(name = "Cover") val cover:String?,
+    @ColumnInfo(name = "Cover", typeAffinity = ColumnInfo.BLOB) val cover:ByteArray?,
     @ColumnInfo(name = "Publisher") val publisher:String?
 ) {
 

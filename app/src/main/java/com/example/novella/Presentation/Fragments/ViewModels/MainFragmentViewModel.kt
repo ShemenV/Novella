@@ -1,24 +1,25 @@
 package com.example.novella.Presentation.Fragments.ViewModels
 
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.novella.Data.Room.Repository.BookRepositoryImpl
+import com.example.novella.Data.Retrofit.Repository.RetrofitBookRepositoryImpl
+import com.example.novella.Data.Room.Repository.RoomBookRepositoryImpl
 import com.example.novella.Domain.Entities.Book
+import com.example.novella.Domain.Usecases.GetReadBooksListUseCase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 
-class MainFragmentViewModel(private val bookRepositoryImpl: BookRepositoryImpl): ViewModel() {
+class MainFragmentViewModel(private val getReadBooksListUseCase: GetReadBooksListUseCase): ViewModel() {
 
 
-    val G: MutableLiveData<List<Book?>> = MutableLiveData<List<Book?>>()
+    val readBooksList: MutableLiveData<List<Book?>> = MutableLiveData<List<Book?>>()
 
-    fun A(){
+    fun getReadBooks(){
        viewModelScope.launch {
-           G.value = bookRepositoryImpl.getBooks()
+           readBooksList.value = getReadBooksListUseCase.execute()
+
        }
     }
 
