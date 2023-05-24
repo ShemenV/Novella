@@ -37,6 +37,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_gravity="center"
+            android:id="@+id/readingBook"
             android:background="@color/design_default_color_error">
             <ImageView
                 android:layout_width="160dp"

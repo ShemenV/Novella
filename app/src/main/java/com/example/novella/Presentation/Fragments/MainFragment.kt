@@ -12,7 +12,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.novella.Presentation.Fragments.ViewModels.MainFragmentViewModel
+import com.example.novella.Presentation.MAIN
 import com.example.novella.Presentation.adapters.BookAdapter
+import com.example.novella.R
 import com.example.novella.databinding.FragmentMainBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,7 +32,12 @@ class MainFragment() : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMainBinding.inflate(layoutInflater,container,false)
+        return binding.root
+    }
 
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val manager = LinearLayoutManager(activity?.applicationContext)
         adapter = BookAdapter()
@@ -49,10 +56,8 @@ class MainFragment() : Fragment() {
             Log.e("fragment",vm.readBooksList.toString())
         }
 
-
-
-
-
-        return binding.root
+        binding.readingBook.setOnClickListener {
+            MAIN.navController.navigate(R.id.action_mainFragment_to_bookFragment)
+        }
     }
 }
