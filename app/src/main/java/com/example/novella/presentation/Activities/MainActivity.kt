@@ -1,10 +1,10 @@
-package com.example.novella.Presentation.Activities
+package com.example.novella.presentation.Activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.example.novella.Presentation.MAIN
+import com.example.novella.presentation.MAIN
 import com.example.novella.R
 import com.example.novella.databinding.ActivityMainBinding
 

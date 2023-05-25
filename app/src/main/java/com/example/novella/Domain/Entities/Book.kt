@@ -7,6 +7,7 @@ data class Book(
     val pageCount: Int?,
     val description: String?,
     val cover:ByteArray?,
-    val publisher:String?
+    val publisher:String?,
+    val readStatus: Int
 ) {
 }

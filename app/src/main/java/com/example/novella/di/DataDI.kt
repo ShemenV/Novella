@@ -2,15 +2,12 @@ package com.example.novella.di
 
 import androidx.room.Room
 import com.example.novella.Data.Retrofit.Interfaces.BookService
-import com.example.novella.Data.Retrofit.Repository.RetrofitBookRepositoryImpl
 import com.example.novella.Data.Room.AppDatabase
 import com.example.novella.Data.Room.Dao.BooksDao
 import com.example.novella.Data.Room.Repository.RoomBookRepositoryImpl
 import com.example.novella.Domain.Repositories.BookRepository
-import com.example.novella.Presentation.Fragments.ViewModels.MainFragmentViewModel
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidApplication
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -21,7 +18,7 @@ var dataModule = module {
         Room.databaseBuilder(
             androidApplication(),
             AppDatabase::class.java,
-            "novella1.db"
+            "novella3.db"
         )
             .createFromAsset("Novella.db")
             .fallbackToDestructiveMigration()
@@ -52,9 +49,7 @@ var dataModule = module {
 
     single<BookService> { provideBookApi(get()) }
 
-//    single<BookRepository> {
-//        RetrofitBookRepositoryImpl(get())
-//    }
+
 
 
 

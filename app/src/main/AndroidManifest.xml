@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Novella"
         tools:targetApi="31">
         <activity
-            android:name=".Presentation.Activities.MainActivity"
+            android:name=".presentation.Activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

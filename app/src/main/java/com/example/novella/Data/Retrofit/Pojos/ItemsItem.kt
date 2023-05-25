@@ -18,7 +18,8 @@ data class ItemsItem(
 			pageCount = volumeInfo?.pageCount,
 			description = volumeInfo?.subtitle,
 			cover = ByteArray(2),
-			publisher = volumeInfo?.publisher
+			publisher = volumeInfo?.publisher,
+			readStatus = 1
 		)
 	}
 }

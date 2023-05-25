@@ -1,11 +1,10 @@
-package com.example.novella.Presentation.Fragments
+package com.example.novella.presentation.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.novella.R
 import com.example.novella.databinding.FragmentBookBinding
 
 // TODO: Rename parameter arguments, choose names that match

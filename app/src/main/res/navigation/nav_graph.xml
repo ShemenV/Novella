@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/libraryFragment">
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.novella.Presentation.Fragments.MainFragment"
+        android:name="com.example.novella.presentation.fragments.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
@@ -16,7 +16,12 @@
     </fragment>
     <fragment
         android:id="@+id/bookFragment"
-        android:name="com.example.novella.Presentation.Fragments.BookFragment"
+        android:name="com.example.novella.presentation.fragments.BookFragment"
         android:label="fragment_book"
         tools:layout="@layout/fragment_book" />
+    <fragment
+        android:id="@+id/libraryFragment"
+        android:name="com.example.novella.presentation.fragments.LibraryFragment"
+        android:label="fragment_library"
+        tools:layout="@layout/fragment_library" />
 </navigation>

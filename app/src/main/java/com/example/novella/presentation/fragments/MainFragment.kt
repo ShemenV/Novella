@@ -1,4 +1,4 @@
-package com.example.novella.Presentation.Fragments
+package com.example.novella.presentation.fragments
 
 import android.os.Build
 import android.os.Bundle
@@ -11,12 +11,11 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.novella.Presentation.Fragments.ViewModels.MainFragmentViewModel
-import com.example.novella.Presentation.MAIN
-import com.example.novella.Presentation.adapters.BookAdapter
+import com.example.novella.presentation.fragments.viewModels.MainFragmentViewModel
+import com.example.novella.presentation.MAIN
+import com.example.novella.presentation.adapters.BookAdapter
 import com.example.novella.R
 import com.example.novella.databinding.FragmentMainBinding
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -48,16 +47,15 @@ class MainFragment() : Fragment() {
                 adapter.data = books
                 Log.e("===========",books.get(0)?.cover?.get(0).toString())
             })
+        binding.currentBookLayout.setOnClickListener {
+            MAIN.navController.navigate(R.id.action_mainFragment_to_bookFragment)
+        }
 
 
 
-            binding.recyclerView.layoutManager = manager
-            binding.recyclerView.adapter = adapter
             Log.e("fragment",vm.readBooksList.toString())
         }
 
-        binding.readingBook.setOnClickListener {
-            MAIN.navController.navigate(R.id.action_mainFragment_to_bookFragment)
-        }
+
     }
 }
