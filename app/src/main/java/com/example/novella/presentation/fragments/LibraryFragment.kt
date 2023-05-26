@@ -16,6 +16,7 @@ import com.example.novella.presentation.fragments.viewModels.LibraryFragmentView
 import com.example.novella.presentation.adapters.BookAdapter
 import com.example.novella.R
 import com.example.novella.databinding.FragmentLibraryBinding
+import com.example.novella.presentation.MAIN
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -35,8 +36,11 @@ class LibraryFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(layoutInflater,R.layout.fragment_library, container, false)
 
-        binding.viewmodel = vm
+        binding.vm = vm
 
+        binding.addBoookButton.setOnClickListener {
+            MAIN.navController.navigate(R.id.action_libraryFragment_to_addBookFragment)
+        }
 
         return binding.root
     }

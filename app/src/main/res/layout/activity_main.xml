@@ -15,7 +15,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toTopOf="@id/navLayout"
         app:navGraph="@navigation/nav_graph"
-        android:layout_gravity="bottom"/>
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="70dp"/>
 
     <FrameLayout
         android:id="@+id/navLayout"
@@ -28,7 +29,7 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/navMenu"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nav_host_fragment"

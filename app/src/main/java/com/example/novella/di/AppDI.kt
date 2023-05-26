@@ -1,5 +1,6 @@
 package com.example.novella.di
 
+import com.example.novella.presentation.fragments.viewModels.AddBookFragmentViewModel
 import com.example.novella.presentation.fragments.viewModels.LibraryFragmentViewModel
 import com.example.novella.presentation.fragments.viewModels.MainFragmentViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -12,5 +13,9 @@ var appModule = module {
 
     viewModel<LibraryFragmentViewModel>{
         LibraryFragmentViewModel(getReadBooksListUseCase = get())
+    }
+
+    viewModel<AddBookFragmentViewModel>{
+        AddBookFragmentViewModel()
     }
 }
