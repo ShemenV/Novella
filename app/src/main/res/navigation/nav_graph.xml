@@ -30,9 +30,9 @@
     </fragment>
     <fragment
         android:id="@+id/addBookFragment"
-        android:name="com.example.novella.presentation.fragments.AddBookFragment"
+        android:name="com.example.novella.presentation.fragments.SearchNewFragment"
         android:label="fragment_add_book"
-        tools:layout="@layout/fragment_add_book" >
+        tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/action_addBookFragment_to_libraryFragment"
             app:destination="@id/libraryFragment" />

@@ -2,12 +2,14 @@ package com.example.novella.di
 
 import androidx.room.Room
 import com.example.novella.Data.Retrofit.Interfaces.BookService
+import com.example.novella.Data.Retrofit.Repository.RetrofitBookRepositoryImpl
 import com.example.novella.Data.Room.AppDatabase
 import com.example.novella.Data.Room.Dao.BooksDao
 import com.example.novella.Data.Room.Repository.RoomBookRepositoryImpl
 import com.example.novella.Domain.Repositories.BookRepository
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidApplication
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -30,8 +32,12 @@ var dataModule = module {
         database.getBooksDao()
     }
 
-    single<BookRepository> {
+    single<BookRepository>(named("room")) {
         RoomBookRepositoryImpl(booksDao = get())
+    }
+
+    single<BookRepository>(named("retrofit")) {
+        RetrofitBookRepositoryImpl(bookApi = get())
     }
 
     fun provideRetrofit(): Retrofit {
@@ -48,10 +54,6 @@ var dataModule = module {
     factory { provideRetrofit() }
 
     single<BookService> { provideBookApi(get()) }
-
-
-
-
 
 
 }
