@@ -1,7 +1,5 @@
 package com.example.novella.di
 
-import com.example.novella.Data.Retrofit.Repository.RetrofitBookRepositoryImpl
-import com.example.novella.Domain.Usecases.GetReadBooksListUseCase
 import com.example.novella.presentation.fragments.viewModels.SearchNewFragmentViewModel
 import com.example.novella.presentation.fragments.viewModels.LibraryFragmentViewModel
 import com.example.novella.presentation.fragments.viewModels.MainFragmentViewModel
@@ -19,6 +17,6 @@ var appModule = module {
     }
 
     viewModel<SearchNewFragmentViewModel>{
-        SearchNewFragmentViewModel(getReadBooksListUseCase = get(named("getFromRetrofit")))
+        SearchNewFragmentViewModel(getBooksByNameUseCase = get(named("getBooksBuNameFromRetrofit")))
     }
 }

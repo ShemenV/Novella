@@ -1,6 +1,5 @@
 package com.example.novella.Data.Retrofit.Pojos
 
-import com.example.novella.Domain.Entities.Book
 import com.google.gson.annotations.SerializedName
 
 data class VolumeInfo(

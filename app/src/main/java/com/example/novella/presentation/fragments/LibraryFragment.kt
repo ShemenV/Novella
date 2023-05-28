@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import com.bumptech.glide.Glide
 import com.example.novella.presentation.fragments.viewModels.LibraryFragmentViewModel
 import com.example.novella.presentation.adapters.BookAdapter
 import com.example.novella.R
@@ -42,14 +43,17 @@ class LibraryFragment : Fragment() {
             MAIN.navController.navigate(R.id.action_libraryFragment_to_addBookFragment)
         }
 
+
+
+
         return binding.root
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter: BookAdapter = BookAdapter()
+        val adapter :BookAdapter = BookAdapter(requireActivity())
         val manager: LayoutManager = GridLayoutManager(activity?.applicationContext,2)
 
         lifecycleScope.launch{

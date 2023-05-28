@@ -6,5 +6,5 @@ import retrofit2.http.Query
 
 interface BookService {
     @GET("volumes")
-    suspend fun getBookList(@Query("q") id:String): Response
+    suspend fun getBookList(@Query("q") id:String?): Response
 }

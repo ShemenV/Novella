@@ -1,15 +1,23 @@
 package com.example.novella.presentation.adapters
 
+import android.content.Context
 import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.webkit.WebSettings
 import androidx.recyclerview.widget.RecyclerView
-import com.example.novella.Domain.Entities.Book
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
+import com.bumptech.glide.request.RequestOptions
 import com.example.novella.R
+import com.example.novella.app.GlideApp
 import com.example.novella.databinding.BookItemBinding
+import com.example.novella.domain.Entities.Book
+import com.squareup.picasso.Picasso
 
-class BookAdapter: RecyclerView.Adapter<BookAdapter.BookViewHolder>()
+
+class BookAdapter(private val context: Context): RecyclerView.Adapter<BookAdapter.BookViewHolder>()
 {
 
     var data: List<Book?> = emptyList()
@@ -31,21 +39,31 @@ class BookAdapter: RecyclerView.Adapter<BookAdapter.BookViewHolder>()
 
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
         val book: Book? = data[position]
-        val context =  holder.itemView.context
-
+        var requestOptions = RequestOptions()
 
         with(holder.binding){
 
             val bitmap = BitmapFactory.decodeResource(context.resources,R.drawable.layla)
 
             titleTextView.text = book?.title
-            Log.e("==========",book?.cover?.toString() + "tttttttt")
-            coverImageView.setImageBitmap(book?.cover?.let {
-                BitmapFactory.decodeByteArray(book?.cover,0,
-                    it.size)
-            })
 
+            if(book?.cover != null){
+                coverImageView.setImageBitmap(book?.cover?.let {
+                    BitmapFactory.decodeByteArray(book?.cover,0,
+                        it.size)
+                })
+            }
+            else if(book?.coverUrl != null){
+                Picasso.get()
+                    .load(book?.coverUrl)
+                    .into(holder.binding.coverImageView)
+                Log.e("++++++++++++++++++++++++++++++++++++",book?.coverUrl)
+
+            }
         }
+
+
+
     }
 
     class BookViewHolder(val binding:BookItemBinding ): RecyclerView.ViewHolder(binding.root)

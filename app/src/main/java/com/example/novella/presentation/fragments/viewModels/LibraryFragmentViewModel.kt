@@ -4,11 +4,9 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.novella.Domain.Entities.Book
-import com.example.novella.Domain.Usecases.GetReadBooksListUseCase
-import kotlinx.coroutines.Dispatchers
+import com.example.novella.domain.Entities.Book
+import com.example.novella.domain.usecases.GetReadBooksListUseCase
 import kotlinx.coroutines.launch
-import java.util.*
 
 class LibraryFragmentViewModel(private val getReadBooksListUseCase: GetReadBooksListUseCase):ViewModel() {
     var readBookList: MutableLiveData<List<Book?>> = MutableLiveData<List<Book?>>()

@@ -42,6 +42,7 @@
             android:id="@+id/currentBookLayout"
             android:background="@color/design_default_color_error">
             <ImageView
+                android:id="@+id/image"
                 android:layout_width="160dp"
                 android:layout_height="230dp"
                 android:scaleType="centerCrop"

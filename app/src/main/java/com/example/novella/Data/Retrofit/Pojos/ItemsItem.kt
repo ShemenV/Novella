@@ -1,6 +1,6 @@
 package com.example.novella.Data.Retrofit.Pojos
 
-import com.example.novella.Domain.Entities.Book
+import com.example.novella.domain.Entities.Book
 import com.google.gson.annotations.SerializedName
 
 data class ItemsItem(
@@ -17,8 +17,9 @@ data class ItemsItem(
 			author = volumeInfo?.authors?.joinToString(", "),
 			pageCount = volumeInfo?.pageCount,
 			description = volumeInfo?.subtitle,
-			cover = ByteArray(2),
+			cover = null,
 			publisher = volumeInfo?.publisher,
+			coverUrl = volumeInfo?.imageLinks?.smallThumbnail,
 			readStatus = 1
 		)
 	}

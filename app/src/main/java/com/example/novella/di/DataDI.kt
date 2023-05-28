@@ -6,7 +6,7 @@ import com.example.novella.Data.Retrofit.Repository.RetrofitBookRepositoryImpl
 import com.example.novella.Data.Room.AppDatabase
 import com.example.novella.Data.Room.Dao.BooksDao
 import com.example.novella.Data.Room.Repository.RoomBookRepositoryImpl
-import com.example.novella.Domain.Repositories.BookRepository
+import com.example.novella.domain.Repositories.BookRepository
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidApplication
 import org.koin.core.qualifier.named

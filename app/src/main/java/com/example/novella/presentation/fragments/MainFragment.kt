@@ -39,7 +39,7 @@ class MainFragment() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val manager = LinearLayoutManager(activity?.applicationContext)
-        adapter = BookAdapter()
+        adapter = BookAdapter(requireActivity())
 
         lifecycleScope.launch {
             vm.getReadBooks()
