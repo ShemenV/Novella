@@ -37,10 +37,10 @@
     android:layout_gravity="center">
     <ImageView
         android:id="@+id/coverImageView"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="230dp"
         android:layout_gravity="center"
-        android:scaleType="fitXY"
+
         android:src="@drawable/sucrose"
 />
 </androidx.cardview.widget.CardView>

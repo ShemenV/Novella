@@ -12,13 +12,20 @@ import kotlinx.coroutines.launch
 class SearchNewFragmentViewModel(private val getBooksByNameUseCase: GetBooksByNameUseCase):ViewModel() {
 
     val booksList: MutableLiveData<List<Book?>> = MutableLiveData()
+    var searchName: String? = null
 
     fun getBooksByName(name: String?){
         viewModelScope.launch {
-            booksList.value = getBooksByNameUseCase.execute(name)
-            Log.e("_______________",booksList.value.toString())
+            booksList.value = getBooksByNameUseCase.execute(name, startIndex = 0)
+            searchName = name
         }
 
+    }
+
+    fun updateBooksByStartIndex(startIndex: Int){
+        viewModelScope.launch {
+           booksList.value =  booksList.value?.plus(getBooksByNameUseCase.execute(searchName, startIndex = startIndex))
+        }
     }
 
 }

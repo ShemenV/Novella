@@ -9,7 +9,7 @@ class RetrofitBookRepositoryImpl(private val bookApi: BookService): BookReposito
         return bookApi.getBookList("r").items?.map { b -> b?.ToBook()  }!!
     }
 
-    override suspend fun getBooksByName(name: String?): List<Book?> {
-        return bookApi.getBookList(name).items?.map { b -> b?.ToBook()  }!!
+    override suspend fun getBooksByName(name: String?, startIndex: Int): List<Book?> {
+        return bookApi.getBookList(name,startIndex).items?.map { b -> b?.ToBook()  }!!
     }
 }

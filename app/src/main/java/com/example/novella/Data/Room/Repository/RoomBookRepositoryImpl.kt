@@ -11,7 +11,7 @@ class RoomBookRepositoryImpl(
         return booksDao.getAllBooks().map { value -> value?.ToBook() }
     }
 
-    override suspend fun getBooksByName(name: String?): List<Book?> {
+    override suspend fun getBooksByName(name: String?, startIndex: Int): List<Book?> {
         TODO("Not yet implemented")
     }
 }

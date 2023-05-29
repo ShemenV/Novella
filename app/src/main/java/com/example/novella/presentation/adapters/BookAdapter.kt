@@ -56,9 +56,10 @@ class BookAdapter(private val context: Context): RecyclerView.Adapter<BookAdapte
             else if(book?.coverUrl != null){
                 Picasso.get()
                     .load(book?.coverUrl)
+                    .resize(0,230)
+                    .centerCrop()
                     .into(holder.binding.coverImageView)
                 Log.e("++++++++++++++++++++++++++++++++++++",book?.coverUrl)
-
             }
         }
 

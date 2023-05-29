@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.novella.R
 import com.example.novella.databinding.FragmentSearchBinding
@@ -53,5 +54,22 @@ class SearchNewFragment : Fragment() {
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = manager
 
+
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val layoutManager: GridLayoutManager = GridLayoutManager::class.java.cast(recyclerView.layoutManager) as GridLayoutManager
+                val totalItemCount:Int = layoutManager.itemCount
+                val lastVisiblePosition: Int = layoutManager.findLastVisibleItemPosition()
+
+                val isEnded: Boolean = lastVisiblePosition + 5 >= totalItemCount
+
+                if(totalItemCount >0 && isEnded){
+                    viewModel.updateBooksByStartIndex(totalItemCount)
+                }
+
+            }
+        })
     }
 }
