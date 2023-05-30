@@ -55,21 +55,6 @@ class SearchNewFragment : Fragment() {
         binding.recyclerView.layoutManager = manager
 
 
-        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
 
-                val layoutManager: GridLayoutManager = GridLayoutManager::class.java.cast(recyclerView.layoutManager) as GridLayoutManager
-                val totalItemCount:Int = layoutManager.itemCount
-                val lastVisiblePosition: Int = layoutManager.findLastVisibleItemPosition()
-
-                val isEnded: Boolean = lastVisiblePosition + 5 >= totalItemCount
-
-                if(totalItemCount >0 && isEnded){
-                    viewModel.updateBooksByStartIndex(totalItemCount)
-                }
-
-            }
-        })
     }
 }

@@ -18,6 +18,11 @@ import com.example.novella.presentation.adapters.BookAdapter
 import com.example.novella.R
 import com.example.novella.databinding.FragmentLibraryBinding
 import com.example.novella.presentation.MAIN
+import com.example.novella.presentation.adapters.BookFastAdapter
+import com.example.novella.presentation.adapters.BookItem
+import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.adapters.ItemAdapter
+import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -56,12 +61,15 @@ class LibraryFragment : Fragment() {
         val adapter :BookAdapter = BookAdapter(requireActivity())
         val manager: LayoutManager = GridLayoutManager(activity?.applicationContext,2)
 
+        val itemAdapter = ItemAdapter<BookItem>()
+        val fastAdapter = FastAdapter.with(itemAdapter)
+
         lifecycleScope.launch{
             vm.getAllBooks()
 
             vm.readBookList.observe(viewLifecycleOwner, Observer { books ->
                 if(books != null){
-                    adapter.data = books
+                    FastAdapterDiffUtil[itemAdapter] = books.map(::BookItem)
                 }
 
             })
@@ -74,7 +82,10 @@ class LibraryFragment : Fragment() {
             })
         }
 
-        binding.recyclerView.adapter = adapter
+
+
+
+        binding.recyclerView.adapter = fastAdapter
         binding.recyclerView.layoutManager = manager
     }
 

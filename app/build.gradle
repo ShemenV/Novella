@@ -73,6 +73,20 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.15.1'
 
+
+    def latestFastAdapterRelease = "5.7.0"
+    implementation "com.mikepenz:fastadapter:${latestFastAdapterRelease}"
+    implementation "com.mikepenz:fastadapter-extensions-expandable:${latestFastAdapterRelease}"
+    implementation "com.mikepenz:fastadapter-extensions-binding:${latestFastAdapterRelease}" // view binding helpers
+    implementation "com.mikepenz:fastadapter-extensions-diff:${latestFastAdapterRelease}" // diff util helpers
+    implementation "com.mikepenz:fastadapter-extensions-drag:${latestFastAdapterRelease}" // drag support
+    implementation "com.mikepenz:fastadapter-extensions-paged:${latestFastAdapterRelease}" // paging support
+    implementation "com.mikepenz:fastadapter-extensions-scroll:${latestFastAdapterRelease}" // scroll helpers
+    implementation "com.mikepenz:fastadapter-extensions-swipe:${latestFastAdapterRelease}" // swipe support
+    implementation "com.mikepenz:fastadapter-extensions-ui:${latestFastAdapterRelease}" // pre-defined ui components
+    implementation "com.mikepenz:fastadapter-extensions-utils:${latestFastAdapterRelease}"
+
+
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
