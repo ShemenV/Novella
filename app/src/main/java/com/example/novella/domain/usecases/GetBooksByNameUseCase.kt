@@ -5,7 +5,7 @@ import com.example.novella.domain.Repositories.BookRepository
 
 class GetBooksByNameUseCase(private val repository:BookRepository) {
 
-    suspend fun execute(name: String?, startIndex:Int = 0):List<Book?>{
+    suspend fun execute(name: String?, startIndex:Int = 0):MutableList<Book?>?{
         return repository.getBooksByName(name, startIndex)
     }
 }

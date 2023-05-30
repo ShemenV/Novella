@@ -86,6 +86,7 @@ dependencies {
     implementation "com.mikepenz:fastadapter-extensions-ui:${latestFastAdapterRelease}" // pre-defined ui components
     implementation "com.mikepenz:fastadapter-extensions-utils:${latestFastAdapterRelease}"
 
+    implementation "io.github.cymchad:BaseRecyclerViewAdapterHelper:3.0.13"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'

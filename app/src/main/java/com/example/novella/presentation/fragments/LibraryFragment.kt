@@ -1,8 +1,6 @@
 package com.example.novella.presentation.fragments
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,18 +10,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
-import com.bumptech.glide.Glide
 import com.example.novella.presentation.fragments.viewModels.LibraryFragmentViewModel
 import com.example.novella.presentation.adapters.BookAdapter
 import com.example.novella.R
 import com.example.novella.databinding.FragmentLibraryBinding
 import com.example.novella.presentation.MAIN
-import com.example.novella.presentation.adapters.BookFastAdapter
 import com.example.novella.presentation.adapters.BookItem
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
