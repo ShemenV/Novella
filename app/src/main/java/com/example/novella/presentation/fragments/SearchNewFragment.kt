@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.novella.R
 import com.example.novella.databinding.FragmentSearchBinding
 import com.example.novella.domain.Entities.Book
+import com.example.novella.presentation.MAIN
 import com.example.novella.presentation.adapters.BRVAHAdapter
 import com.example.novella.presentation.adapters.BookAdapter
 import com.example.novella.presentation.adapters.BookItem
@@ -36,6 +38,7 @@ import com.mikepenz.fastadapter.scroll.EndlessRecyclerOnScrollListener
 import com.mikepenz.fastadapter.ui.items.ProgressItem
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import retrofit2.HttpException
 
 class SearchNewFragment : Fragment() {
     lateinit var binding: FragmentSearchBinding
@@ -67,21 +70,36 @@ class SearchNewFragment : Fragment() {
             val handler = android.os.Handler()
             handler.postDelayed({ loadMore() }, 10) }
 
+        adapter.setOnItemClickListener { _, view, position ->
+            val selectedBook = adapter.getItem(position)
+            if(selectedBook != null){
+                val action = SearchNewFragmentDirections.actionAddBookFragmentToBookFragment2(selectedBook)
+                MAIN.navController.navigate(action)
+            }
 
+        }
 
         lifecycleScope.launch {
             viewModel.booksList.observe(viewLifecycleOwner, Observer{ books ->
                 Log.e("_____________________",books.toString())
+                if(books?.isEmpty() == true){
+                    Toast.makeText(activity?.applicationContext,"Проверьте соединение с сетью",Toast.LENGTH_SHORT).show()
+                }
             adapter.setNewInstance(books)
         })
         }
 
         binding.searchButton.setOnClickListener {
+            try {
             val handler = android.os.Handler()
 
             handler.postDelayed({  binding.recyclerView.scrollToPosition(0)
                 adapter.data.clear()
                 viewModel.getBooksByName(binding.searchEditText.text.toString()) }, 100)
+            }
+            catch (e: Exception){
+                Log.e("_________________________________________________",e.toString())
+            }
         }
 
 
@@ -90,13 +108,23 @@ class SearchNewFragment : Fragment() {
 
 
     private fun loadMore(){
+        try {
+            val data = viewModel.getNextPageBook()
 
-        val data = viewModel.getNextPageBook()
+            if (!data.isNullOrEmpty() && data.last() != adapter.data.last()) {
+                adapter.addData(data)
+            }
+            else if(!data.isNullOrEmpty() && data.size < 10){
+                adapter.addData(data)
+                adapter.loadMoreModule.loadMoreEnd()
 
-        if (data != null && data.last() != adapter.data.last()) {
-            adapter.addData(data)
+                return
+            }
+            adapter.loadMoreModule.isEnableLoadMore = true
+            adapter.loadMoreModule.loadMoreComplete()
         }
-        adapter.loadMoreModule.isEnableLoadMore = true
-        adapter.loadMoreModule.loadMoreComplete()
+      catch (e: Exception){
+          Log.e("RetrofitHTTPexception", e.toString())
+      }
     }
 }

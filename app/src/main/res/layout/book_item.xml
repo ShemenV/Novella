@@ -42,7 +42,7 @@
         android:layout_height="230dp"
         android:layout_gravity="center"
 
-        android:src="@drawable/sucrose"
+        android:src="@drawable/book_placeholder"
 />
 </androidx.cardview.widget.CardView>
 

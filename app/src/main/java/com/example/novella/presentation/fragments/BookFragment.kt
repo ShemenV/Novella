@@ -1,26 +1,25 @@
 package com.example.novella.presentation.fragments
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.navigation.fragment.navArgs
+import com.example.novella.R
 import com.example.novella.databinding.FragmentBookBinding
+import com.example.novella.domain.Entities.Book
+import com.squareup.picasso.Picasso
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [BookFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class BookFragment : Fragment() {
     lateinit var binding: FragmentBookBinding
+    val args: BookFragmentArgs by navArgs()
 
+    val selectBook: Book by lazy { args.book }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,7 +30,28 @@ class BookFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.e("SelectedBook",args.book.toString())
 
-        val args:B by navArgs()
+        binding.titleTextView.text = selectBook.title
+        binding.authorTextView.text = selectBook.author
+        binding.descriptionTextView.text = selectBook.description
+        binding.publisherTextView.text = selectBook.publisher
+        binding.pageCountTextView.text = selectBook.pageCount.toString()
+
+        if(selectBook.cover != null){
+            binding.coverImageView.setImageBitmap(selectBook?.cover?.let {
+                BitmapFactory.decodeByteArray(selectBook?.cover,0,
+                    it.size)
+            })
+        }
+
+        else if(selectBook?.coverUrl != null){
+
+            Picasso.get()
+                .load(selectBook.coverUrl)
+                .resize(0,230)
+                .centerCrop()
+                .into(binding.coverImageView)
+        }
     }
 }

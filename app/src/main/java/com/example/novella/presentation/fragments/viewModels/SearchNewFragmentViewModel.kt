@@ -22,7 +22,7 @@ class SearchNewFragmentViewModel(private val getBooksByNameUseCase: GetBooksByNa
     var startIndex: Int = 0
     fun getBooksByName(name: String?){
         viewModelScope.launch {
-            startIndex = 0
+            startIndex = 620
             booksList.value = getBooksByNameUseCase.execute(name, startIndex = startIndex)
             searchName = name
         }
@@ -37,9 +37,14 @@ class SearchNewFragmentViewModel(private val getBooksByNameUseCase: GetBooksByNa
         viewModelScope.launch {
 
               newBooksList = getBooksByNameUseCase.execute(searchName, startIndex = startIndex)
+            Log.e("Null",newBooksList.toString())
+
         }
        Log.e("ABOBA",newBooksList.toString())
-
+        if(newBooksList == null){
+            Log.e("Null","Yes")
+           return mutableListOf()
+        }
         return newBooksList
 
     }

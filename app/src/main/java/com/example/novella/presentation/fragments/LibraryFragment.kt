@@ -57,8 +57,12 @@ class LibraryFragment : Fragment() {
         binding.recyclerView.layoutManager = manager
 
         adapter.setOnItemClickListener { _, view, position ->
-            val action = LibraryFragmentDirections.actionLibraryFragmentToBookFragment(adapter.getItem(position))
-            MAIN.navController.navigate(action)
+            val selectedBook = adapter.getItem(position)
+            if(selectedBook != null){
+                val action = LibraryFragmentDirections.actionLibraryFragmentToBookFragment(selectedBook)
+                MAIN.navController.navigate(action)
+            }
+
         }
 
         lifecycleScope.launch{

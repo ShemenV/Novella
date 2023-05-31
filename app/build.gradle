@@ -3,7 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.8.20'
-    id("androidx.navigation.safeargs.kotlin")
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-parcelize'
 
 }
 
@@ -32,7 +33,10 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+
+            debuggable true
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -42,6 +46,14 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main {
+            kotlin {
+                srcDirs += 'build/generated/source/navigation-args/'
+            }
+        }
     }
 }
 

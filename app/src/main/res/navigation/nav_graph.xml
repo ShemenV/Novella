@@ -19,9 +19,9 @@
         android:name="com.example.novella.presentation.fragments.BookFragment"
         android:label="fragment_book"
         tools:layout="@layout/fragment_book" >
-        <action
-            android:id="@+id/action_bookFragment_to_libraryFragment"
-            app:destination="@id/libraryFragment" />
+        <argument
+            android:name="book"
+            app:argType="com.example.novella.domain.Entities.Book" />
     </fragment>
     <fragment
         android:id="@+id/libraryFragment"
@@ -41,7 +41,10 @@
         android:label="fragment_add_book"
         tools:layout="@layout/fragment_search" >
         <action
-            android:id="@+id/action_addBookFragment_to_libraryFragment"
-            app:destination="@id/libraryFragment" />
+            android:id="@+id/action_addBookFragment_to_bookFragment2"
+            app:destination="@id/bookFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/bookFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
