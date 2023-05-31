@@ -5,8 +5,8 @@ import com.example.novella.domain.Entities.Book
 import com.example.novella.domain.Repositories.BookRepository
 
 class RetrofitBookRepositoryImpl(private val bookApi: BookService): BookRepository {
-    override suspend fun getBooks(): List<Book?> {
-        return bookApi.getBookList("r").items?.map { b -> b?.ToBook()  }!!
+    override suspend fun getBooks(): MutableList<Book?> {
+        return bookApi.getBookList("r").items?.map { b -> b?.ToBook()  }?.toMutableList()!!
     }
 
     override suspend fun getBooksByName(name: String?, startIndex: Int): MutableList<Book?>? {

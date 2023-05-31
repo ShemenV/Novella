@@ -7,8 +7,8 @@ import com.example.novella.domain.Repositories.BookRepository
 class RoomBookRepositoryImpl(
     private val booksDao: BooksDao
     ): BookRepository {
-    override suspend fun getBooks(): List<Book?> {
-        return booksDao.getAllBooks().map { value -> value?.ToBook() }
+    override suspend fun getBooks(): MutableList<Book?> {
+        return booksDao.getAllBooks().map { value -> value?.ToBook() }.toMutableList()
     }
 
     override suspend fun getBooksByName(name: String?, startIndex: Int): MutableList<Book?>? {

@@ -9,6 +9,7 @@ import com.example.novella.domain.Entities.Book
 import com.example.novella.domain.usecases.GetBooksByNameUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -34,11 +35,12 @@ class SearchNewFragmentViewModel(private val getBooksByNameUseCase: GetBooksByNa
 
         var books:MutableList<Book?>? = null
         viewModelScope.launch {
+
               newBooksList = getBooksByNameUseCase.execute(searchName, startIndex = startIndex)
         }
        Log.e("ABOBA",newBooksList.toString())
 
-        return books
+        return newBooksList
 
     }
 

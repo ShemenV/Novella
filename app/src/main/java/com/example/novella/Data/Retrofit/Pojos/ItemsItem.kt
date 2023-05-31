@@ -19,7 +19,7 @@ data class ItemsItem(
 			description = volumeInfo?.subtitle,
 			cover = null,
 			publisher = volumeInfo?.publisher,
-			coverUrl = volumeInfo?.imageLinks?.smallThumbnail,
+			coverUrl = volumeInfo?.imageLinks?.thumbnail,
 			readStatus = 1
 		)
 	}

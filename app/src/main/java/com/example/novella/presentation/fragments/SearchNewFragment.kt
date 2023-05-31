@@ -57,16 +57,15 @@ class SearchNewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        val manager: LayoutManager =LinearLayoutManager(activity)
+        val manager: LayoutManager =GridLayoutManager(activity,2)
         adapter = BRVAHAdapter(mutableListOf())
         binding.recyclerView.layoutManager = manager
         binding.recyclerView.adapter = adapter
 
         adapter.loadMoreModule.loadMoreView = customLoadMoreView
-        adapter.loadMoreModule.setOnLoadMoreListener { loadMore() }
-        adapter.loadMoreModule.isAutoLoadMore = true
-
-
+        adapter.loadMoreModule.setOnLoadMoreListener {
+            val handler = android.os.Handler()
+            handler.postDelayed({ loadMore() }, 10) }
 
 
 
@@ -78,17 +77,23 @@ class SearchNewFragment : Fragment() {
         }
 
         binding.searchButton.setOnClickListener {
-            viewModel.getBooksByName(binding.searchEditText.text.toString())
+            val handler = android.os.Handler()
+
+            handler.postDelayed({  binding.recyclerView.scrollToPosition(0)
+                adapter.data.clear()
+                viewModel.getBooksByName(binding.searchEditText.text.toString()) }, 100)
         }
+
+
 
     }
 
 
     private fun loadMore(){
 
-        val data = viewModel.booksList.value
+        val data = viewModel.getNextPageBook()
 
-        if (data != null) {
+        if (data != null && data.last() != adapter.data.last()) {
             adapter.addData(data)
         }
         adapter.loadMoreModule.isEnableLoadMore = true

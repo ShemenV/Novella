@@ -11,12 +11,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.novella.presentation.fragments.viewModels.LibraryFragmentViewModel
-import com.example.novella.presentation.adapters.BookAdapter
 import com.example.novella.R
+import com.example.novella.databinding.FragmentBookBinding
 import com.example.novella.databinding.FragmentLibraryBinding
 import com.example.novella.presentation.MAIN
-import com.example.novella.presentation.adapters.BookItem
-import com.mikepenz.fastadapter.FastAdapter
+import com.example.novella.presentation.adapters.BRVAHAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import kotlinx.coroutines.launch
@@ -33,7 +32,7 @@ class LibraryFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(layoutInflater,R.layout.fragment_library, container, false)
 
@@ -43,9 +42,6 @@ class LibraryFragment : Fragment() {
             MAIN.navController.navigate(R.id.action_libraryFragment_to_addBookFragment)
         }
 
-
-
-
         return binding.root
     }
 
@@ -53,21 +49,26 @@ class LibraryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter :BookAdapter = BookAdapter(requireActivity())
+        val adapter :BRVAHAdapter = BRVAHAdapter(mutableListOf())
         val manager: LayoutManager = GridLayoutManager(activity?.applicationContext,2)
 
-        val itemAdapter = ItemAdapter<BookItem>()
-        val fastAdapter = FastAdapter.with(itemAdapter)
+
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = manager
+
+        adapter.setOnItemClickListener { _, view, position ->
+            val action = LibraryFragmentDirections.actionLibraryFragmentToBookFragment(adapter.getItem(position))
+            MAIN.navController.navigate(action)
+        }
 
         lifecycleScope.launch{
             vm.getAllBooks()
-
             vm.readBookList.observe(viewLifecycleOwner, Observer { books ->
                 if(books != null){
-                    FastAdapterDiffUtil[itemAdapter] = books.map(::BookItem)
+                    adapter.setNewInstance(books)
                 }
-
             })
+
 
             vm.search.observe(viewLifecycleOwner, Observer {
                 if (it != null ) {
@@ -76,13 +77,5 @@ class LibraryFragment : Fragment() {
                 }
             })
         }
-
-
-
-
-        binding.recyclerView.adapter = fastAdapter
-        binding.recyclerView.layoutManager = manager
     }
-
-
 }

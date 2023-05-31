@@ -4,7 +4,7 @@ import com.example.novella.domain.Entities.Book
 import com.example.novella.domain.Repositories.BookRepository
 
 class GetReadBooksListUseCase(private val repository: BookRepository) {
-    suspend fun execute(): List<Book?>{
+    suspend fun execute(): MutableList<Book?>{
         return repository.getBooks()
     }
 }

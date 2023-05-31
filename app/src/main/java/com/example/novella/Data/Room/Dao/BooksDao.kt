@@ -9,6 +9,6 @@ import kotlinx.coroutines.flow.Flow
 interface BooksDao {
 
     @Query("SELECT * FROM books")
-    suspend fun getAllBooks(): List<BooksDbEntity?>
+    suspend fun getAllBooks(): MutableList<BooksDbEntity?>
 
 }
