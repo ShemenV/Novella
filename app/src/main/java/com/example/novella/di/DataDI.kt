@@ -40,6 +40,10 @@ var dataModule = module {
         RetrofitBookRepositoryImpl(bookApi = get())
     }
 
+    single<RoomBookRepositoryImpl>(named("roomIds")){
+        RoomBookRepositoryImpl(booksDao = get())
+    }
+
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://www.googleapis.com/books/v1/")

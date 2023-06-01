@@ -7,13 +7,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.novella.domain.Entities.Book
 import com.example.novella.domain.usecases.GetBooksByNameUseCase
+import com.example.novella.domain.usecases.GetBooksIdsUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
 
-class SearchNewFragmentViewModel(private val getBooksByNameUseCase: GetBooksByNameUseCase):ViewModel() {
+class SearchNewFragmentViewModel(private val getBooksByNameUseCase: GetBooksByNameUseCase,
+private val getBooksIdsUseCase: GetBooksIdsUseCase):ViewModel() {
 
     val booksList: MutableLiveData<MutableList<Book?>?> = MutableLiveData()
     var searchName: String? = null
@@ -22,6 +24,7 @@ class SearchNewFragmentViewModel(private val getBooksByNameUseCase: GetBooksByNa
     var startIndex: Int = 0
     fun getBooksByName(name: String?){
         viewModelScope.launch {
+            Log.e("ID",getBooksIdsUseCase.execute().get(0).toString())
             startIndex = 0
             booksList.value = getBooksByNameUseCase.execute(name, startIndex = startIndex)
             searchName = name

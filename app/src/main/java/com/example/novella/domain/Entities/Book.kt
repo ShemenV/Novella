@@ -5,13 +5,13 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Book(
-    val id: Long?,
+    val id: String? = null,
     val title: String?,
-    val author: String?,
-    val pageCount: Int?,
-    val description: String?,
-    val cover:ByteArray?,
-    val publisher:String?,
-    val readStatus: Int,
+    val author: String? = null,
+    val pageCount: Int? = null,
+    val description: String? = null,
+    val cover:ByteArray? = null,
+    val publisher:String? = null,
+    val readStatus: Int = 1,
     val coverUrl: String? = null
 ) : Parcelable

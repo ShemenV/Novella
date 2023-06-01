@@ -14,4 +14,8 @@ class RoomBookRepositoryImpl(
     override suspend fun getBooksByName(name: String?, startIndex: Int): MutableList<Book?>? {
         TODO("Not yet implemented")
     }
+
+    suspend fun getIds(): MutableList<String?> {
+        return booksDao.getAllIds().map { value -> value?.id.toString() }.toMutableList()
+    }
 }

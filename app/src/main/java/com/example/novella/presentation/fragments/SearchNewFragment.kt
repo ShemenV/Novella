@@ -82,8 +82,9 @@ class SearchNewFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.booksList.observe(viewLifecycleOwner, Observer{ books ->
                 Log.e("_____________________",books.toString())
-                if(books?.isEmpty() == true){
+                if(books?.size== 1 && books.get(0)?.title == "Exception"){
                     Toast.makeText(activity?.applicationContext,"Проверьте соединение с сетью",Toast.LENGTH_SHORT).show()
+                    return@Observer
                 }
             adapter.setNewInstance(books)
         })
@@ -117,7 +118,10 @@ class SearchNewFragment : Fragment() {
             else if(!data.isNullOrEmpty() && data.size < 10){
                 adapter.addData(data)
                 adapter.loadMoreModule.loadMoreEnd()
-
+                return
+            }
+            else if(data?.size== 1 && data.get(0)?.title == "Exception"){
+               adapter.loadMoreModule.loadMoreFail()
                 return
             }
             adapter.loadMoreModule.isEnableLoadMore = true

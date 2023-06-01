@@ -1,6 +1,7 @@
 package com.example.novella.di
 
 import com.example.novella.domain.usecases.GetBooksByNameUseCase
+import com.example.novella.domain.usecases.GetBooksIdsUseCase
 import com.example.novella.domain.usecases.GetReadBooksListUseCase
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -12,5 +13,9 @@ val domainModule = module {
 
     factory<GetBooksByNameUseCase>(named("getBooksBuNameFromRetrofit")) {
         GetBooksByNameUseCase(repository = get(named("retrofit")))
+    }
+
+    factory<GetBooksIdsUseCase>(named("getBooksIdsFromDb")) {
+        GetBooksIdsUseCase(repository = get(named("roomIds")))
     }
 }

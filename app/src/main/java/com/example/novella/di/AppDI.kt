@@ -17,6 +17,7 @@ var appModule = module {
     }
 
     viewModel<SearchNewFragmentViewModel>{
-        SearchNewFragmentViewModel(getBooksByNameUseCase = get(named("getBooksBuNameFromRetrofit")))
+        SearchNewFragmentViewModel(getBooksByNameUseCase = get(named("getBooksBuNameFromRetrofit")),
+        getBooksIdsUseCase = get(named("getBooksIdsFromDb")))
     }
 }

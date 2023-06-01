@@ -13,7 +13,7 @@ import com.example.novella.domain.Entities.Book
     childColumns = arrayOf("readStatus")))
 )
 data class BooksDbEntity(
-    @PrimaryKey @ColumnInfo(name = "Id") val id: Long,
+    @PrimaryKey @ColumnInfo(name = "Id") val id: String,
     @ColumnInfo(name = "Title") val title: String,
     @ColumnInfo(name = "Author") val author: String?,
     @ColumnInfo(name = "PageCount") val pageCount: Int,
