@@ -47,9 +47,6 @@ class MainFragment() : Fragment() {
                 adapter.data = books
                 Log.e("===========",books.get(0)?.cover?.get(0).toString())
             })
-        binding.currentBookLayout.setOnClickListener {
-            MAIN.navController.navigate(R.id.action_mainFragment_to_bookFragment)
-        }
 
 
 

@@ -16,7 +16,7 @@ data class ItemsItem(
 			title = volumeInfo?.title,
 			author = volumeInfo?.authors?.joinToString(", "),
 			pageCount = volumeInfo?.pageCount,
-			description = volumeInfo?.subtitle,
+			description = volumeInfo?.description,
 			cover = null,
 			publisher = volumeInfo?.publisher,
 			coverUrl = volumeInfo?.imageLinks?.thumbnail,

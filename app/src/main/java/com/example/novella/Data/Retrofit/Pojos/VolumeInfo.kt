@@ -45,6 +45,9 @@ data class VolumeInfo(
 	@field:SerializedName("contentVersion")
 	val contentVersion: String? = null,
 
+	@field:SerializedName("description")
+	val description: String? = null,
+
 	@field:SerializedName("authors")
 	val authors: List<String?>? = null,
 

@@ -6,15 +6,6 @@
     app:startDestination="@id/libraryFragment">
 
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.example.novella.presentation.fragments.MainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
-        <action
-            android:id="@+id/action_mainFragment_to_bookFragment"
-            app:destination="@id/bookFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/bookFragment"
         android:name="com.example.novella.presentation.fragments.BookFragment"
         android:label="fragment_book"
@@ -30,7 +21,11 @@
         tools:layout="@layout/fragment_library" >
         <action
             android:id="@+id/action_libraryFragment_to_addBookFragment"
-            app:destination="@id/addBookFragment" />
+            app:destination="@id/addBookFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_libraryFragment_to_bookFragment"
             app:destination="@id/bookFragment" />

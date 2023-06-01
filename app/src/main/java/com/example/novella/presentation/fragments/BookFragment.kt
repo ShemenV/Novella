@@ -1,5 +1,6 @@
 package com.example.novella.presentation.fragments
 
+import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
@@ -28,15 +29,17 @@ class BookFragment : Fragment() {
         return binding.root
     }
 
+
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.e("SelectedBook",args.book.toString())
 
         binding.titleTextView.text = selectBook.title
-        binding.authorTextView.text = selectBook.author
-        binding.descriptionTextView.text = selectBook.description
-        binding.publisherTextView.text = selectBook.publisher
-        binding.pageCountTextView.text = selectBook.pageCount.toString()
+        binding.authorTextView.text = "Автор: ${selectBook.author}"
+        binding.descriptionTextView.text = "Описание:\n${selectBook.description}"
+        binding.publisherTextView.text = "Издатель: ${selectBook.publisher}"
+        binding.pageCountTextView.text = "Количество страниц: ${selectBook.pageCount.toString()}"
 
         if(selectBook.cover != null){
             binding.coverImageView.setImageBitmap(selectBook?.cover?.let {

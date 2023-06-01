@@ -60,6 +60,7 @@ class LibraryFragment : Fragment() {
             val selectedBook = adapter.getItem(position)
             if(selectedBook != null){
                 val action = LibraryFragmentDirections.actionLibraryFragmentToBookFragment(selectedBook)
+
                 MAIN.navController.navigate(action)
             }
 

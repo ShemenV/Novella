@@ -21,72 +21,83 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:id="@+id/frameLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="370dp">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        >
 
-                        <TextView
-                            android:id="@+id/titleTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="23sp"
-                            android:text="fef"
-                            android:textAlignment="center"/>
 
-                        <TextView
-                            android:id="@+id/authorTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="17sp"
-                            android:text="title"
-                            android:textAlignment="textStart"
-                            android:paddingLeft="20dp"
-                            android:layout_marginTop="30dp"/>
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="370dp"
+    android:backgroundTint="#57387E"
+    app:cardCornerRadius="20dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="400dp">
 
-                        <TextView
-                            android:id="@+id/pageCountTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="17sp"
-                            android:text="authoor"
-                            android:textAlignment="textStart"
-                            android:paddingLeft="20dp"
-                            android:layout_marginTop="10dp"/>
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="fef"
+            android:textAlignment="center"
+            android:textSize="23sp" />
 
-                        <TextView
-                            android:id="@+id/publisherTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="17sp"
-                            android:text="publisher"
-                            android:textAlignment="textStart"
-                            android:paddingLeft="20dp"
-                            android:layout_marginTop="10dp"/>
+        <TextView
+            android:id="@+id/authorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:paddingLeft="20dp"
+            android:text="title"
+            android:textAlignment="textStart"
+            android:textSize="17sp" />
 
-                        <TextView
-                            android:id="@+id/descriptionTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="17sp"
-                            android:text="description"
-                            android:textAlignment="textStart"
-                            android:paddingLeft="20dp"
-                            android:layout_marginTop="20dp"/>
+        <TextView
+            android:id="@+id/pageCountTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="20dp"
+            android:text="authoor"
+            android:textAlignment="textStart"
+            android:textSize="17sp" />
 
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
+        <TextView
+            android:id="@+id/publisherTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="20dp"
+            android:text="publisher"
+            android:textAlignment="textStart"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="20dp"
+            android:text="Одна из лучших фэнтези-саг за всю историю существования жанра.Оригинальное, масштабное эпическое произведение, одновременно и свободное от влияния извне, и связанное с классической мифологической, легендарной и сказовой традицией.Шедевр не только писательского мастерства Анджея Сапковского, но и переводческого искусства Евгения Павловича Вайсброта.«Сага о Геральте» – в одном томе.Бесценный подарок и для поклонника прекрасной фантастики, и для ценителя просто хорошей литературы.Перед читателем буквально оживает необычный, прекрасный и жестокий мир литературной легенда, в котором обитают эльфы и гномы, оборотни, вампиры и «низушки»-хоббиты, драконы и монстры, – но прежде всего люди.Очень близкие нам, понятные и человечные люди – такие как мастер меча ведьмак Геральт, его друг, беспутный менестрель Лютик, его возлюбленная, прекрасная чародейка Йеннифэр, и приемная дочь – безрассудно отважная юная Цири...Больше интересных фактов об этой книге и втором сезоне сериала читайте в ЛитРес: Журнале"
+            android:textAlignment="textStart"
+            android:textSize="17sp" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+
+
 
 
             </ScrollView>
