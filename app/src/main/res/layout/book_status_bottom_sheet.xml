@@ -1,6 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.Design.BottomSheet.Modal">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/standard_bottom_sheet"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        android:paddingVertical="20dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+                <RadioButton
+                    android:id="@+id/wantReadRadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Хочу прочитать"
+                    android:textSize="20sp"
+                    android:layout_marginVertical="7dp"/>
+
+
+                <RadioButton
+                    android:id="@+id/readdRadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Прочитано"
+                    android:textSize="20sp"
+                    android:layout_marginVertical="7dp"/>
+
+                <RadioButton
+                    android:id="@+id/readNowRadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Начать читать"
+                    android:textSize="20sp"
+                    android:layout_marginVertical="7dp"/>
+
+        </RadioGroup>
+
+</FrameLayout>
+</androidx.cardview.widget.CardView>

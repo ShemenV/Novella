@@ -8,11 +8,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
+import androidx.fragment.app.FragmentResultListener
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.navArgs
 import com.example.novella.R
 import com.example.novella.databinding.FragmentBookBinding
 import com.example.novella.domain.Entities.Book
+import com.example.novella.presentation.Activities.ModalBottomSheet
 import com.squareup.picasso.Picasso
 
 
@@ -55,6 +59,40 @@ class BookFragment : Fragment() {
                 .resize(0,230)
                 .centerCrop()
                 .into(binding.coverImageView)
+        }
+
+        changeBooksStatusButton(binding.changeBookStatusExtendedFAB,selectBook.readStatus)
+
+        val modalBottomSheet = ModalBottomSheet(selectBook.readStatus)
+        binding.changeBookStatusExtendedFAB.setOnClickListener {
+            modalBottomSheet.show(activity?.supportFragmentManager!!, ModalBottomSheet.TAG)
+        }
+
+        modalBottomSheet.dialog?.setOnDismissListener {
+            Log.e("++++++++++++++++++++","ABOBUS")
+        }
+
+
+    }
+
+    fun changeBooksStatusButton(button:Button,status: Int){
+        when(status){
+            1 -> {
+                button.backgroundTintList = context?.resources?.getColorStateList(R.color.noInLists)
+                button.text = "Не добавлена"
+            }
+            2 -> {
+                button.backgroundTintList = context?.resources?.getColorStateList(R.color.wantRead)
+                button.text = "Хочу прочитать"
+            }
+            3 -> {
+                button.backgroundTintList = context?.resources?.getColorStateList(R.color.readed)
+                button.text = "Прочитано"
+            }
+            4 -> {
+                button.backgroundTintList = context?.resources?.getColorStateList(R.color.readNow)
+                button.text = "Читаю сейчас"
+            }
         }
     }
 }

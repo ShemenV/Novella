@@ -85,32 +85,15 @@
             android:textSize="17sp" />
 
 
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/changeBookStatusExtendedFAB"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/addBoookButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:src="@drawable/add_book_icon"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Хочу прочитать"/>
-            </LinearLayout>
-
-        </LinearLayout>
+            android:layout_gravity="center"
+            android:layout_marginVertical="10dp"
+            android:text="Прочитано"
+            android:backgroundTint="#51F876"
+            app:icon="@drawable/_23bookmark_99967" />
 
         <TextView
             android:id="@+id/descriptionTextView"
