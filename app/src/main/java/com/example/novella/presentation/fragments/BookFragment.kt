@@ -10,26 +10,32 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentResultListener
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.example.novella.R
 import com.example.novella.databinding.FragmentBookBinding
 import com.example.novella.domain.Entities.Book
-import com.example.novella.presentation.Activities.ModalBottomSheet
+import com.example.novella.presentation.fragments.viewModels.BookFragmentViewModel
 import com.squareup.picasso.Picasso
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class BookFragment : Fragment() {
+class BookFragment : Fragment(), ModalBottomSheetFragment.ModalBottomListener {
     lateinit var binding: FragmentBookBinding
+    private val viewModel by viewModel<BookFragmentViewModel>()
     val args: BookFragmentArgs by navArgs()
-
     val selectBook: Book by lazy { args.book }
+
+    lateinit var chooseStatusListener:ModalBottomSheetFragment.ModalBottomListener
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentBookBinding.inflate(layoutInflater,container,false)
+        binding = DataBindingUtil.inflate(layoutInflater,R.layout.fragment_book, container, false)
+        binding.vm = viewModel
         return binding.root
     }
 
@@ -39,11 +45,9 @@ class BookFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.e("SelectedBook",args.book.toString())
 
-        binding.titleTextView.text = selectBook.title
-        binding.authorTextView.text = "Автор: ${selectBook.author}"
-        binding.descriptionTextView.text = "Описание:\n${selectBook.description}"
-        binding.publisherTextView.text = "Издатель: ${selectBook.publisher}"
-        binding.pageCountTextView.text = "Количество страниц: ${selectBook.pageCount.toString()}"
+        chooseStatusListener = this
+
+        viewModel.setSelectedBook(selectBook)
 
         if(selectBook.cover != null){
             binding.coverImageView.setImageBitmap(selectBook?.cover?.let {
@@ -63,14 +67,25 @@ class BookFragment : Fragment() {
 
         changeBooksStatusButton(binding.changeBookStatusExtendedFAB,selectBook.readStatus)
 
-        val modalBottomSheet = ModalBottomSheet(selectBook.readStatus)
+        val modalBottomSheet = ModalBottomSheetFragment(chooseStatusListener,selectBook.readStatus)
+
+
+
         binding.changeBookStatusExtendedFAB.setOnClickListener {
-            modalBottomSheet.show(activity?.supportFragmentManager!!, ModalBottomSheet.TAG)
+            modalBottomSheet.show(activity?.supportFragmentManager!!, ModalBottomSheetFragment.TAG)
         }
 
-        modalBottomSheet.dialog?.setOnDismissListener {
-            Log.e("++++++++++++++++++++","ABOBUS")
-        }
+
+
+        viewModel.selectedReadStatus.observe(viewLifecycleOwner, Observer {
+
+            if(it != null){
+                changeBooksStatusButton(binding.changeBookStatusExtendedFAB,it)
+                viewModel.selectedBookMutable.value?.readStatus = it
+                viewModel.saveBook()
+            }
+
+        })
 
 
     }
@@ -94,5 +109,9 @@ class BookFragment : Fragment() {
                 button.text = "Читаю сейчас"
             }
         }
+    }
+
+    override fun chooseReadStatusClick(seletedStatus: Int) {
+        viewModel.setSelectedReadStatus(seletedStatus)
     }
 }

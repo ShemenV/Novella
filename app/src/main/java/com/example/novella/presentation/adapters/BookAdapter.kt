@@ -59,7 +59,6 @@ class BookAdapter(private val context: Context): RecyclerView.Adapter<BookAdapte
                     .resize(0,230)
                     .centerCrop()
                     .into(holder.binding.coverImageView)
-                Log.e("++++++++++++++++++++++++++++++++++++",book?.coverUrl)
             }
         }
 

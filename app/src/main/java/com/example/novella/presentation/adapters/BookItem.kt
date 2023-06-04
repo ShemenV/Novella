@@ -45,7 +45,6 @@ open class BookItem(val book: Book?): AbstractBindingItem<BookItemBinding>() {
                 .resize(0,230)
                 .centerCrop()
                 .into(binding.coverImageView)
-            Log.e("++++++++++++++++++++++++++++++++++++",book?.coverUrl)
         }
     }
 

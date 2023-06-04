@@ -1,5 +1,6 @@
 package com.example.novella.di
 
+import com.example.novella.presentation.fragments.viewModels.BookFragmentViewModel
 import com.example.novella.presentation.fragments.viewModels.SearchNewFragmentViewModel
 import com.example.novella.presentation.fragments.viewModels.LibraryFragmentViewModel
 import com.example.novella.presentation.fragments.viewModels.MainFragmentViewModel
@@ -18,6 +19,11 @@ var appModule = module {
 
     viewModel<SearchNewFragmentViewModel>{
         SearchNewFragmentViewModel(getBooksByNameUseCase = get(named("getBooksBuNameFromRetrofit")),
+        getBooksIdsUseCase = get(named("getBooksIdsFromDb")))
+    }
+
+    viewModel<BookFragmentViewModel>{
+        BookFragmentViewModel(saveBookUseCase =  get(named("saveNewBook")),
         getBooksIdsUseCase = get(named("getBooksIdsFromDb")))
     }
 }

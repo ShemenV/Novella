@@ -1,10 +1,13 @@
 package com.example.novella.presentation.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -46,6 +49,7 @@ class LibraryFragment : Fragment() {
     }
 
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -60,16 +64,23 @@ class LibraryFragment : Fragment() {
             val selectedBook = adapter.getItem(position)
             if(selectedBook != null){
                 val action = LibraryFragmentDirections.actionLibraryFragmentToBookFragment(selectedBook)
-
                 MAIN.navController.navigate(action)
             }
-
         }
+
+        adapter.setOnItemLongClickListener{ a, adapterView, position ->
+
+            vm.selectBook(position)
+            adapter.notifyDataSetChanged()
+            true
+        }
+
 
         lifecycleScope.launch{
             vm.getAllBooks()
             vm.readBookList.observe(viewLifecycleOwner, Observer { books ->
                 if(books != null){
+                    Log.e("__","observe")
                     adapter.setNewInstance(books)
                 }
             })
@@ -77,7 +88,6 @@ class LibraryFragment : Fragment() {
 
             vm.search.observe(viewLifecycleOwner, Observer {
                 if (it != null ) {
-
                     vm.filterBooks(it)
                 }
             })

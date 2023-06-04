@@ -12,7 +12,7 @@ data class ItemsItem(
 ){
 	fun ToBook(): Book {
 		return Book(
-			id = id,
+			id = id!!,
 			title = volumeInfo?.title,
 			author = volumeInfo?.authors?.joinToString(", "),
 			pageCount = volumeInfo?.pageCount,

@@ -11,4 +11,5 @@
     <color name="noInLists">#FFC6C6C6</color>
     <color name="wantRead">#FFEFBB54</color>
     <color name="readNow">#FF51F876</color>
+    <color name="select">#807958A5</color>
 </resources>

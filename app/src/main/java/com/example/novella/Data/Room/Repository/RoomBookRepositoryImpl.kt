@@ -1,6 +1,7 @@
 package com.example.novella.Data.Room.Repository
 
 import com.example.novella.Data.Room.Dao.BooksDao
+import com.example.novella.Data.Room.DbEntities.BooksDbEntity
 import com.example.novella.domain.Entities.Book
 import com.example.novella.domain.Repositories.BookRepository
 
@@ -17,5 +18,13 @@ class RoomBookRepositoryImpl(
 
     suspend fun getIds(): MutableList<String?> {
         return booksDao.getAllIds().map { value -> value?.id.toString() }.toMutableList()
+    }
+
+    suspend fun saveBook(book: Book){
+        booksDao.saveBook(BooksDbEntity.fromBook(book))
+    }
+
+    suspend fun updateBook(book: Book){
+        booksDao.updateBook(BooksDbEntity.fromBook(book))
     }
 }
