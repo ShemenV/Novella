@@ -1,5 +1,6 @@
 package com.example.novella.domain.usecases
 
+import android.util.Log
 import com.example.novella.Data.Room.Repository.RoomBookRepositoryImpl
 import com.example.novella.domain.Entities.Book
 import kotlinx.coroutines.Dispatchers
@@ -14,10 +15,12 @@ class SaveBookUseCase(private val repository:RoomBookRepositoryImpl) {
         val idsList = repository.getIds()
 
         if (idsList.contains(book.id)) {
+            Log.e("vvvuivui","hohohohoho")
             repository.updateBook(book)
         }
         else{
             if (book.cover == null && book.coverUrl != null) {
+
                 val imageUrl: URL = URL(book.coverUrl)
 
                 withContext(Dispatchers.IO) {
@@ -35,6 +38,7 @@ class SaveBookUseCase(private val repository:RoomBookRepositoryImpl) {
                     book.cover = byteArray
                 }
             }
+            Log.e("vvvuivui","hihihihi")
             repository.saveBook(book)
         }
 

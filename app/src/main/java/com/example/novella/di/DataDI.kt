@@ -20,7 +20,7 @@ var dataModule = module {
         Room.databaseBuilder(
             androidApplication(),
             AppDatabase::class.java,
-            "novella3.db"
+            "novella4.db"
         )
             .createFromAsset("Novella.db")
             .build()

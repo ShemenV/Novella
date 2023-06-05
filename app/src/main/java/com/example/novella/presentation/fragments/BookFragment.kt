@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentResultListener
 import androidx.fragment.app.setFragmentResultListener
@@ -80,8 +81,9 @@ class BookFragment : Fragment(), ModalBottomSheetFragment.ModalBottomListener {
         viewModel.selectedReadStatus.observe(viewLifecycleOwner, Observer {
 
             if(it != null){
+                Toast.makeText(activity?.applicationContext,"fefefef",Toast.LENGTH_LONG).show()
                 changeBooksStatusButton(binding.changeBookStatusExtendedFAB,it)
-                viewModel.selectedBookMutable.value?.readStatus = it
+
                 viewModel.saveBook()
             }
 
