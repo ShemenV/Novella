@@ -37,22 +37,5 @@ class MainFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val manager = LinearLayoutManager(activity?.applicationContext)
-        adapter = BookAdapter(requireActivity())
-
-        lifecycleScope.launch {
-            vm.getReadBooks()
-            vm.readBooksList.observe(viewLifecycleOwner, Observer{ books ->
-                adapter.data = books
-                Log.e("===========",books.get(0)?.cover?.get(0).toString())
-            })
-
-
-
-            Log.e("fragment",vm.readBooksList.toString())
-        }
-
-
     }
 }

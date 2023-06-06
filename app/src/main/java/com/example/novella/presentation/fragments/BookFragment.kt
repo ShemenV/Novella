@@ -4,16 +4,12 @@ import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentResultListener
-import androidx.fragment.app.setFragmentResultListener
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.example.novella.R
@@ -30,46 +26,43 @@ class BookFragment : Fragment(), ModalBottomSheetFragment.ModalBottomListener {
     val args: BookFragmentArgs by navArgs()
     val selectBook: Book by lazy { args.book }
 
-    lateinit var chooseStatusListener:ModalBottomSheetFragment.ModalBottomListener
+    lateinit var chooseStatusListener: ModalBottomSheetFragment.ModalBottomListener
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(layoutInflater,R.layout.fragment_book, container, false)
+        binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_book, container, false)
         binding.vm = viewModel
         return binding.root
     }
 
-
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e("SelectedBook",args.book.toString())
+        Log.e("SelectedBook", args.book.toString())
 
         chooseStatusListener = this
 
         viewModel.setSelectedBook(selectBook)
 
-        if(selectBook.cover != null){
-            binding.coverImageView.setImageBitmap(selectBook?.cover?.let {
-                BitmapFactory.decodeByteArray(selectBook?.cover,0,
-                    it.size)
+        if (selectBook.cover != null) {
+            binding.coverImageView.setImageBitmap(selectBook.cover?.let {
+                BitmapFactory.decodeByteArray(
+                    selectBook.cover, 0,
+                    it.size
+                )
             })
-        }
-
-        else if(selectBook?.coverUrl != null){
+        } else if (selectBook.coverUrl != null) {
 
             Picasso.get()
                 .load(selectBook.coverUrl)
-                .resize(0,230)
+                .resize(0, 230)
                 .centerCrop()
                 .into(binding.coverImageView)
         }
 
-        changeBooksStatusButton(binding.changeBookStatusExtendedFAB,selectBook.readStatus)
-
-        val modalBottomSheet = ModalBottomSheetFragment(chooseStatusListener,selectBook.readStatus)
-
+        changeBooksStatusButton(binding.changeBookStatusExtendedFAB, selectBook.readStatus)
+        val modalBottomSheet = ModalBottomSheetFragment(chooseStatusListener, selectBook.readStatus)
 
 
         binding.changeBookStatusExtendedFAB.setOnClickListener {
@@ -77,23 +70,16 @@ class BookFragment : Fragment(), ModalBottomSheetFragment.ModalBottomListener {
         }
 
 
-
         viewModel.selectedReadStatus.observe(viewLifecycleOwner, Observer {
-
-            if(it != null){
-                Toast.makeText(activity?.applicationContext,"fefefef",Toast.LENGTH_LONG).show()
-                changeBooksStatusButton(binding.changeBookStatusExtendedFAB,it)
-
+            if (it != null) {
+                changeBooksStatusButton(binding.changeBookStatusExtendedFAB, it)
                 viewModel.saveBook()
             }
-
         })
-
-
     }
 
-    fun changeBooksStatusButton(button:Button,status: Int){
-        when(status){
+    fun changeBooksStatusButton(button: Button, status: Int) {
+        when (status) {
             1 -> {
                 button.backgroundTintList = context?.resources?.getColorStateList(R.color.noInLists)
                 button.text = "Не добавлена"

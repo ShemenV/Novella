@@ -1,9 +1,6 @@
 package com.example.novella.Data.Room.Dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.example.novella.Data.Room.DbEntities.BooksDbEntity
 import com.example.novella.Data.Room.DbEntities.Tuples.BookIdTuple
 import kotlinx.coroutines.flow.Flow
@@ -22,4 +19,6 @@ interface BooksDao {
 
     @Update
     suspend fun updateBook(booksDbEntity: BooksDbEntity)
+    @Delete
+    suspend fun deleteBook(book: BooksDbEntity)
 }

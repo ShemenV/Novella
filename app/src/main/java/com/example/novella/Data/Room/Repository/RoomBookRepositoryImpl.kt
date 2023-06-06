@@ -28,4 +28,9 @@ class RoomBookRepositoryImpl(
     suspend fun updateBook(book: Book){
         booksDao.updateBook(BooksDbEntity.fromBook(book))
     }
+
+    suspend fun deleteBook(book: Book){
+        booksDao.deleteBook(BooksDbEntity.fromBook(book))
+        Log.e("Room", "Book deleted - ${book.title}")
+    }
 }

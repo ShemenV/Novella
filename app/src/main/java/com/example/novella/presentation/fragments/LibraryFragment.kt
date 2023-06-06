@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -16,14 +17,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import androidx.recyclerview.widget.RecyclerView.VIEW_LOG_TAG
 import com.example.novella.presentation.fragments.viewModels.LibraryFragmentViewModel
 import com.example.novella.R
 import com.example.novella.databinding.FragmentBookBinding
 import com.example.novella.databinding.FragmentLibraryBinding
+import com.example.novella.domain.Entities.Book
 import com.example.novella.presentation.MAIN
 import com.example.novella.presentation.adapters.BRVAHAdapter
+import com.example.novella.presentation.adapters.BookAdapter
 import com.example.novella.presentation.adapters.BookItem
+import com.example.novella.presentation.adapters.OnRecyclerViewItemClickListener
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.IAdapter
 import com.mikepenz.fastadapter.ISelectionListener
@@ -36,14 +42,17 @@ import com.mikepenz.fastadapter.select.getSelectExtension
 import com.mikepenz.fastadapter.select.selectExtension
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.text.FieldPosition
 
 
-class LibraryFragment : Fragment() {
+class LibraryFragment : Fragment(),
+    OnRecyclerViewItemClickListener
+{
 
     lateinit var binding: FragmentLibraryBinding
     private val vm by viewModel<LibraryFragmentViewModel>()
-
-
+    lateinit var listener: OnRecyclerViewItemClickListener
+    lateinit var adapter: BookAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,6 +67,10 @@ class LibraryFragment : Fragment() {
             MAIN.navController.navigate(R.id.action_libraryFragment_to_addBookFragment)
         }
 
+
+
+        listener = this
+
         return binding.root
     }
 
@@ -66,67 +79,17 @@ class LibraryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var mUndoHelper: UndoHelper<*>
-        var mActionModeHelper: ActionModeHelper<BookItem>
-        var selectExtension: SelectExtension<BookItem>
-        val itemAdapter :ItemAdapter<BookItem> = ItemAdapter<BookItem>()
-        val fastAdapter = FastAdapter.with(itemAdapter)
-        selectExtension = fastAdapter.getSelectExtension()
-        selectExtension.apply {
-            isSelectable = true
-            multiSelect = true
-            selectOnLongClick = true
-            selectionListener = object : ISelectionListener<BookItem> {
-                override fun onSelectionChanged(item: BookItem, selected: Boolean) {
-                    Log.i("FastAdapter", "SelectedCount: " + selectExtension.selections.size + " ItemsCount: " + selectExtension.selectedItems.size)
-                }
-            }
-        }
-
-
-
-        fastAdapter.onClickListener = { v: View?, _: IAdapter<BookItem>, _:BookItem, _: Int ->
-            if (v != null) {
-                Toast.makeText(
-                    v.context,
-                    "SelectedCount: " + selectExtension.selections.size + " ItemsCount: " + selectExtension.selectedItems.size,
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            false
-        }
-
-
-
-
+        adapter = BookAdapter(requireContext(),listener)
 
         val manager: LayoutManager = GridLayoutManager(activity?.applicationContext,2)
-        binding.recyclerView.adapter = fastAdapter
+        binding.recyclerView.adapter =adapter
         binding.recyclerView.layoutManager = manager
-
-        fastAdapter.onClickListener = {view, adapter, item, position ->
-            val selectedBook = adapter.getAdapterItem(position).book
-            if(selectedBook != null){
-                val action = LibraryFragmentDirections.actionLibraryFragmentToBookFragment(selectedBook)
-                MAIN.navController.navigate(action)
-            }
-
-            false
-        }
-
-        fastAdapter.onLongClickListener = {view, adapter, item, position ->
-
-
-
-            false
-        }
 
         lifecycleScope.launch{
             vm.getAllBooks()
             vm.readBookList.observe(viewLifecycleOwner, Observer { books ->
-                if(books != null){
-                    Log.e("__","observe")
-                    itemAdapter.set(books.map(::BookItem))
+                if(books != null && !adapter.data.equals(books)){
+                    adapter.data = books
                 }
             })
 
@@ -138,4 +101,32 @@ class LibraryFragment : Fragment() {
             })
         }
     }
+
+
+    @SuppressLint("SuspiciousIndentation")
+    override fun onItemClick(position: Int) {
+        val selectedBook = adapter.data[position]
+            if(selectedBook != null){
+                val action = LibraryFragmentDirections.actionLibraryFragmentToBookFragment(selectedBook)
+                MAIN.navController.navigate(action)
+            }
+    }
+
+    override fun menuItem1Click(book: Book) {
+        Log.e("Context Menu", "Delete book - ${book.title}")
+
+        lifecycleScope.launch{
+            vm.deleteBook(book)
+
+        }
+
+    }
+
+    override fun menuItem2Click(book: Book) {
+        Log.e("Context Menu", "Edit book - ${book.title}")
+        val action = LibraryFragmentDirections.actionLibraryFragmentToEditBookFragment(book)
+        MAIN.navController.navigate(action)
+    }
+
+
 }

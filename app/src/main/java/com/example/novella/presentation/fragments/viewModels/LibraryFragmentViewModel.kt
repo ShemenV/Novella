@@ -5,11 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.novella.domain.Entities.Book
+import com.example.novella.domain.usecases.DeleteBookUseCase
 import com.example.novella.domain.usecases.GetReadBooksListUseCase
 import kotlinx.coroutines.launch
 import java.util.*
 
-class LibraryFragmentViewModel(private val getReadBooksListUseCase: GetReadBooksListUseCase):ViewModel() {
+class LibraryFragmentViewModel(private val getReadBooksListUseCase: GetReadBooksListUseCase,
+private val deleteBookUseCase: DeleteBookUseCase):ViewModel() {
     var readBookList: MutableLiveData<MutableList<Book?>> = MutableLiveData<MutableList<Book?>>()
     var search: MutableLiveData<String?> = MutableLiveData("")
     fun getAllBooks(){
@@ -28,12 +30,10 @@ class LibraryFragmentViewModel(private val getReadBooksListUseCase: GetReadBooks
     }
 
 
-    fun selectBook(position: Int){
-        val bookList:MutableList<Book?> = readBookList.value!!
-        val book = bookList?.get(position)
-        book?.isSelect =true
-        bookList?.set(position,book)
-        Log.e("ddd",position.toString())
-        readBookList.value = bookList
+    fun deleteBook(book: Book){
+        viewModelScope.launch {
+            deleteBookUseCase.execute(book)
+            getAllBooks()
+        }
     }
 }

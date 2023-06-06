@@ -6,5 +6,13 @@
     <string name="publisher_name">Издатель: %s</string>
     <string name="page_count_name">Количество страниц: %s</string>
     <string name="description">Описание:\n %s</string>
-    <string name="vm_selectedbookmutable_pagecount_tostring">Количество страниц: @{vm.selectedBookMutable.pageCount.toString()}</string>
+
+    <string name="selectContextAction">Выберите действие</string>
+    <string name="delete">Удалить</string>
+    <string name="edit">Изменить</string>
+    <string name="changeBookTitle">Название</string>
+    <string name="changeBookAuthor">Автор</string>
+    <string name="changeBookPageCount">Количество страниц</string>
+    <string name="changeBookPublisher">Издатель</string>
+    <string name="changeBookDescription">Описание</string>
 </resources>
