@@ -31,10 +31,6 @@ class BRVAHAdapter(books: MutableList<Book?>?) :
                     it.size
                 )
             })
-            if(item.isSelect){
-                val image = holder.getView<ImageView>(R.id.coverImageView)
-                image.foreground = ColorDrawable(ContextCompat.getColor(image.context, R.color.select))
-            }
         } else if (item?.coverUrl != null) {
             val imageView = holder.getView<ImageView>(R.id.coverImageView)
             Picasso.get()

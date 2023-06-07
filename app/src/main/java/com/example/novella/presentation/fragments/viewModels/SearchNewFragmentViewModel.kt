@@ -24,7 +24,7 @@ private val getBooksIdsUseCase: GetBooksIdsUseCase):ViewModel() {
     var startIndex: Int = 0
     fun getBooksByName(name: String?){
         viewModelScope.launch {
-            Log.e("ID",getBooksIdsUseCase.execute().get(0).toString())
+
             startIndex = 0
             booksList.value = getBooksByNameUseCase.execute(name, startIndex = startIndex)
             searchName = name

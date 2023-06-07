@@ -28,12 +28,15 @@ class RetrofitBookRepositoryImpl(private val bookApi: BookService): BookReposito
            } as MutableList<Book?>?)
        }
         catch (e:UnknownHostException){
-            Log.e("pipiska",e.toString())
+            Log.e("Exception",e.toString())
             return mutableListOf(Book(title = "Exception"))
         }
        catch (e:java.lang.Exception){
-           Log.e("pipiska",e.toString())
+           Log.e("Exception",e.toString())
            return mutableListOf()
        }
     }
+
+
+
 }

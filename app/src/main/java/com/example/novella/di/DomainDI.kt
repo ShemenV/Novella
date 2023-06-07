@@ -25,4 +25,8 @@ val domainModule = module {
     factory<DeleteBookUseCase>(named("deleteBook")) {
         DeleteBookUseCase(repository = get(named("roomIds")))
     }
+
+    factory<GetBooksByIdUseCase>(named("getBooksIdsFromGoogle")) {
+        GetBooksByIdUseCase(repository =  get())
+    }
 }

@@ -23,7 +23,6 @@ var dataModule = module {
             "novella4.db"
         )
             .createFromAsset("Novella.db")
-            .fallbackToDestructiveMigration()
             .build()
     }
 
@@ -43,6 +42,10 @@ var dataModule = module {
     single<RoomBookRepositoryImpl>(named("roomIds")){
         RoomBookRepositoryImpl(booksDao = get())
     }
+    single<RetrofitBookRepositoryImpl>() {
+        RetrofitBookRepositoryImpl(bookApi = get())
+    }
+
 
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()

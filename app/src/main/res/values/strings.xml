@@ -15,4 +15,5 @@
     <string name="changeBookPageCount">Количество страниц</string>
     <string name="changeBookPublisher">Издатель</string>
     <string name="changeBookDescription">Описание</string>
+    <string name="editBookDescription">Описание</string>
 </resources>

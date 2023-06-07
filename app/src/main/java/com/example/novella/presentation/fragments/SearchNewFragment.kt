@@ -71,7 +71,8 @@ class SearchNewFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.booksList.observe(viewLifecycleOwner, Observer{ books ->
                 Log.e("_____________________",books.toString())
-                if(books?.size== 1 && books.get(0)?.title == "Exception"){
+
+                if(books?.size== 1 && books[0]?.title == "Exception"){
                     Toast.makeText(activity?.applicationContext,"Проверьте соединение с сетью",Toast.LENGTH_SHORT).show()
                     return@Observer
                 }
@@ -83,13 +84,19 @@ class SearchNewFragment : Fragment() {
             try {
             val handler = android.os.Handler()
 
-            handler.postDelayed({  binding.recyclerView.scrollToPosition(0)
+            handler.postDelayed({
+                binding.recyclerView.scrollToPosition(0)
                 adapter.data.clear()
                 viewModel.getBooksByName(binding.searchEditText.text.toString()) }, 100)
             }
             catch (e: Exception){
                 Log.e("_________________________________________________",e.toString())
             }
+        }
+
+        binding.addNewBookButton.setOnClickListener {
+            val action = SearchNewFragmentDirections.actionAddBookFragmentToAddBookFragment3()
+            MAIN.navController.navigate(action)
         }
 
 

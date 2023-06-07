@@ -32,7 +32,9 @@ class LibraryFragment : Fragment(),
     private val vm by viewModel<LibraryFragmentViewModel>()
     lateinit var listener: OnRecyclerViewItemClickListener
     lateinit var adapter: BookAdapter
+    init {
 
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,7 +49,7 @@ class LibraryFragment : Fragment(),
         }
 
         listener = this
-
+        Log.e("Library","Create")
         return binding.root
     }
 
@@ -57,7 +59,7 @@ class LibraryFragment : Fragment(),
         super.onViewCreated(view, savedInstanceState)
 
         adapter = BookAdapter(requireContext(),listener)
-
+        Log.e("Library","Created")
         val manager: LayoutManager = GridLayoutManager(activity?.applicationContext,2)
         binding.recyclerView.adapter =adapter
         binding.recyclerView.layoutManager = manager

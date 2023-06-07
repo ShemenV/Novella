@@ -8,6 +8,6 @@
     android:checked="true"
     />
 <item android:title="Настройки"
-    android:id="@+id/settingsMenuItem"
+    android:id="@+id/quotesMenuItem"
     android:checked="false"/>
 </menu>

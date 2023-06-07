@@ -44,13 +44,39 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/bookFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_addBookFragment_to_addBookFragment3"
+            app:destination="@id/addBookFragment3" />
     </fragment>
     <fragment
         android:id="@+id/editBookFragment"
         android:name="com.example.novella.presentation.fragments.EditBookFragment"
-        android:label="EditBookFragment" >
+        android:label="EditBookFragment"
+        tools:layout="@layout/fragment_edit_book">
         <argument
             android:name="editableBook"
             app:argType="com.example.novella.domain.Entities.Book" />
+        <action
+            android:id="@+id/action_editBookFragment_to_libraryFragment"
+            app:destination="@id/libraryFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/addBookFragment3"
+        android:name="com.example.novella.presentation.fragments.AddBookFragment"
+        android:label="AddBookFragment"
+        tools:layout="@layout/fragment_add_book">
+        <action
+            android:id="@+id/action_addBookFragment3_to_libraryFragment"
+            app:destination="@id/libraryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.novella.presentation.fragments.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" />
+    <fragment
+        android:id="@+id/quotesFragment"
+        android:name="com.example.novella.presentation.fragments.QuotesFragment"
+        android:label="fragment_quotes"
+        tools:layout="@layout/fragment_quotes" />
 </navigation>

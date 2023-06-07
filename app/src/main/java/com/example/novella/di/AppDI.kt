@@ -25,7 +25,16 @@ var appModule = module {
     }
 
     viewModel<EditBookFragmentViewModel>{
-        EditBookFragmentViewModel(saveBookUseCase =  get(named("saveNewBook")))
+        EditBookFragmentViewModel(saveBookUseCase =  get(named("saveNewBook")),
+        getBooksByIdUseCase =  get(named("getBooksIdsFromGoogle")),
+        getBooksIdsUseCase = get(named("getBooksIdsFromDb")))
     }
+
+    viewModel<AddBookFragmentViewModel>{
+        AddBookFragmentViewModel(saveBookUseCase =  get(named("saveNewBook")),
+            getBooksByNameUseCase = get(named("getBooksBuNameFromRetrofit")),
+            getBooksIdsUseCase = get(named("getBooksIdsFromDb")))
+    }
+
 
 }
