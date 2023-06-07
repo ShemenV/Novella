@@ -1,48 +1,27 @@
 package com.example.novella.presentation.fragments
 
 import android.annotation.SuppressLint
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
-import androidx.recyclerview.widget.RecyclerView.VIEW_LOG_TAG
 import com.example.novella.presentation.fragments.viewModels.LibraryFragmentViewModel
 import com.example.novella.R
-import com.example.novella.databinding.FragmentBookBinding
 import com.example.novella.databinding.FragmentLibraryBinding
 import com.example.novella.domain.Entities.Book
 import com.example.novella.presentation.MAIN
-import com.example.novella.presentation.adapters.BRVAHAdapter
 import com.example.novella.presentation.adapters.BookAdapter
-import com.example.novella.presentation.adapters.BookItem
 import com.example.novella.presentation.adapters.OnRecyclerViewItemClickListener
-import com.mikepenz.fastadapter.FastAdapter
-import com.mikepenz.fastadapter.IAdapter
-import com.mikepenz.fastadapter.ISelectionListener
-import com.mikepenz.fastadapter.adapters.ItemAdapter
-import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
-import com.mikepenz.fastadapter.helpers.ActionModeHelper
-import com.mikepenz.fastadapter.helpers.UndoHelper
-import com.mikepenz.fastadapter.select.SelectExtension
-import com.mikepenz.fastadapter.select.getSelectExtension
-import com.mikepenz.fastadapter.select.selectExtension
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.text.FieldPosition
 
 
 class LibraryFragment : Fragment(),
@@ -66,8 +45,6 @@ class LibraryFragment : Fragment(),
         binding.addBoookButton.setOnClickListener {
             MAIN.navController.navigate(R.id.action_libraryFragment_to_addBookFragment)
         }
-
-
 
         listener = this
 
@@ -115,12 +92,21 @@ class LibraryFragment : Fragment(),
     override fun menuItem1Click(book: Book) {
         Log.e("Context Menu", "Delete book - ${book.title}")
 
-        lifecycleScope.launch{
-            vm.deleteBook(book)
+       val dialog= AlertDialog.Builder(requireContext())
+            .setMessage("Вы действительно хотите удалить ${book.title}")
+            .setPositiveButton("Да") { _,_ ->
+                vm.deleteBook(book)
+            }
+            .setNegativeButton("Нет"){_,_,->}
+            .create()
 
-        }
+        dialog.show()
+//        lifecycleScope.launch{
+//            vm.deleteBook(book)
+//        }
 
     }
+
 
     override fun menuItem2Click(book: Book) {
         Log.e("Context Menu", "Edit book - ${book.title}")

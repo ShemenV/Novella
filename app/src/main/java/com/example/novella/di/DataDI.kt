@@ -23,6 +23,7 @@ var dataModule = module {
             "novella4.db"
         )
             .createFromAsset("Novella.db")
+            .fallbackToDestructiveMigration()
             .build()
     }
 

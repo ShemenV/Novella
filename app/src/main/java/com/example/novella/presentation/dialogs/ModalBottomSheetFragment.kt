@@ -1,16 +1,14 @@
-package com.example.novella.presentation.fragments
+package com.example.novella.presentation.dialogs
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
-import android.widget.RadioGroup.OnCheckedChangeListener
 import com.example.novella.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class ModalBottomSheetFragment(val listener:ModalBottomListener,val status:Int = 1) : BottomSheetDialogFragment() {
+class ModalBottomSheetFragment(val listener: ModalBottomListener, val status:Int = 1) : BottomSheetDialogFragment() {
 
     private var chooseReadStatusListener: ModalBottomListener? = null
 

@@ -15,6 +15,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.novella.R
 import com.example.novella.databinding.FragmentBookBinding
 import com.example.novella.domain.Entities.Book
+import com.example.novella.presentation.dialogs.ModalBottomSheetFragment
 import com.example.novella.presentation.fragments.viewModels.BookFragmentViewModel
 import com.squareup.picasso.Picasso
 import org.koin.androidx.viewmodel.ext.android.viewModel

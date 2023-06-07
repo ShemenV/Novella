@@ -31,7 +31,7 @@ data class BooksDbEntity(
             description = book.description,
             cover = book.cover,
             publisher = book.publisher,
-            readStatus = book.readStatus
+            readStatus = book.readStatus,
         )
     }
     fun ToBook():Book = Book(
