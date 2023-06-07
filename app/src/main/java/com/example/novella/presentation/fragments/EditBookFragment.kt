@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
@@ -58,12 +59,7 @@ class EditBookFragment : Fragment() {
 
 
         if (viewModel.editableBookMutable.value?.cover != null) {
-            binding.editCoverImageView.setImageBitmap(viewModel.editableBookMutable.value?.cover?.let {
-                android.graphics.BitmapFactory.decodeByteArray(
-                    viewModel.editableBookMutable.value?.cover, 0,
-                    it.size
-                )
-            })
+            binding.editCoverImageView.setImageURI(viewModel.editableBookMutable.value?.cover!!.toUri())
         }
         viewModel.editableBookPageCountStringMutable.observe(viewLifecycleOwner, Observer {
             viewModel.setPageCount()
@@ -131,16 +127,9 @@ class EditBookFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == SELECT_IMAGE) {
             val imageUri = data?.data
-            val reolver: ContentResolver = requireActivity().contentResolver
-            val bytes = reolver.openInputStream(imageUri!!)?.readBytes()
-            val bitmap =  BitmapFactory.decodeByteArray(
-                bytes, 0,
-                bytes!!.size
-            )
-            val resizedBitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, true)
-            binding.editCoverImageView.setImageBitmap(resizedBitmap)
 
-            viewModel.editableBookMutable.value?.cover = bytes
+            binding.editCoverImageView.setImageURI(imageUri)
+            viewModel.editableBookMutable.value?.cover = imageUri.toString()
         }
     }
 

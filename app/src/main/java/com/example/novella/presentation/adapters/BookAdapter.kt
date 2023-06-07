@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.*
 import android.view.View.OnCreateContextMenuListener
 import android.webkit.WebSettings
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.LazyHeaders
@@ -71,10 +72,7 @@ class BookAdapter(private val context: Context,val listener:OnRecyclerViewItemCl
             titleTextView.text = book?.title
 
             if(book?.cover != null){
-                coverImageView.setImageBitmap(book?.cover?.let {
-                    BitmapFactory.decodeByteArray(book?.cover,0,
-                        it.size)
-                })
+                coverImageView.setImageURI(book.cover!!.toUri())
             }
             else if(book?.coverUrl != null){
                 Picasso.get()

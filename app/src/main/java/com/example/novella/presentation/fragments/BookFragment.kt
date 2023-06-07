@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -47,12 +48,7 @@ class BookFragment : Fragment(), ModalBottomSheetFragment.ModalBottomListener {
         viewModel.setSelectedBook(selectBook)
 
         if (selectBook.cover != null) {
-            binding.coverImageView.setImageBitmap(selectBook.cover?.let {
-                BitmapFactory.decodeByteArray(
-                    selectBook.cover, 0,
-                    it.size
-                )
-            })
+            binding.coverImageView.setImageURI(selectBook.cover?.toUri())
         } else if (selectBook.coverUrl != null) {
 
             Picasso.get()

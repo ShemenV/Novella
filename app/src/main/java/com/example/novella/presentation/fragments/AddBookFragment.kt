@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.example.novella.R
@@ -53,12 +54,7 @@ class AddBookFragment : Fragment() {
 
 
         if (viewModel.addBookMutable.value?.cover != null) {
-            binding.addCoverImageView.setImageBitmap(viewModel.addBookMutable.value?.cover?.let {
-                android.graphics.BitmapFactory.decodeByteArray(
-                    viewModel.addBookMutable.value?.cover, 0,
-                    it.size
-                )
-            })
+            binding.addCoverImageView.setImageURI(viewModel.addBookMutable.value?.cover!!.toUri())
         }
         viewModel.addBookPageCountStringMutable.observe(viewLifecycleOwner, Observer {
             viewModel.setPageCount()
@@ -127,16 +123,8 @@ class AddBookFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == SELECT_IMAGE) {
             val imageUri = data?.data
-            val reolver: ContentResolver = requireActivity().contentResolver
-            val bytes = reolver.openInputStream(imageUri!!)?.readBytes()
-            val bitmap =  BitmapFactory.decodeByteArray(
-                bytes, 0,
-                bytes!!.size
-            )
-            val resizedBitmap = Bitmap.createScaledBitmap(bitmap, 600, 600, true)
-            binding.addCoverImageView.setImageBitmap(resizedBitmap)
-
-            viewModel.addBookMutable.value?.cover = bytes
+            binding.addCoverImageView.setImageURI(imageUri)
+            viewModel.addBookMutable.value?.cover = imageUri.toString()
         }
     }
 }

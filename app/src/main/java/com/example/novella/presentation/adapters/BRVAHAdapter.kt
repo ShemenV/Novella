@@ -1,8 +1,10 @@
 package com.example.novella.presentation.adapters
 
 import android.graphics.drawable.ColorDrawable
+import android.provider.MediaStore
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -22,17 +24,13 @@ class BRVAHAdapter(books: MutableList<Book?>?) :
 
 
 
-
+        val imageView = holder.getView<ImageView>(R.id.coverImageView)
         holder.setText(R.id.titleTextView, item?.title)
         if (item?.cover != null) {
-            holder.setImageBitmap(R.id.coverImageView, item.cover?.let {
-                android.graphics.BitmapFactory.decodeByteArray(
-                    item.cover, 0,
-                    it.size
-                )
-            })
+            val bitmap = MediaStore.Images.Media.getBitmap(imageView.context.contentResolver, item.cover?.toUri());
+            holder.setImageBitmap(R.id.coverImageView,bitmap)
         } else if (item?.coverUrl != null) {
-            val imageView = holder.getView<ImageView>(R.id.coverImageView)
+
             Picasso.get()
                 .load(item.coverUrl)
                 .resize(0, 230)
