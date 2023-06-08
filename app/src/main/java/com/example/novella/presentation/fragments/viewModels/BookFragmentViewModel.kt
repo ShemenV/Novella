@@ -1,5 +1,7 @@
 package com.example.novella.presentation.fragments.viewModels
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,6 +12,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.io.InputStream
 import java.net.URL
 import java.net.URLConnection
@@ -36,7 +41,50 @@ class BookFragmentViewModel(
 
 
     fun saveBook() {
-        viewModelScope.launch {
+        viewModelScope.launch{
+            var byteArray:ByteArray? = null
+
+
+
+                val imageUrl: URL = URL(selectedBookMutable.value?.coverUrl)
+
+                withContext(Dispatchers.IO) {
+                    val urlConnection: URLConnection =imageUrl.openConnection()
+                    val inputStream: InputStream = urlConnection.getInputStream()
+                    val outputStream: ByteArrayOutputStream = ByteArrayOutputStream()
+
+                    inputStream.use { input ->
+                        outputStream.use { output ->
+                            input.copyTo(output)
+                        }
+                    }
+
+                    byteArray = outputStream.toByteArray()
+                }
+
+        val mFolder = File("/data/data/com.example.novella/files/images")
+        val imgFile = File(mFolder.absolutePath + "/" + "${ selectedBookMutable.value?.id}.png")
+
+        val bitmap = BitmapFactory.decodeByteArray(byteArray,0,byteArray!!.size)
+        if (!mFolder.exists()) {
+            mFolder.mkdir()
+        }
+        if (!imgFile.exists()) {
+            withContext(Dispatchers.IO) {
+                imgFile.createNewFile()
+            }
+        }
+
+            var fos: FileOutputStream? = null
+            try {
+                fos = FileOutputStream(imgFile)
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
+                fos.flush()
+                fos.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            selectedBookMutable.value?.coverString = "/data/data/com.example.novella/files/images/${ selectedBookMutable.value?.id}.png"
             saveBookUseCase.execute(selectedBookMutable.value!!)
         }
     }

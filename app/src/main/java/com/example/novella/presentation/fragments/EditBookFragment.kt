@@ -13,13 +13,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.example.novella.R
 import com.example.novella.databinding.FragmentEditBookBinding
-import com.example.novella.databinding.FragmentLibraryBinding
 import com.example.novella.domain.Entities.Book
 import com.example.novella.presentation.MAIN
 import com.example.novella.presentation.fragments.viewModels.EditBookFragmentViewModel
@@ -57,13 +55,22 @@ class EditBookFragment : Fragment() {
             viewModel.editableBookPageCountStringMutable.value = "0"
         }
 
+        viewModel.imageMutable.observe(viewLifecycleOwner,Observer{
+            if(it != null){
+                binding.editCoverImageView.setImageBitmap(it)
+            }
+        })
 
-        if (viewModel.editableBookMutable.value?.cover != null) {
-            binding.editCoverImageView.setImageURI(viewModel.editableBookMutable.value?.cover!!.toUri())
+        if (viewModel.editableBookMutable.value?.coverString != null) {
+           val bitmap = BitmapFactory.decodeFile(viewModel.editableBookMutable.value?.coverString)
+            binding.editCoverImageView.setImageBitmap(bitmap)
         }
         viewModel.editableBookPageCountStringMutable.observe(viewLifecycleOwner, Observer {
             viewModel.setPageCount()
         })
+
+
+
 
         binding.saveChangesButton.setOnClickListener {
             Log.e("EditableBookResult",viewModel.editableBookMutable.value.toString())
@@ -76,9 +83,6 @@ class EditBookFragment : Fragment() {
                 viewModel.updateBook()
                 MAIN.navController.navigate(R.id.action_editBookFragment_to_libraryFragment)
             }
-
-
-
         }
 
         binding.editCoverImageView.setOnClickListener {
@@ -127,9 +131,16 @@ class EditBookFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == SELECT_IMAGE) {
             val imageUri = data?.data
+            val reolver: ContentResolver = requireActivity().contentResolver
+            val bytes = reolver.openInputStream(imageUri!!)?.readBytes()
+            val bitmap =  BitmapFactory.decodeByteArray(
+                bytes, 0,
+                bytes!!.size
+            )
 
-            binding.editCoverImageView.setImageURI(imageUri)
-            viewModel.editableBookMutable.value?.cover = imageUri.toString()
+
+            viewModel.imageMutable.value = bitmap
+            binding.editCoverImageView.setImageBitmap(bitmap)
         }
     }
 

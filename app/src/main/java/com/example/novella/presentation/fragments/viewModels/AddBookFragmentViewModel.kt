@@ -1,5 +1,6 @@
 package com.example.novella.presentation.fragments.viewModels
 
+import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +10,11 @@ import com.example.novella.domain.usecases.GetBooksByIdUseCase
 import com.example.novella.domain.usecases.GetBooksByNameUseCase
 import com.example.novella.domain.usecases.GetBooksIdsUseCase
 import com.example.novella.domain.usecases.SaveBookUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 class AddBookFragmentViewModel (private val saveBookUseCase: SaveBookUseCase,
                                 private val getBooksByNameUseCase: GetBooksByNameUseCase,
@@ -17,7 +22,7 @@ class AddBookFragmentViewModel (private val saveBookUseCase: SaveBookUseCase,
 ): ViewModel() {
     val addBookMutable: MutableLiveData<Book> = MutableLiveData()
     val addBookPageCountStringMutable: MutableLiveData<String> = MutableLiveData()
-
+    val imageMutable: MutableLiveData<Bitmap> = MutableLiveData()
 
     init {
         if(addBookMutable.value?.pageCount != null){
@@ -32,7 +37,7 @@ class AddBookFragmentViewModel (private val saveBookUseCase: SaveBookUseCase,
         addBookMutable.value!!.pageCount = addBookPageCountStringMutable.value?.toInt()
     }
 
-    fun updateBook(){
+    fun updateBook() {
         viewModelScope.launch {
             var newId:String = ""
             if(addBookMutable.value!!.id == null){
@@ -44,7 +49,37 @@ class AddBookFragmentViewModel (private val saveBookUseCase: SaveBookUseCase,
                 }
             }
             addBookMutable.value!!.id = newId
+            if(imageMutable.value != null){
+                saveImage(bitmap = imageMutable.value!!)
+                Log.e("ImagePath",addBookMutable.value?.coverString.toString())
+            }
             saveBookUseCase.execute(addBookMutable.value!!)
+        }
+    }
+
+
+    fun saveImage(bitmap:Bitmap){
+        viewModelScope.launch(Dispatchers.IO){
+            val mFolder = File("/data/data/com.example.novella/files/images")
+            val imgFile = File(mFolder.absolutePath + "/" + "${ addBookMutable.value?.id}.png")
+
+            if (!mFolder.exists()) {
+                mFolder.mkdir()
+            }
+            if (!imgFile.exists()) {
+                imgFile.createNewFile()
+            }
+
+            var fos: FileOutputStream? = null
+            try {
+                fos = FileOutputStream(imgFile)
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
+                fos.flush()
+                fos.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            addBookMutable.value?.coverString = "/data/data/com.example.novella/files/images/${addBookMutable.value?.id}.png"
         }
     }
 

@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.example.novella.R
@@ -27,7 +26,7 @@ class AddBookFragment : Fragment() {
     lateinit var binding: FragmentAddBookBinding
     val viewModel by viewModel<AddBookFragmentViewModel>()
     val addBook: Book = Book()
-
+    var resultBitmap :Bitmap? = null
 
 
     override fun onCreateView(
@@ -53,9 +52,17 @@ class AddBookFragment : Fragment() {
         }
 
 
-        if (viewModel.addBookMutable.value?.cover != null) {
-            binding.addCoverImageView.setImageURI(viewModel.addBookMutable.value?.cover!!.toUri())
+        if (viewModel.addBookMutable.value?.coverString != null) {
+            val bitmap = BitmapFactory.decodeFile(viewModel.addBookMutable.value?.coverString)
+            binding.addCoverImageView.setImageBitmap(bitmap)
         }
+
+        viewModel.imageMutable.observe(viewLifecycleOwner,Observer{
+            if(it != null){
+                binding.addCoverImageView.setImageBitmap(it)
+            }
+        })
+
         viewModel.addBookPageCountStringMutable.observe(viewLifecycleOwner, Observer {
             viewModel.setPageCount()
         })
@@ -69,11 +76,7 @@ class AddBookFragment : Fragment() {
                 val handler = android.os.Handler()
 
                 handler.postDelayed({ MAIN.navController.navigate(R.id.libraryFragment) }, 1000)
-
             }
-
-
-
         }
 
         binding.addCoverImageView.setOnClickListener {
@@ -123,8 +126,15 @@ class AddBookFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == SELECT_IMAGE) {
             val imageUri = data?.data
-            binding.addCoverImageView.setImageURI(imageUri)
-            viewModel.addBookMutable.value?.cover = imageUri.toString()
+            val reolver: ContentResolver = requireActivity().contentResolver
+            val bytes = reolver.openInputStream(imageUri!!)?.readBytes()
+            val bitmap =  BitmapFactory.decodeByteArray(
+                bytes, 0,
+                bytes!!.size
+            )
+
+            viewModel.imageMutable.value = bitmap
+            Log.e("ABOBA",viewModel.imageMutable.value.toString())
         }
     }
 }

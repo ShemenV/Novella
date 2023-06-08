@@ -20,7 +20,8 @@ data class BooksDbEntity(
     @ColumnInfo(name = "Description") val description: String?,
     @ColumnInfo(name = "Cover") val cover:String?,
     @ColumnInfo(name = "Publisher") val publisher:String?,
-    @ColumnInfo(name = "readStatus", defaultValue = "1") val readStatus:Int
+    @ColumnInfo(name = "readStatus", defaultValue = "1") val readStatus:Int,
+    @ColumnInfo(name="CoverPath") val coverPath:String?
 ) {
     companion object{
         fun fromBook(book: Book) = BooksDbEntity(
@@ -32,6 +33,7 @@ data class BooksDbEntity(
             cover = book.cover,
             publisher = book.publisher,
             readStatus = book.readStatus,
+            coverPath = book.coverString
         )
     }
     fun ToBook():Book = Book(
@@ -42,7 +44,8 @@ data class BooksDbEntity(
         description = description,
         cover = cover,
         publisher = publisher,
-        readStatus = readStatus
+        readStatus = readStatus,
+        coverString = coverPath
     )
 
 

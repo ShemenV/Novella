@@ -15,6 +15,7 @@ data class Book(
     var publisher:String? = null,
     var readStatus: Int = 1,
     var coverUrl: String? = null,
+    var coverString:String? = null
 ) : Parcelable{
 var isSelect = false
 }
