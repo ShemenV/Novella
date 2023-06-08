@@ -1,5 +1,6 @@
 package com.example.novella.presentation.adapters
 
+import android.graphics.BitmapFactory
 import android.graphics.drawable.ColorDrawable
 import android.provider.MediaStore
 import android.widget.ImageView
@@ -26,8 +27,8 @@ class BRVAHAdapter(books: MutableList<Book?>?) :
 
         val imageView = holder.getView<ImageView>(R.id.coverImageView)
         holder.setText(R.id.titleTextView, item?.title)
-        if (item?.cover != null) {
-            val bitmap = MediaStore.Images.Media.getBitmap(imageView.context.contentResolver, item.cover?.toUri());
+        if (item?.coverString != null) {
+            val bitmap = BitmapFactory.decodeFile(item.coverString)
             holder.setImageBitmap(R.id.coverImageView,bitmap)
         } else if (item?.coverUrl != null) {
 

@@ -31,23 +31,35 @@
       android:layout_height="match_parent"
       android:orientation="vertical">
 
-      <com.google.android.material.textfield.TextInputLayout
-          android:id="@+id/outlinedTextField"
+      <com.google.android.material.appbar.AppBarLayout
+          xmlns:android="http://schemas.android.com/apk/res/android"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="5dp"
-          android:layout_marginEnd="5dp"
-          android:hint="Поиск"
-          android:background="@color/white"
-          android:backgroundTint="@color/white"
-          style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
+          android:layout_height="wrap_content">
 
-          <com.google.android.material.textfield.TextInputEditText
+          <androidx.appcompat.widget.Toolbar
+              android:id="@+id/app_bar"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="@={vm.search}"/>
+              android:layout_height="wrap_content">
 
-      </com.google.android.material.textfield.TextInputLayout>
+              <SearchView
+                  android:id="@+id/librarySearchView"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:iconifiedByDefault="false"
+                  android:queryHint="Поиск"
+                  android:layout_centerHorizontal="true" />
+              <ImageButton
+                  android:id="@+id/filterButton"
+                  android:layout_width="wrap_content"
+                  android:layout_height="match_parent"
+                 android:layout_margin="0dp"
+                  android:src="@drawable/baseline_filter_alt_24"
+                  android:backgroundTint="#00FFFFFF"/>
+
+          </androidx.appcompat.widget.Toolbar>
+
+      </com.google.android.material.appbar.AppBarLayout>
+
       <androidx.recyclerview.widget.RecyclerView
           android:id="@+id/recyclerView"
           android:layout_width="match_parent"

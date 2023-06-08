@@ -18,7 +18,7 @@ data class BooksDbEntity(
     @ColumnInfo(name = "Author") val author: String?,
     @ColumnInfo(name = "PageCount") val pageCount: Int?,
     @ColumnInfo(name = "Description") val description: String?,
-    @ColumnInfo(name = "Cover") val cover:String?,
+    @ColumnInfo(name = "Cover") val cover:ByteArray?,
     @ColumnInfo(name = "Publisher") val publisher:String?,
     @ColumnInfo(name = "readStatus", defaultValue = "1") val readStatus:Int,
     @ColumnInfo(name="CoverPath") val coverPath:String?

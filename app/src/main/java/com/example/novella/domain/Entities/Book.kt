@@ -11,7 +11,7 @@ data class Book(
     var author: String? = null,
     var pageCount: Int? = null,
     var description: String? = null,
-    var cover:String? = null,
+    var cover:ByteArray? = null,
     var publisher:String? = null,
     var readStatus: Int = 1,
     var coverUrl: String? = null,

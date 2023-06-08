@@ -47,8 +47,9 @@ class BookFragment : Fragment(), ModalBottomSheetFragment.ModalBottomListener {
 
         viewModel.setSelectedBook(selectBook)
 
-        if (selectBook.cover != null) {
-            binding.coverImageView.setImageURI(selectBook.cover?.toUri())
+        if (selectBook.coverString != null) {
+            val bitmap = BitmapFactory.decodeFile(selectBook.coverString)
+            binding.coverImageView.setImageBitmap(bitmap)
         } else if (selectBook.coverUrl != null) {
 
             Picasso.get()

@@ -73,9 +73,7 @@ class AddBookFragment : Fragment() {
             vallidateAuthor()
             if(!binding.addAuthorTextInputLayout.isErrorEnabled && !binding.addTitleTextInputLayout.isErrorEnabled){
                 viewModel.updateBook()
-                val handler = android.os.Handler()
-
-                handler.postDelayed({ MAIN.navController.navigate(R.id.libraryFragment) }, 1000)
+                 MAIN.navController.navigate(R.id.libraryFragment)
             }
         }
 

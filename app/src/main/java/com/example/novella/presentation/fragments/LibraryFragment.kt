@@ -7,7 +7,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView.OnQueryTextListener
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -20,6 +22,7 @@ import com.example.novella.domain.Entities.Book
 import com.example.novella.presentation.MAIN
 import com.example.novella.presentation.adapters.BookAdapter
 import com.example.novella.presentation.adapters.OnRecyclerViewItemClickListener
+import com.example.novella.presentation.dialogs.FilterBottomSheetFragment
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -69,9 +72,32 @@ class LibraryFragment : Fragment(),
             vm.readBookList.observe(viewLifecycleOwner, Observer { books ->
                 if(books != null && !adapter.data.equals(books)){
                     adapter.data = books
+                    adapter.notifyDataSetChanged()
                 }
             })
 
+
+            binding.filterButton.setOnClickListener {
+                val filterBottomSheetDialog = FilterBottomSheetFragment()
+                filterBottomSheetDialog.show(childFragmentManager,FilterBottomSheetFragment.TAG)
+            }
+
+            binding.librarySearchView.setOnQueryTextListener(object : OnQueryTextListener{
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    if (query != null) {
+                        vm.filterBooks(query)
+                    }
+                    return true
+                }
+
+                override fun onQueryTextChange(query: String?): Boolean {
+                    if(query.isNullOrEmpty()){
+                        vm.getAllBooks()
+                    }
+                    return true
+                }
+
+            })
 
             vm.search.observe(viewLifecycleOwner, Observer {
                 if (it != null ) {
@@ -115,6 +141,7 @@ class LibraryFragment : Fragment(),
         val action = LibraryFragmentDirections.actionLibraryFragmentToEditBookFragment(book)
         MAIN.navController.navigate(action)
     }
+
 
 
 }

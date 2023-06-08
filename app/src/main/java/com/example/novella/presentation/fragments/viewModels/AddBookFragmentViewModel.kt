@@ -51,6 +51,7 @@ class AddBookFragmentViewModel (private val saveBookUseCase: SaveBookUseCase,
             addBookMutable.value!!.id = newId
             if(imageMutable.value != null){
                 saveImage(bitmap = imageMutable.value!!)
+                addBookMutable.value?.coverString = "/data/data/com.example.novella/files/images/${addBookMutable.value?.id}.png"
                 Log.e("ImagePath",addBookMutable.value?.coverString.toString())
             }
             saveBookUseCase.execute(addBookMutable.value!!)
@@ -79,7 +80,6 @@ class AddBookFragmentViewModel (private val saveBookUseCase: SaveBookUseCase,
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-            addBookMutable.value?.coverString = "/data/data/com.example.novella/files/images/${addBookMutable.value?.id}.png"
         }
     }
 
