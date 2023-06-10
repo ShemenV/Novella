@@ -1,11 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="400dp"
-    android:background="@color/teal_200"
-    android:backgroundTint="@color/teal_200">
-<TextView
+    android:layout_height="wrap_content">
+<ScrollView
     android:layout_width="match_parent"
-    android:layout_height="400dp"
-    android:text="Фильтры"/>
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Сортировка и фильтры"
+            android:layout_gravity="center"
+            android:textSize="30sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:textSize="20sp"
+            android:layout_marginTop="20dp"
+            android:text="Сортировать по:"/>
+
+        <RadioGroup
+            android:id="@+id/sortRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/titleSortButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Названию"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/pageCountSortButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Количеству страниц"/>
+
+        </RadioGroup>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:textSize="20sp"
+            android:layout_marginTop="20dp"
+            android:text="Упорядочить по:"/>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/descendingButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Убыванию"/>
+
+            <RadioButton
+                android:id="@+id/ascendingButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Возрастанию"
+                android:checked="true"/>
+
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="Статус чтения"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Читаю сейчас"
+            android:checked="true"/>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Прочитано"
+            android:checked="true"/>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Хочу прочитать"
+            android:checked="true"/>
+
+        <Button
+            android:id="@+id/saveFiltersButton"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:text="Сохранить"/>
+    </LinearLayout>
+</ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

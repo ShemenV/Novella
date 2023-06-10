@@ -73,7 +73,8 @@ class AddBookFragment : Fragment() {
             vallidateAuthor()
             if(!binding.addAuthorTextInputLayout.isErrorEnabled && !binding.addTitleTextInputLayout.isErrorEnabled){
                 viewModel.updateBook()
-                 MAIN.navController.navigate(R.id.libraryFragment)
+                val action = AddBookFragmentDirections.actionAddBookFragment3ToLibraryFragment(true)
+                 MAIN.navController.navigate(action)
             }
         }
 

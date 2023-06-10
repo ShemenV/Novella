@@ -16,4 +16,5 @@
     <string name="changeBookPublisher">Издатель</string>
     <string name="changeBookDescription">Описание</string>
     <string name="editBookDescription">Описание</string>
+    <string name="filters">Фильтры</string>
 </resources>

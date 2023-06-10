@@ -8,15 +8,25 @@ import com.example.novella.domain.Entities.Book
 import com.example.novella.domain.usecases.DeleteBookUseCase
 import com.example.novella.domain.usecases.GetReadBooksListUseCase
 import kotlinx.coroutines.launch
-import java.util.*
 
 class LibraryFragmentViewModel(private val getReadBooksListUseCase: GetReadBooksListUseCase,
 private val deleteBookUseCase: DeleteBookUseCase):ViewModel() {
     var readBookList: MutableLiveData<MutableList<Book?>> = MutableLiveData<MutableList<Book?>>()
     var search: MutableLiveData<String?> = MutableLiveData("")
-    fun getAllBooks(){
+
+    var selectedSortOrder:String = "TitleSort"
+    var selectedSortType:String = "Descending"
+
+
+    init {
+        readBookList.value = mutableListOf()
+    }
+    fun getAllBooks() {
         viewModelScope.launch {
             readBookList.value = getReadBooksListUseCase.execute()
+            readBookList.value = readBookList.value?.sortedBy { it?.title }?.toMutableList()
+
+            Log.e("GettingBooks",readBookList.value.toString())
         }
     }
 
@@ -29,6 +39,20 @@ private val deleteBookUseCase: DeleteBookUseCase):ViewModel() {
         }
     }
 
+
+    fun sortBooksByType(sortType:String){
+        when(sortType){
+            "TitleSort" -> readBookList.value = readBookList.value?.sortedBy { it?.title }?.toMutableList()
+            "PageCountSort" -> readBookList.value = readBookList.value?.sortedBy { it?.pageCount }?.toMutableList()
+        }
+    }
+
+    fun sortBooksByOrder(sortOrder:String){
+        when(sortOrder){
+            "Descending" -> readBookList.value = readBookList.value?.asReversed()!!.toMutableList()
+            "Ascending" -> readBookList.value = readBookList.value?.sortedBy { it?.pageCount }?.toMutableList()
+        }
+    }
 
     fun deleteBook(book: Book){
         viewModelScope.launch {

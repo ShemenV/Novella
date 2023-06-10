@@ -9,10 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView.OnQueryTextListener
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.novella.presentation.fragments.viewModels.LibraryFragmentViewModel
@@ -23,20 +23,28 @@ import com.example.novella.presentation.MAIN
 import com.example.novella.presentation.adapters.BookAdapter
 import com.example.novella.presentation.adapters.OnRecyclerViewItemClickListener
 import com.example.novella.presentation.dialogs.FilterBottomSheetFragment
+import com.example.novella.presentation.dialogs.FilterDialogListener
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class LibraryFragment : Fragment(),
-    OnRecyclerViewItemClickListener
+    OnRecyclerViewItemClickListener,
+        FilterDialogListener
 {
 
     lateinit var binding: FragmentLibraryBinding
     private val vm by viewModel<LibraryFragmentViewModel>()
-    lateinit var listener: OnRecyclerViewItemClickListener
+    lateinit var onRecyclerViewItemClickListener: OnRecyclerViewItemClickListener
+    lateinit var filterDialogListener: FilterDialogListener
     lateinit var adapter: BookAdapter
-    init {
 
+    val args: LibraryFragmentArgs by navArgs()
+    val changed: Boolean by lazy { args.dataChanged}
+
+    init {
+        onRecyclerViewItemClickListener = this
+        filterDialogListener = this
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +59,7 @@ class LibraryFragment : Fragment(),
             MAIN.navController.navigate(R.id.action_libraryFragment_to_addBookFragment)
         }
 
-        listener = this
+
         Log.e("Library","Create")
         return binding.root
     }
@@ -61,7 +69,7 @@ class LibraryFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = BookAdapter(requireContext(),listener)
+        adapter = BookAdapter(requireContext(),onRecyclerViewItemClickListener)
         Log.e("Library","Created")
         val manager: LayoutManager = GridLayoutManager(activity?.applicationContext,2)
         binding.recyclerView.adapter =adapter
@@ -78,7 +86,7 @@ class LibraryFragment : Fragment(),
 
 
             binding.filterButton.setOnClickListener {
-                val filterBottomSheetDialog = FilterBottomSheetFragment()
+                val filterBottomSheetDialog = FilterBottomSheetFragment(filterDialogListener)
                 filterBottomSheetDialog.show(childFragmentManager,FilterBottomSheetFragment.TAG)
             }
 
@@ -142,6 +150,20 @@ class LibraryFragment : Fragment(),
         MAIN.navController.navigate(action)
     }
 
+
+    override fun sortTypeChanged(value: String) {
+        if(value != "" ){
+            Log.e("SortType",value.toString())
+            vm.selectedSortType = value
+        }
+    }
+
+    override fun sortOrderChanged(order: String) {
+        if(order != "" ){
+            Log.e("SortOrder",order.toString())
+            vm.selectedSortOrder = order
+        }
+    }
 
 
 }

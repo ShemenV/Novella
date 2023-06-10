@@ -82,7 +82,7 @@ class BookFragment : Fragment(), ModalBottomSheetFragment.ModalBottomListener {
                 button.backgroundTintList = context?.resources?.getColorStateList(R.color.noInLists)
                 button.text = "Не добавлена"
             }
-            2 -> {
+            4 -> {
                 button.backgroundTintList = context?.resources?.getColorStateList(R.color.wantRead)
                 button.text = "Хочу прочитать"
             }
@@ -90,7 +90,7 @@ class BookFragment : Fragment(), ModalBottomSheetFragment.ModalBottomListener {
                 button.backgroundTintList = context?.resources?.getColorStateList(R.color.readed)
                 button.text = "Прочитано"
             }
-            4 -> {
+            2 -> {
                 button.backgroundTintList = context?.resources?.getColorStateList(R.color.readNow)
                 button.text = "Читаю сейчас"
             }

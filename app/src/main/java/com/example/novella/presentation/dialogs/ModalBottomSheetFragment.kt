@@ -42,14 +42,14 @@ class ModalBottomSheetFragment(val listener: ModalBottomListener, val status:Int
                 readedRadioButton.isChecked = false
                 readNowRadioButton.isChecked = false
             }
-            2 -> wantReadRadioButton.isChecked = true
+            4 -> wantReadRadioButton.isChecked = true
             3 -> readedRadioButton.isChecked = true
-            4 -> readNowRadioButton.isChecked = true
+            2 -> readNowRadioButton.isChecked = true
         }
 
         wantReadRadioButton.setOnCheckedChangeListener { compoundButton, b ->
             if(compoundButton.isChecked)
-                chooseReadStatusListener?.chooseReadStatusClick(2)
+                chooseReadStatusListener?.chooseReadStatusClick(4)
         }
 
         readedRadioButton.setOnCheckedChangeListener { compoundButton, b ->
@@ -59,7 +59,7 @@ class ModalBottomSheetFragment(val listener: ModalBottomListener, val status:Int
 
         readNowRadioButton.setOnCheckedChangeListener { compoundButton, b ->
             if(compoundButton.isChecked)
-                chooseReadStatusListener?.chooseReadStatusClick(4)
+                chooseReadStatusListener?.chooseReadStatusClick(2)
         }
 
 
@@ -71,14 +71,14 @@ class ModalBottomSheetFragment(val listener: ModalBottomListener, val status:Int
 
     fun getSelectedStatus(): Int{
         if( wantReadRadioButton.isChecked){
-            return 2
+            return 4
         }
         else if(readedRadioButton.isChecked){
             return 3
         }
 
         else if(readNowRadioButton.isChecked){
-            return 4
+            return 2
         }
         else{
             return 1

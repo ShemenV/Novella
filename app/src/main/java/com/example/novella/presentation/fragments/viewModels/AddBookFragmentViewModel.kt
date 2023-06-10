@@ -54,6 +54,7 @@ class AddBookFragmentViewModel (private val saveBookUseCase: SaveBookUseCase,
                 addBookMutable.value?.coverString = "/data/data/com.example.novella/files/images/${addBookMutable.value?.id}.png"
                 Log.e("ImagePath",addBookMutable.value?.coverString.toString())
             }
+            addBookMutable.value!!.readStatus = 4
             saveBookUseCase.execute(addBookMutable.value!!)
         }
     }

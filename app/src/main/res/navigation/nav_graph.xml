@@ -32,6 +32,10 @@
         <action
             android:id="@+id/action_libraryFragment_to_editBookFragment"
             app:destination="@id/editBookFragment" />
+        <argument
+            android:name="dataChanged"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/addBookFragment"
