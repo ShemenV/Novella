@@ -15,12 +15,13 @@ data class ItemsItem(
 			id = id!!,
 			title = volumeInfo?.title,
 			author = volumeInfo?.authors?.joinToString(", "),
-			pageCount = volumeInfo?.pageCount,
+			pageCount = volumeInfo?.pageCount!!,
 			description = volumeInfo?.description,
 			cover = null,
 			publisher = volumeInfo?.publisher,
 			coverUrl = volumeInfo?.imageLinks?.thumbnail,
-			readStatus = 1
+			readStatus = 1,
+			readedPages = 0
 		)
 	}
 }

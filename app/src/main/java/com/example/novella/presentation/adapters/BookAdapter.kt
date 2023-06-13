@@ -3,6 +3,7 @@ package com.example.novella.presentation.adapters
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.*
 import android.view.View.OnCreateContextMenuListener
@@ -18,7 +19,7 @@ import com.example.novella.domain.Entities.Book
 import com.squareup.picasso.Picasso
 
 
-class BookAdapter(private val context: Context,val listener:OnRecyclerViewItemClickListener):
+class BookAdapter(private val context: Context,val listener:OnRecyclerViewItemClickListener? = null):
     RecyclerView.Adapter<BookAdapter.BookViewHolder>()
 {
 
@@ -46,7 +47,7 @@ class BookAdapter(private val context: Context,val listener:OnRecyclerViewItemCl
         with(holder.binding){
 
             bookItemLayout.setOnClickListener {
-                listener.onItemClick(position)
+                listener?.onItemClick(position)
             }
 
             bookItemLayout.setOnCreateContextMenuListener { menu, view, contextMenuInfo ->
@@ -54,7 +55,7 @@ class BookAdapter(private val context: Context,val listener:OnRecyclerViewItemCl
                 val menuItem1 = menu.add(0, view.getId(), 0, R.string.delete)
                 menuItem1.setOnMenuItemClickListener {
                     if (book != null) {
-                        listener.menuItem1Click(book)
+                        listener?.menuItem1Click(book)
                     }
                     true
                 }
@@ -62,7 +63,7 @@ class BookAdapter(private val context: Context,val listener:OnRecyclerViewItemCl
                 val menuItem2 = menu.add(0, view.getId(), 0, R.string.edit)
                 menuItem2.setOnMenuItemClickListener {
                     if (book != null) {
-                        listener.menuItem2Click(book)
+                        listener?.menuItem2Click(book)
                     }
                     true
                 }
@@ -70,6 +71,10 @@ class BookAdapter(private val context: Context,val listener:OnRecyclerViewItemCl
 
             titleTextView.text = book?.title
 
+            if(book?.coverString == null && book?.cover == null && book?.coverUrl == null){
+                val drawable: Drawable = coverImageView.context.resources.getDrawable(R.drawable.book_placeholder)
+                coverImageView.setImageDrawable(drawable)
+            }
             if(book?.coverString != null){
                 Log.e("ssccscs",book.coverString.toString())
                 val bitmap = BitmapFactory.decodeFile(book.coverString)

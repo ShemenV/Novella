@@ -29,4 +29,16 @@ val domainModule = module {
     factory<GetBooksByIdUseCase>(named("getBooksIdsFromGoogle")) {
         GetBooksByIdUseCase(repository =  get())
     }
+
+    factory<SaveSortParamsUseCase>(){
+        SaveSortParamsUseCase(repository = get())
+    }
+
+    factory<GetSortParamsUseCase>(){
+        GetSortParamsUseCase(repository = get())
+    }
+
+    factory<GetReadNowBooksUseCase>(){
+        GetReadNowBooksUseCase(repositoryImpl =  get(named("roomIds")))
+    }
 }

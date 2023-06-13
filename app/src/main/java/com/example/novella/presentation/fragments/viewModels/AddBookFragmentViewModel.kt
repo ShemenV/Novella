@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.novella.domain.Entities.Book
-import com.example.novella.domain.usecases.GetBooksByIdUseCase
 import com.example.novella.domain.usecases.GetBooksByNameUseCase
 import com.example.novella.domain.usecases.GetBooksIdsUseCase
 import com.example.novella.domain.usecases.SaveBookUseCase
@@ -34,7 +33,7 @@ class AddBookFragmentViewModel (private val saveBookUseCase: SaveBookUseCase,
         if(addBookPageCountStringMutable.value.equals("")){
             addBookPageCountStringMutable.value = "0"
         }
-        addBookMutable.value!!.pageCount = addBookPageCountStringMutable.value?.toInt()
+        addBookMutable.value!!.pageCount = addBookPageCountStringMutable.value?.toInt()!!
     }
 
     fun updateBook() {

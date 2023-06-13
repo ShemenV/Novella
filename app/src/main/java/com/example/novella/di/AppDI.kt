@@ -7,11 +7,13 @@ import org.koin.dsl.module
 
 var appModule = module {
     viewModel<MainFragmentViewModel>{
-        MainFragmentViewModel(getReadBooksListUseCase = get(named("getFromRoom")))
+        MainFragmentViewModel(getReadNowBooksUseCase = get())
     }
 
     viewModel<LibraryFragmentViewModel>{
-        LibraryFragmentViewModel(getReadBooksListUseCase = get(named("getFromRoom")), deleteBookUseCase = get(named("deleteBook")))
+        LibraryFragmentViewModel(getReadBooksListUseCase = get(named("getFromRoom")), deleteBookUseCase = get(named("deleteBook")),
+        saveSortParamsUseCase = get(),
+        getSortParamsUseCase = get())
     }
 
     viewModel<SearchNewFragmentViewModel>{
@@ -35,6 +37,4 @@ var appModule = module {
             getBooksByNameUseCase = get(named("getBooksBuNameFromRetrofit")),
             getBooksIdsUseCase = get(named("getBooksIdsFromDb")))
     }
-
-
 }

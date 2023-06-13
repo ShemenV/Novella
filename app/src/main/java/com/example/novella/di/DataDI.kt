@@ -6,7 +6,9 @@ import com.example.novella.Data.Retrofit.Repository.RetrofitBookRepositoryImpl
 import com.example.novella.Data.Room.AppDatabase
 import com.example.novella.Data.Room.Dao.BooksDao
 import com.example.novella.Data.Room.Repository.RoomBookRepositoryImpl
+import com.example.novella.Data.sharedPreferences.SortParamsRepositoryImpl
 import com.example.novella.domain.Repositories.BookRepository
+import com.example.novella.domain.Repositories.SortParamsRepository
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidApplication
 import org.koin.core.qualifier.named
@@ -62,5 +64,8 @@ var dataModule = module {
 
     single<BookService> { provideBookApi(get()) }
 
+    single<SortParamsRepository>{
+        SortParamsRepositoryImpl(get())
+    }
 
 }

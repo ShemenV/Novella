@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.example.novella.domain.Entities.Book
+import java.time.LocalDate
 
 @Entity(
     tableName = "books",
@@ -21,7 +22,10 @@ data class BooksDbEntity(
     @ColumnInfo(name = "Cover") val cover:ByteArray?,
     @ColumnInfo(name = "Publisher") val publisher:String?,
     @ColumnInfo(name = "readStatus", defaultValue = "1") val readStatus:Int,
-    @ColumnInfo(name="CoverPath") val coverPath:String?
+    @ColumnInfo(name = "CoverPath") val coverPath:String?,
+    @ColumnInfo(name = "StartReadDate") val startReadDate: String? = null,
+    @ColumnInfo(name = "FinishReadDate") val finishReadDate: String? = null,
+    @ColumnInfo(name = "ReadedPage") val readedPages: Int = 0,
 ) {
     companion object{
         fun fromBook(book: Book) = BooksDbEntity(
@@ -33,20 +37,51 @@ data class BooksDbEntity(
             cover = book.cover,
             publisher = book.publisher,
             readStatus = book.readStatus,
-            coverPath = book.coverString
+            coverPath = book.coverString,
+            startReadDate = book.startReadDate.toString(),
+            finishReadDate = book.finishReadDate.toString(),
+            readedPages = book.readedPages
         )
     }
-    fun ToBook():Book = Book(
-        id = id,
-        title = title,
-        author = author,
-        pageCount = pageCount,
-        description = description,
-        cover = cover,
-        publisher = publisher,
-        readStatus = readStatus,
-        coverString = coverPath
-    )
+    fun ToBook():Book {
+        var book =  Book(
+            id = id,
+            title = title,
+            author = author,
+            description = description,
+            cover = cover,
+            publisher = publisher,
+            readStatus = readStatus,
+            coverString = coverPath,
+        pageCount = pageCount!!,
+        readedPages = readedPages)
+
+        if(startReadDate != "null"){
+            book.startReadDate = LocalDate.parse(startReadDate)
+        }
+        if(finishReadDate != "null"){
+            book.finishReadDate = LocalDate.parse(finishReadDate)
+        }
+
+        if(pageCount == null){
+            book.pageCount = 0
+        }
+
+        if(description == null){
+            book.description = ""
+        }
+        if(publisher == null){
+            book.publisher = "Неизвестно"
+        }
+        if(author == null){
+            book.author = "Неизвестно"
+        }
+        if(readedPages == null){
+            book.readedPages = 0
+        }
+
+        return book
+    }
 
 
 }

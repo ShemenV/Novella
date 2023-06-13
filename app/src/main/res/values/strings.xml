@@ -17,4 +17,7 @@
     <string name="changeBookDescription">Описание</string>
     <string name="editBookDescription">Описание</string>
     <string name="filters">Фильтры</string>
+    <string name="readNox">Читаю сейчас</string>
+    <string name="pagesCount">/%s страниц(ы)</string>
+    <string name="empty">%s</string>
 </resources>

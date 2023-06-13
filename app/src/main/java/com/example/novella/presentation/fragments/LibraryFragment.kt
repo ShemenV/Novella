@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.novella.presentation.fragments.viewModels.LibraryFragmentViewModel
 import com.example.novella.R
 import com.example.novella.databinding.FragmentLibraryBinding
-import com.example.novella.domain.Entities.Book
+import com.example.novella.domain.Entities.*
 import com.example.novella.presentation.MAIN
 import com.example.novella.presentation.adapters.BookAdapter
 import com.example.novella.presentation.adapters.OnRecyclerViewItemClickListener
@@ -52,14 +52,13 @@ class LibraryFragment : Fragment(),
     ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(layoutInflater,R.layout.fragment_library, container, false)
-
         binding.vm = vm
 
         binding.addBoookButton.setOnClickListener {
             MAIN.navController.navigate(R.id.action_libraryFragment_to_addBookFragment)
         }
 
-
+        vm.initData()
         Log.e("Library","Create")
         return binding.root
     }
@@ -76,40 +75,37 @@ class LibraryFragment : Fragment(),
         binding.recyclerView.layoutManager = manager
 
         lifecycleScope.launch{
-            vm.getAllBooks()
             vm.readBookList.observe(viewLifecycleOwner, Observer { books ->
                 if(books != null && !adapter.data.equals(books)){
+                    vm.filterBook()
                     adapter.data = books
-                    adapter.notifyDataSetChanged()
                 }
             })
 
 
             binding.filterButton.setOnClickListener {
-                val filterBottomSheetDialog = FilterBottomSheetFragment(filterDialogListener)
+                val filterBottomSheetDialog = FilterBottomSheetFragment(filterDialogListener,
+                    vm.sortParams.value!!
+                )
                 filterBottomSheetDialog.show(childFragmentManager,FilterBottomSheetFragment.TAG)
             }
 
             binding.librarySearchView.setOnQueryTextListener(object : OnQueryTextListener{
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     if (query != null) {
-                        vm.filterBooks(query)
+                        vm.searchBooks(query)
                     }
                     return true
                 }
-
                 override fun onQueryTextChange(query: String?): Boolean {
-                    if(query.isNullOrEmpty()){
-                        vm.getAllBooks()
-                    }
+
                     return true
                 }
-
             })
 
             vm.search.observe(viewLifecycleOwner, Observer {
                 if (it != null ) {
-                    vm.filterBooks(it)
+                    vm.searchBooks(it)
                 }
             })
         }
@@ -135,12 +131,7 @@ class LibraryFragment : Fragment(),
             }
             .setNegativeButton("Нет"){_,_,->}
             .create()
-
         dialog.show()
-//        lifecycleScope.launch{
-//            vm.deleteBook(book)
-//        }
-
     }
 
 
@@ -151,18 +142,30 @@ class LibraryFragment : Fragment(),
     }
 
 
-    override fun sortTypeChanged(value: String) {
-        if(value != "" ){
+    override fun sortTypeChanged(value: SortTypes) {
+        if(value != SortTypes.None ){
             Log.e("SortType",value.toString())
-            vm.selectedSortType = value
+            vm.sortParams.value?.sortType = value
         }
     }
 
-    override fun sortOrderChanged(order: String) {
-        if(order != "" ){
+    override fun sortOrderChanged(order: SortOrders) {
+        if(order != SortOrders.None ){
             Log.e("SortOrder",order.toString())
-            vm.selectedSortOrder = order
+            vm.sortParams.value?.sortOrder = order
         }
+    }
+
+    override fun filtersChanged(filters: List<Int>) {
+        Log.e("filters", filters.toString())
+        vm.sortParams.value?.filtersList = filters
+    }
+
+    override fun resultSort() {
+        Log.e("sort", vm.sortParams.value?.sortType.toString())
+        Log.e("sort", vm.sortParams.value?.sortOrder.toString())
+
+        vm.filterBook()
     }
 
 

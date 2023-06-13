@@ -1,6 +1,7 @@
 package com.example.novella.presentation.fragments.viewModels
 
 import android.graphics.Bitmap
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -34,7 +35,7 @@ private val getBooksIdsUseCase: GetBooksIdsUseCase):ViewModel() {
                 editableBookPageCountStringMutable.value = "0"
             }
 
-        editableBookMutable.value!!.pageCount = editableBookPageCountStringMutable.value?.toInt()
+        editableBookMutable.value!!.pageCount = editableBookPageCountStringMutable.value?.toInt()!!
     }
 
     fun updateBook() {
@@ -52,7 +53,8 @@ private val getBooksIdsUseCase: GetBooksIdsUseCase):ViewModel() {
             if(imageMutable.value != null){
                 saveImage(bitmap = imageMutable.value!!)
             }
-            saveBookUseCase.execute(editableBookMutable.value!!)
+            Log.e("EditBook",editableBookMutable.value.toString())
+            saveBookUseCase.execute(editableBookMutable.value)
         }
     }
 

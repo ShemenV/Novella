@@ -25,7 +25,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class AddBookFragment : Fragment() {
     lateinit var binding: FragmentAddBookBinding
     val viewModel by viewModel<AddBookFragmentViewModel>()
-    val addBook: Book = Book()
+    val addBook: Book = Book(readedPages = 0, pageCount = 0)
     var resultBitmap :Bitmap? = null
 
 
@@ -41,7 +41,7 @@ class AddBookFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e("AddBook", addBook.toString())
+
 
         viewModel.addBookMutable.value = addBook
         if(addBook.pageCount != null){

@@ -22,15 +22,21 @@ class RoomBookRepositoryImpl(
     }
 
     suspend fun saveBook(book: Book){
+
         booksDao.saveBook(BooksDbEntity.fromBook(book))
     }
 
     suspend fun updateBook(book: Book){
+        Log.e("SavedBook", BooksDbEntity.fromBook(book).toString())
         booksDao.updateBook(BooksDbEntity.fromBook(book))
     }
 
     suspend fun deleteBook(book: Book){
         booksDao.deleteBook(BooksDbEntity.fromBook(book))
         Log.e("Room", "Book deleted - ${book.title}")
+    }
+
+    suspend fun getReadNowBooks(): MutableList<Book?>{
+        return booksDao.getReadNowBooks().map {  value -> value?.ToBook()}.toMutableList()
     }
 }

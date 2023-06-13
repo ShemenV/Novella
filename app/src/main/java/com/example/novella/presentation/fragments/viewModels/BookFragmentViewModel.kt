@@ -18,16 +18,21 @@ import java.io.IOException
 import java.io.InputStream
 import java.net.URL
 import java.net.URLConnection
+import java.time.LocalDate
 
 class BookFragmentViewModel(
     val saveBookUseCase: SaveBookUseCase,
     private val getBooksIdsUseCase: GetBooksIdsUseCase
-) : ViewModel() {
+) : ViewModel(){
     val selectedBookMutable: MutableLiveData<Book> = MutableLiveData<Book>()
     val selectedReadStatus: MutableLiveData<Int> = MutableLiveData<Int>()
 
+
+
+
     init {
         selectedReadStatus.value = selectedBookMutable.value?.readStatus
+
     }
 
     fun setSelectedBook(book: Book) {
@@ -83,11 +88,21 @@ class BookFragmentViewModel(
                         e.printStackTrace()
                     }
             }
+                selectedBookMutable.value?.coverString = "/data/data/com.example.novella/files/images/${ selectedBookMutable.value?.id}.png"
                 }
 
 
-            selectedBookMutable.value?.coverString = "/data/data/com.example.novella/files/images/${ selectedBookMutable.value?.id}.png"
+            if(selectedReadStatus.value == 2 && selectedBookMutable.value?.startReadDate == null) {
+                selectedBookMutable.value?.startReadDate = LocalDate.now()
+            }
+
+            if(selectedReadStatus.value == 3 && selectedBookMutable.value?.finishReadDate == null){
+                selectedBookMutable.value?.finishReadDate = LocalDate.now()
+            }
+
             saveBookUseCase.execute(selectedBookMutable.value!!)
         }
     }
+
+
 }
