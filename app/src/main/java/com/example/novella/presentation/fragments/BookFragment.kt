@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.Button
+import androidx.annotation.RequiresApi
 import androidx.core.view.updateLayoutParams
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -19,23 +21,25 @@ import androidx.navigation.fragment.navArgs
 import com.example.novella.R
 import com.example.novella.databinding.FragmentBookBinding
 import com.example.novella.domain.Entities.Book
-import com.example.novella.presentation.dialogs.ModalBottomSheetFragment
-import com.example.novella.presentation.dialogs.SetReadPageDialogFragment
-import com.example.novella.presentation.dialogs.SetReadPageListener
+import com.example.novella.domain.Entities.Genre
+import com.example.novella.presentation.dialogs.*
 import com.example.novella.presentation.fragments.viewModels.BookFragmentViewModel
+import com.google.android.material.chip.Chip
 import com.squareup.picasso.Picasso
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.LocalDate
 
 
 class BookFragment : Fragment(), ModalBottomSheetFragment.ModalBottomListener,
-    SetReadPageListener {
+    SetReadPageListener,
+SetGenresDialogListener{
     lateinit var binding: FragmentBookBinding
     private val viewModel by viewModel<BookFragmentViewModel>()
     val args: BookFragmentArgs by navArgs()
     val selectBook: Book by lazy { args.book }
     private lateinit var setReadPageListener: SetReadPageListener
     lateinit var chooseStatusListener: ModalBottomSheetFragment.ModalBottomListener
+    lateinit var setGenresListener: SetGenresDialogListener
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,10 +49,12 @@ class BookFragment : Fragment(), ModalBottomSheetFragment.ModalBottomListener,
         binding.vm = viewModel
 
         setReadPageListener = this
+        setGenresListener = this
 
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -98,6 +104,13 @@ class BookFragment : Fragment(), ModalBottomSheetFragment.ModalBottomListener,
             dialog.show()
         }
 
+        binding.showGenresButton.setOnClickListener {
+            if(viewModel.selectedGenresMutable.value != null){
+                val dialog = SetGenresDialog(setGenresListener,viewModel.allGenres, viewModel.selectedGenresMutable.value!!)
+                dialog.show(childFragmentManager, SetGenresDialog.TAG)
+            }
+
+        }
 
 
 
@@ -131,6 +144,19 @@ class BookFragment : Fragment(), ModalBottomSheetFragment.ModalBottomListener,
             if (it != null) {
                 changeBooksStatusButton(binding.changeBookStatusExtendedFAB, it)
                 viewModel.saveBook()
+            }
+        })
+
+        viewModel.selectedGenresMutable.observe(viewLifecycleOwner, Observer {
+            if(it != null){
+                for(i in 0 until it.size){
+                    val chip = Chip(requireContext())
+                    chip.apply {
+                        text = it[i].title
+                        isCheckable = false
+                    }
+                    binding.genresChipGroup.addView(chip)
+                }
             }
         })
     }
@@ -168,5 +194,10 @@ class BookFragment : Fragment(), ModalBottomSheetFragment.ModalBottomListener,
 
         binding.readedPagesTextView.text = viewModel.selectedBookMutable.value?.readedPages.toString()
         binding.readProgressBar.progress = viewModel.selectedBookMutable.value?.readedPages!!
+    }
+
+    override fun saveGenres(genresList: MutableList<Genre>) {
+        viewModel.selectedGenresMutable.value = genresList
+        viewModel.saveBookGenres()
     }
 }

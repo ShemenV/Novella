@@ -5,7 +5,11 @@ import com.example.novella.Data.Retrofit.Interfaces.BookService
 import com.example.novella.Data.Retrofit.Repository.RetrofitBookRepositoryImpl
 import com.example.novella.Data.Room.AppDatabase
 import com.example.novella.Data.Room.Dao.BooksDao
+import com.example.novella.Data.Room.Dao.BooksGenresDao
+import com.example.novella.Data.Room.Dao.GenresDao
 import com.example.novella.Data.Room.Repository.RoomBookRepositoryImpl
+import com.example.novella.Data.Room.Repository.RoomBooksGenresRepository
+import com.example.novella.Data.Room.Repository.RoomGenresRepository
 import com.example.novella.Data.sharedPreferences.SortParamsRepositoryImpl
 import com.example.novella.domain.Repositories.BookRepository
 import com.example.novella.domain.Repositories.SortParamsRepository
@@ -15,6 +19,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.math.sin
 
 var dataModule = module {
 
@@ -33,6 +38,16 @@ var dataModule = module {
         database.getBooksDao()
     }
 
+    single<GenresDao>{
+        val database = get<AppDatabase>()
+        database.getGenresDao()
+    }
+
+    single<BooksGenresDao>
+    {  val database = get<AppDatabase>()
+        database.getBookGenresDao()
+    }
+
     single<BookRepository>(named("room")) {
         RoomBookRepositoryImpl(booksDao = get())
     }
@@ -47,6 +62,16 @@ var dataModule = module {
     single<RetrofitBookRepositoryImpl>() {
         RetrofitBookRepositoryImpl(bookApi = get())
     }
+
+    single<RoomGenresRepository>(){
+        RoomGenresRepository(genresDao = get())
+    }
+
+    single<RoomBooksGenresRepository>(){
+        RoomBooksGenresRepository(booksGenresDao = get())
+    }
+
+
 
 
     fun provideRetrofit(): Retrofit {

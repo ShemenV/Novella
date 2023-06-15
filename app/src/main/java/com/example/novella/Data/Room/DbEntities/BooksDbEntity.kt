@@ -8,7 +8,7 @@ import com.example.novella.domain.Entities.Book
 import java.time.LocalDate
 
 @Entity(
-    tableName = "books",
+    tableName = "Books",
     foreignKeys = arrayOf(ForeignKey(entity = ReadStatusesDbEntity::class,
     parentColumns = arrayOf("Id"),
     childColumns = arrayOf("readStatus")))

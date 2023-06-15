@@ -23,7 +23,11 @@ var appModule = module {
 
     viewModel<BookFragmentViewModel>{
         BookFragmentViewModel(saveBookUseCase =  get(named("saveNewBook")),
-        getBooksIdsUseCase = get(named("getBooksIdsFromDb")))
+        getBooksIdsUseCase = get(named("getBooksIdsFromDb")),
+        getAllGenresUseCase = get(),
+        addBookGenresUseCase = get(),
+        getBookGenresById = get(),
+        deleteGenresByBookIdUseCase = get())
     }
 
     viewModel<EditBookFragmentViewModel>{

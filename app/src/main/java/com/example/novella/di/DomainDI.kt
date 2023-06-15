@@ -41,4 +41,20 @@ val domainModule = module {
     factory<GetReadNowBooksUseCase>(){
         GetReadNowBooksUseCase(repositoryImpl =  get(named("roomIds")))
     }
+
+    factory<GetAllGenresUseCase>(){
+        GetAllGenresUseCase(repository = get())
+    }
+
+    factory<AddBookGenresUseCase>(){
+        AddBookGenresUseCase(repository = get())
+    }
+
+    factory<GetBookGenresById>(){
+        GetBookGenresById(repository = get())
+    }
+
+    factory<DeleteGenresByBookIdUseCase>(){
+        DeleteGenresByBookIdUseCase(repository = get())
+    }
 }
