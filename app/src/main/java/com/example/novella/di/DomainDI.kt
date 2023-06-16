@@ -57,4 +57,9 @@ val domainModule = module {
     factory<DeleteGenresByBookIdUseCase>(){
         DeleteGenresByBookIdUseCase(repository = get())
     }
+
+    factory<GetAllNotesUseCase>()
+    {
+        GetAllNotesUseCase(repository = get())
+    }
 }

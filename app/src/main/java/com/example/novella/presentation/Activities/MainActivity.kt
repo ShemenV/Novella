@@ -39,7 +39,7 @@ BottomNavigationView.OnNavigationItemSelectedListener{
                 MAIN.navController.navigate(R.id.libraryFragment)
             }
             R.id.mainMenuItem -> MAIN.navController.navigate(R.id.mainFragment)
-            R.id.quotesMenuItem -> MAIN.navController.navigate(R.id.quotesFragment)
+            R.id.quotesMenuItem -> MAIN.navController.navigate(R.id.notesFragment)
         }
         return true
     }

@@ -1,5 +1,6 @@
 package com.example.novella.di
 
+import com.example.novella.domain.usecases.GetAllNotesUseCase
 import com.example.novella.presentation.fragments.viewModels.*
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
@@ -40,5 +41,9 @@ var appModule = module {
         AddBookFragmentViewModel(saveBookUseCase =  get(named("saveNewBook")),
             getBooksByNameUseCase = get(named("getBooksBuNameFromRetrofit")),
             getBooksIdsUseCase = get(named("getBooksIdsFromDb")))
+    }
+
+    viewModel<NotesFragmentViewModel>{
+        NotesFragmentViewModel(getAllNotesUseCase = get())
     }
 }

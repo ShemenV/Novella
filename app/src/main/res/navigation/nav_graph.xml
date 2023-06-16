@@ -87,4 +87,9 @@
         android:name="com.example.novella.presentation.fragments.QuotesFragment"
         android:label="fragment_quotes"
         tools:layout="@layout/fragment_quotes" />
+    <fragment
+        android:id="@+id/notesFragment"
+        android:name="com.example.novella.presentation.fragments.NotesFragment"
+        android:label="NotesFragment"
+        tools:layout="@layout/fragment_notes"/>
 </navigation>

@@ -7,9 +7,11 @@ import com.example.novella.Data.Room.AppDatabase
 import com.example.novella.Data.Room.Dao.BooksDao
 import com.example.novella.Data.Room.Dao.BooksGenresDao
 import com.example.novella.Data.Room.Dao.GenresDao
+import com.example.novella.Data.Room.Dao.NotesDao
 import com.example.novella.Data.Room.Repository.RoomBookRepositoryImpl
 import com.example.novella.Data.Room.Repository.RoomBooksGenresRepository
 import com.example.novella.Data.Room.Repository.RoomGenresRepository
+import com.example.novella.Data.Room.Repository.RoomNotesRepository
 import com.example.novella.Data.sharedPreferences.SortParamsRepositoryImpl
 import com.example.novella.domain.Repositories.BookRepository
 import com.example.novella.domain.Repositories.SortParamsRepository
@@ -48,6 +50,11 @@ var dataModule = module {
         database.getBookGenresDao()
     }
 
+    single<NotesDao>{
+        val database = get<AppDatabase>()
+        database.getNotesDao()
+    }
+
     single<BookRepository>(named("room")) {
         RoomBookRepositoryImpl(booksDao = get())
     }
@@ -69,6 +76,10 @@ var dataModule = module {
 
     single<RoomBooksGenresRepository>(){
         RoomBooksGenresRepository(booksGenresDao = get())
+    }
+
+    single<RoomNotesRepository>(){
+        RoomNotesRepository(notesDao = get(), booksDao = get())
     }
 
 

@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import com.example.novella.Data.Room.Dao.BooksDao
 import com.example.novella.Data.Room.Dao.BooksGenresDao
 import com.example.novella.Data.Room.Dao.GenresDao
+import com.example.novella.Data.Room.Dao.NotesDao
 import com.example.novella.Data.Room.DbEntities.BooksDbEntity
 import com.example.novella.Data.Room.DbEntities.BooksGenresDbEntity
 import com.example.novella.Data.Room.DbEntities.GenresDbEntity
@@ -25,4 +26,5 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun getBooksDao(): BooksDao
     abstract fun getGenresDao(): GenresDao
     abstract fun getBookGenresDao(): BooksGenresDao
+    abstract fun getNotesDao(): NotesDao
 }
