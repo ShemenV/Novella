@@ -148,6 +148,7 @@ SetGenresDialogListener{
         })
 
         viewModel.selectedGenresMutable.observe(viewLifecycleOwner, Observer {
+            binding.genresChipGroup.removeAllViews()
             if(it != null){
                 for(i in 0 until it.size){
                     val chip = Chip(requireContext())

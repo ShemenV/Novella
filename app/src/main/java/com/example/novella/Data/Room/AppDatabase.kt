@@ -8,15 +8,17 @@ import com.example.novella.Data.Room.Dao.GenresDao
 import com.example.novella.Data.Room.DbEntities.BooksDbEntity
 import com.example.novella.Data.Room.DbEntities.BooksGenresDbEntity
 import com.example.novella.Data.Room.DbEntities.GenresDbEntity
+import com.example.novella.Data.Room.DbEntities.NoteDbEntity
 import com.example.novella.Data.Room.DbEntities.ReadStatusesDbEntity
 
 @Database(
-    version = 1,
+    version = 2,
     entities =[
         BooksDbEntity::class,
         ReadStatusesDbEntity::class,
         GenresDbEntity::class,
-        BooksGenresDbEntity::class
+        BooksGenresDbEntity::class,
+        NoteDbEntity::class
     ]
 )
 abstract class AppDatabase: RoomDatabase() {
