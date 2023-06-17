@@ -19,6 +19,4 @@ data class Book(
     var startReadDate: LocalDate? = null,
     var finishReadDate: LocalDate? = null,
     var readedPages:Int
-) : Parcelable{
-var isSelect = false
-}
+) : Parcelable

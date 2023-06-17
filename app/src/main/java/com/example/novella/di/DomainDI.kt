@@ -62,4 +62,10 @@ val domainModule = module {
     {
         GetAllNotesUseCase(repository = get())
     }
+
+    factory<AddNoteUseCase>()
+    {
+        AddNoteUseCase(repository = get())
+    }
+
 }

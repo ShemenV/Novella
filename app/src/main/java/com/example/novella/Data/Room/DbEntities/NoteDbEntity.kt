@@ -20,7 +20,7 @@ data class NoteDbEntity(
     @ColumnInfo(name = "Title") val title:String,
     @ColumnInfo(name = "Text") val text: String?,
     @ColumnInfo(name="BookId") val bookId: String?,
-    @ColumnInfo(name = "AddDate") val addDate: String
+    @ColumnInfo(name = "AddDate") val addDate: String?
 ) {
     @RequiresApi(Build.VERSION_CODES.O)
     fun toNote() = Note(
@@ -29,4 +29,14 @@ data class NoteDbEntity(
         text = text,
         addDate = LocalDate.parse(addDate)
     )
+
+
+    companion object{
+        fun fromNote(note: Note)=NoteDbEntity(
+            title = note.title,
+            text = note.text,
+            bookId = note.book?.id,
+            addDate = note.addDate.toString()
+        )
+    }
 }

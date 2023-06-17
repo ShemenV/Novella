@@ -37,10 +37,7 @@ class BRVAHAdapter(books: MutableList<Book?>?) :
                 .resize(0, 230)
                 .centerCrop()
                 .into(imageView)
-            if(item.isSelect){
-                val image = holder.getView<ImageView>(R.id.coverImageView)
-                image.foreground = ColorDrawable(ContextCompat.getColor(image.context, R.color.select))
-            }
+
         }
 
     }

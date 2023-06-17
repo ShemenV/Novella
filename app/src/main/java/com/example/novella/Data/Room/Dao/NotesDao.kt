@@ -1,6 +1,7 @@
 package com.example.novella.Data.Room.Dao
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import com.example.novella.Data.Room.DbEntities.NoteDbEntity
 
@@ -8,4 +9,7 @@ import com.example.novella.Data.Room.DbEntities.NoteDbEntity
 interface NotesDao {
     @Query("SELECT * FROM notes")
     suspend fun getAllNotes(): MutableList<NoteDbEntity>
+
+    @Insert
+    suspend fun saveNote(note: NoteDbEntity)
 }

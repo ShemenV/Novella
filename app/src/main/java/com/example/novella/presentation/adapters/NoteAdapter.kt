@@ -34,7 +34,6 @@ class NoteAdapter(private val context: Context): RecyclerView.Adapter<NoteAdapte
         with(holder.binding){
             noteTitleTextView.text = note?.title
             noteDateTextView.text= note?.addDate.toString()
-            bookTitleTextView.text = note?.
         }
     }
 

@@ -13,6 +13,8 @@ interface BooksDao {
     suspend fun getAllIds(): MutableList<BookIdTuple?>
     @Query("SELECT * FROM books WHERE readStatus = 2")
     suspend fun getReadNowBooks(): MutableList<BooksDbEntity?>
+    @Query("SELECT * FROM books WHERE id = :bookId")
+    suspend fun getBookById(bookId: String): BooksDbEntity
     @Insert
     suspend fun saveBook(booksDbEntity: BooksDbEntity)
     @Update
