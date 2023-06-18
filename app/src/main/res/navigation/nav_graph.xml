@@ -91,5 +91,23 @@
         android:id="@+id/notesFragment"
         android:name="com.example.novella.presentation.fragments.NotesFragment"
         android:label="NotesFragment"
-        tools:layout="@layout/fragment_notes"/>
+        tools:layout="@layout/fragment_notes">
+        <action
+            android:id="@+id/action_notesFragment_to_addNoteFragment"
+            app:destination="@id/addNoteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNoteFragment"
+        android:name="com.example.novella.presentation.fragments.AddNoteFragment"
+        android:label="AddNoteFragment"
+        tools:layout="@layout/fragment_add_note">
+        <action
+            android:id="@+id/action_addNoteFragment_to_notesFragment"
+            app:destination="@id/notesFragment" />
+        <argument
+            android:name="selectedNote"
+            app:argType="com.example.novella.domain.Entities.Note"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 </navigation>

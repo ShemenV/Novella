@@ -16,7 +16,7 @@ import java.time.LocalDate
         childColumns = arrayOf("BookId")))
 )
 data class NoteDbEntity(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "Id") val id:Int = 1,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "Id") var id:Int = 0,
     @ColumnInfo(name = "Title") val title:String,
     @ColumnInfo(name = "Text") val text: String?,
     @ColumnInfo(name="BookId") val bookId: String?,
@@ -32,11 +32,20 @@ data class NoteDbEntity(
 
 
     companion object{
-        fun fromNote(note: Note)=NoteDbEntity(
-            title = note.title,
-            text = note.text,
-            bookId = note.book?.id,
-            addDate = note.addDate.toString()
-        )
+        fun fromNote(note: Note):NoteDbEntity{
+            val noteDbEntity = NoteDbEntity(
+                title = note.title,
+                text = note.text,
+                bookId = note.book?.id,
+                addDate = note.addDate.toString()
+            )
+
+            if(note.id != null){
+                noteDbEntity.id = note.id!!
+            }
+
+           return noteDbEntity
+        }
+
     }
 }

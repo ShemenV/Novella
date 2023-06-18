@@ -36,9 +36,8 @@ class LibraryFragmentViewModel(
     fun getAllBooks() {
         viewModelScope.launch {
             readBookList.value = getReadBooksListUseCase.execute()
-
-            Log.e("GettingBooks", readBookList.value.toString())
         }
+        Log.e("GettingBooks", readBookList.value.toString())
     }
 
     fun searchBooks(filter: String) {

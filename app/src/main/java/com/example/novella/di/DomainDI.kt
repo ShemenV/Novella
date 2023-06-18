@@ -1,6 +1,5 @@
 package com.example.novella.di
 
-import androidx.room.Delete
 import com.example.novella.domain.usecases.*
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -63,9 +62,9 @@ val domainModule = module {
         GetAllNotesUseCase(repository = get())
     }
 
-    factory<AddNoteUseCase>()
+    factory<SaveNoteUseCase>()
     {
-        AddNoteUseCase(repository = get())
+        SaveNoteUseCase(repository = get())
     }
 
 }

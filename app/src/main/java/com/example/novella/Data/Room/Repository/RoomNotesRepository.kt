@@ -13,11 +13,26 @@ class RoomNotesRepository(private val notesDao: NotesDao, private val booksDao: 
     @RequiresApi(Build.VERSION_CODES.O)
     suspend fun getAllNotes(): MutableList<Note>{
 
-        return notesDao.getAllNotes().map {it.toNote()}.toMutableList()
+        val notesEntities = notesDao.getAllNotes()
+        val notes = notesDao.getAllNotes().map {it.toNote()}.toMutableList()
+
+        for(i in 0 until notesEntities.size){
+            notes[i].book = booksDao.getBookById(notesEntities[i].bookId!!).ToBook()
+        }
+        return notes
     }
     suspend fun addNewNote(note: Note){
         notesDao.saveNote(NoteDbEntity.fromNote(note))
         Log.e("ABOBA",NoteDbEntity.fromNote(note).toString())
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    suspend fun getNoteById(noteId: Int): Note?{
+        return notesDao.getNoteById(noteId)?.toNote()
+    }
+
+    suspend fun updateNote(note: Note){
+        notesDao.updateNote(NoteDbEntity.fromNote(note))
     }
 
 }

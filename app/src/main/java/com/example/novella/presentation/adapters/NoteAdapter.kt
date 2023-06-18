@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.novella.databinding.NoteItemBinding
 import com.example.novella.domain.Entities.Note
 
-class NoteAdapter(private val context: Context): RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(){
+class NoteAdapter(private val context: Context, private val listener: OnNoteRecyclerViewClickListener): RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(){
 
     var data: List<Note?> = emptyList()
         @SuppressLint("NotifyDataSetChanged")
@@ -32,7 +32,13 @@ class NoteAdapter(private val context: Context): RecyclerView.Adapter<NoteAdapte
         val note: Note? = data[position]
 
         with(holder.binding){
+
+            noteItemLayout.setOnClickListener {
+                listener.onItemClick(note!!)
+            }
+
             noteTitleTextView.text = note?.title
+            bookTitleTextView.text = note?.book?.title
             noteDateTextView.text= note?.addDate.toString()
         }
     }
@@ -40,4 +46,8 @@ class NoteAdapter(private val context: Context): RecyclerView.Adapter<NoteAdapte
 
     class NoteViewHolder(val binding: NoteItemBinding): RecyclerView.ViewHolder(binding.root)
 
+}
+
+interface OnNoteRecyclerViewClickListener{
+    fun onItemClick(note: Note)
 }
