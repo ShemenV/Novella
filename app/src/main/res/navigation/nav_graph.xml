@@ -110,4 +110,9 @@
             app:nullable="true"
             android:defaultValue="@null" />
     </fragment>
+    <fragment
+        android:id="@+id/analysisFragment"
+        android:name="com.example.novella.presentation.fragments.AnalysisFragment"
+        android:label="AnalysisFragment"
+        tools:layout="@layout/fragment_analysis"/>
 </navigation>
