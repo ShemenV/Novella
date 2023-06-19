@@ -1,9 +1,6 @@
 package com.example.novella.Data.Room.Dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.example.novella.Data.Room.DbEntities.NoteDbEntity
 import com.example.novella.domain.Entities.Note
 
@@ -17,4 +14,6 @@ interface NotesDao {
     suspend fun getNoteById(id: Int): NoteDbEntity?
     @Update
     suspend fun updateNote(note: NoteDbEntity)
+    @Delete
+    suspend fun deleteNote(note: NoteDbEntity)
 }

@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BooksDao {
-    @Query("SELECT * FROM books")
+    @Query("SELECT * FROM books WHERE IsDeleted = 0")
     suspend fun getAllBooks(): MutableList<BooksDbEntity?>
     @Query("SELECT id FROM books")
     suspend fun getAllIds(): MutableList<BookIdTuple?>
@@ -19,6 +19,6 @@ interface BooksDao {
     suspend fun saveBook(booksDbEntity: BooksDbEntity)
     @Update
     suspend fun updateBook(booksDbEntity: BooksDbEntity)
-    @Delete
-    suspend fun deleteBook(book: BooksDbEntity)
+    @Query("UPDATE books SET IsDeleted = 1 WHERE Id = :id")
+    suspend fun deleteBook(id: String)
 }

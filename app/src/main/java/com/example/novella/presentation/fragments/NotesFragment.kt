@@ -3,12 +3,12 @@ package com.example.novella.presentation.fragments
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.example.novella.R
@@ -17,12 +17,11 @@ import com.example.novella.domain.Entities.Note
 import com.example.novella.presentation.MAIN
 import com.example.novella.presentation.adapters.NoteAdapter
 import com.example.novella.presentation.adapters.OnNoteRecyclerViewClickListener
-import com.example.novella.presentation.fragments.viewModels.BookFragmentViewModel
 import com.example.novella.presentation.fragments.viewModels.NotesFragmentViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class NotesFragment : Fragment(), OnNoteRecyclerViewClickListener {
+class NotesFragment() : Fragment(), OnNoteRecyclerViewClickListener {
 
     lateinit var binding: FragmentNotesBinding
     private val viewModel by viewModel<NotesFragmentViewModel>()
@@ -32,7 +31,7 @@ class NotesFragment : Fragment(), OnNoteRecyclerViewClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(layoutInflater,R.layout.fragment_notes, container, false)
+        binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_notes, container, false)
         binding.vm = viewModel
 
         listener = this
@@ -42,7 +41,6 @@ class NotesFragment : Fragment(), OnNoteRecyclerViewClickListener {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         viewModel.setNotes()
 
         binding.addNoteButton.setOnClickListener {
@@ -50,13 +48,11 @@ class NotesFragment : Fragment(), OnNoteRecyclerViewClickListener {
             MAIN.navController.navigate(action)
         }
 
-
         lifecycleScope.launch {
             viewModel.notesListMutable.observe(viewLifecycleOwner, Observer {
                 noteAdapter.data = it
             })
         }
-
 
         binding.recyclerView.adapter = noteAdapter
     }
@@ -66,5 +62,8 @@ class NotesFragment : Fragment(), OnNoteRecyclerViewClickListener {
         MAIN.navController.navigate(action)
     }
 
+    override fun menuItemClick(note: Note) {
+        viewModel.deleteSelectedNote(note)
+    }
 
 }

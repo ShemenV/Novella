@@ -13,7 +13,7 @@ import com.example.novella.Data.Room.DbEntities.NoteDbEntity
 import com.example.novella.Data.Room.DbEntities.ReadStatusesDbEntity
 
 @Database(
-    version = 2,
+    version = 1,
     entities =[
         BooksDbEntity::class,
         ReadStatusesDbEntity::class,

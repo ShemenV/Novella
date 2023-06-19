@@ -35,4 +35,8 @@ class RoomNotesRepository(private val notesDao: NotesDao, private val booksDao: 
         notesDao.updateNote(NoteDbEntity.fromNote(note))
     }
 
+    suspend fun deleteNote(note:Note){
+        notesDao.deleteNote(NoteDbEntity.fromNote(note))
+    }
+
 }

@@ -56,7 +56,8 @@ var appModule = module {
     viewModel<NotesFragmentViewModel> {
         NotesFragmentViewModel(
             getAllNotesUseCase = get(),
-            saveNoteUseCase = get()
+            saveNoteUseCase = get(),
+            deleteNoteUseCase = get()
         )
     }
 

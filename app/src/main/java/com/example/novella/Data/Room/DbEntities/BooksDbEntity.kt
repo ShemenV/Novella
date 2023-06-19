@@ -9,9 +9,13 @@ import java.time.LocalDate
 
 @Entity(
     tableName = "Books",
-    foreignKeys = arrayOf(ForeignKey(entity = ReadStatusesDbEntity::class,
-    parentColumns = arrayOf("Id"),
-    childColumns = arrayOf("readStatus")))
+    foreignKeys = arrayOf(
+        ForeignKey(
+            entity = ReadStatusesDbEntity::class,
+            parentColumns = arrayOf("Id"),
+            childColumns = arrayOf("readStatus")
+        )
+    )
 )
 data class BooksDbEntity(
     @PrimaryKey @ColumnInfo(name = "Id") val id: String,
@@ -19,15 +23,16 @@ data class BooksDbEntity(
     @ColumnInfo(name = "Author") val author: String?,
     @ColumnInfo(name = "PageCount") val pageCount: Int?,
     @ColumnInfo(name = "Description") val description: String?,
-    @ColumnInfo(name = "Cover") val cover:ByteArray?,
-    @ColumnInfo(name = "Publisher") val publisher:String?,
-    @ColumnInfo(name = "readStatus", defaultValue = "1") val readStatus:Int,
-    @ColumnInfo(name = "CoverPath") val coverPath:String?,
+    @ColumnInfo(name = "Cover") val cover: ByteArray?,
+    @ColumnInfo(name = "Publisher") val publisher: String?,
+    @ColumnInfo(name = "readStatus", defaultValue = "1") val readStatus: Int,
+    @ColumnInfo(name = "CoverPath") val coverPath: String?,
     @ColumnInfo(name = "StartReadDate") val startReadDate: String? = null,
     @ColumnInfo(name = "FinishReadDate") val finishReadDate: String? = null,
     @ColumnInfo(name = "ReadedPage") val readedPages: Int = 0,
+    @ColumnInfo(name = "IsDeleted") var isDeleted: Int? = 0
 ) {
-    companion object{
+    companion object {
         fun fromBook(book: Book) = BooksDbEntity(
             id = book.id!!,
             title = book.title!!,
@@ -43,8 +48,9 @@ data class BooksDbEntity(
             readedPages = book.readedPages
         )
     }
-    fun ToBook():Book {
-        var book =  Book(
+
+    fun ToBook(): Book {
+        var book = Book(
             id = id,
             title = title,
             author = author,
@@ -53,30 +59,31 @@ data class BooksDbEntity(
             publisher = publisher,
             readStatus = readStatus,
             coverString = coverPath,
-        pageCount = pageCount!!,
-        readedPages = readedPages)
+            pageCount = pageCount!!,
+            readedPages = readedPages
+        )
 
-        if(startReadDate != "null"){
+        if (startReadDate != "null") {
             book.startReadDate = LocalDate.parse(startReadDate)
         }
-        if(finishReadDate != "null"){
+        if (finishReadDate != "null") {
             book.finishReadDate = LocalDate.parse(finishReadDate)
         }
 
-        if(pageCount == null){
+        if (pageCount == null) {
             book.pageCount = 0
         }
 
-        if(description == null){
+        if (description == null) {
             book.description = ""
         }
-        if(publisher == null){
+        if (publisher == null) {
             book.publisher = "Неизвестно"
         }
-        if(author == null){
+        if (author == null) {
             book.author = "Неизвестно"
         }
-        if(readedPages == null){
+        if (readedPages == null) {
             book.readedPages = 0
         }
 

@@ -67,4 +67,8 @@ val domainModule = module {
         SaveNoteUseCase(repository = get())
     }
 
+    factory<DeleteNoteUseCase>{
+        DeleteNoteUseCase(repository = get())
+    }
+
 }

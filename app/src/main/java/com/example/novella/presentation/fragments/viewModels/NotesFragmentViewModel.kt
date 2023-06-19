@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.novella.domain.Entities.Note
+import com.example.novella.domain.usecases.DeleteNoteUseCase
 import com.example.novella.domain.usecases.SaveNoteUseCase
 import com.example.novella.domain.usecases.GetAllNotesUseCase
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +15,8 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 class NotesFragmentViewModel(private val getAllNotesUseCase: GetAllNotesUseCase,
-private val saveNoteUseCase: SaveNoteUseCase):ViewModel() {
+private val saveNoteUseCase: SaveNoteUseCase,
+private val deleteNoteUseCase: DeleteNoteUseCase):ViewModel() {
 
     val notesListMutable: MutableLiveData<MutableList<Note>> = MutableLiveData()
 
@@ -25,5 +27,11 @@ private val saveNoteUseCase: SaveNoteUseCase):ViewModel() {
         }
     }
 
+    fun deleteSelectedNote(note: Note){
+        viewModelScope.launch {
+            deleteNoteUseCase.execute(note)
+            setNotes()
+        }
+    }
 
 }

@@ -8,7 +8,7 @@ import com.example.novella.domain.Repositories.BookRepository
 
 class RoomBookRepositoryImpl(
     private val booksDao: BooksDao
-    ): BookRepository {
+) : BookRepository {
     override suspend fun getBooks(): MutableList<Book?> {
         return booksDao.getAllBooks().map { value -> value?.ToBook() }.toMutableList()
     }
@@ -21,22 +21,22 @@ class RoomBookRepositoryImpl(
         return booksDao.getAllIds().map { value -> value?.id.toString() }.toMutableList()
     }
 
-    suspend fun saveBook(book: Book){
+    suspend fun saveBook(book: Book) {
 
         booksDao.saveBook(BooksDbEntity.fromBook(book))
     }
 
-    suspend fun updateBook(book: Book){
+    suspend fun updateBook(book: Book) {
         Log.e("SavedBook", BooksDbEntity.fromBook(book).toString())
         booksDao.updateBook(BooksDbEntity.fromBook(book))
     }
 
-    suspend fun deleteBook(book: Book){
-        booksDao.deleteBook(BooksDbEntity.fromBook(book))
+    suspend fun deleteBook(book: Book) {
+        booksDao.deleteBook(BooksDbEntity.fromBook(book).id)
         Log.e("Room", "Book deleted - ${book.title}")
     }
 
-    suspend fun getReadNowBooks(): MutableList<Book?>{
-        return booksDao.getReadNowBooks().map {  value -> value?.ToBook()}.toMutableList()
+    suspend fun getReadNowBooks(): MutableList<Book?> {
+        return booksDao.getReadNowBooks().map { value -> value?.ToBook() }.toMutableList()
     }
 }

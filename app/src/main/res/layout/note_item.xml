@@ -8,12 +8,19 @@
     android:elevation="10dp"
     app:cardCornerRadius="10dp"
     android:layout_marginVertical="10dp"
-    android:layout_marginHorizontal="6dp">
+    app:cardPreventCornerOverlap="true"
+    android:divider="@android:color/transparent"
+    android:dividerHeight="0.0px"
+    android:clipToPadding="true"
+    android:clipChildren="false"
+    android:layout_marginHorizontal="6dp"
+   >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="?android:selectableItemBackground">
 
 
         <LinearLayout
