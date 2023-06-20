@@ -42,6 +42,6 @@ BottomNavigationView.OnNavigationItemSelectedListener{
             R.id.quotesMenuItem -> MAIN.navController.navigate(R.id.notesFragment)
             R.id.analysisMenuItem -> MAIN.navController.navigate(R.id.analysisFragment)
         }
-
+        return true
     }
 }
