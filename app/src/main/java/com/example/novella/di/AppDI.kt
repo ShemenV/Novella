@@ -67,4 +67,10 @@ var appModule = module {
             saveNoteUseCase = get()
         )
     }
+
+    viewModel<AnalysisFragmentViewModel>{
+        AnalysisFragmentViewModel(
+            getBooksCountUseCase = get()
+        )
+    }
 }

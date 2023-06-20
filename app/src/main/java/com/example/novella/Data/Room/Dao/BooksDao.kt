@@ -21,4 +21,8 @@ interface BooksDao {
     suspend fun updateBook(booksDbEntity: BooksDbEntity)
     @Query("UPDATE books SET IsDeleted = 1 WHERE Id = :id")
     suspend fun deleteBook(id: String)
+    @Query("SELECT COUNT(*) FROM books")
+    suspend fun getAllBooksCount(): Int
+    @Query("SELECT COUNT(*) FROM books WHERE id = :readStatus")
+    suspend fun getBookCountByReadStatus(readStatus: Int): Int
 }

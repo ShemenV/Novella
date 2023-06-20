@@ -5,18 +5,42 @@
     <data>
         <variable
             name="vm"
-            type="com.example.novella.presentation.fragments.viewModels.LibraryFragmentViewModel" />
+            type="com.example.novella.presentation.fragments.viewModels.AnalysisFragmentViewModel" />
     </data>
-<FrameLayout
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.fragments.AnalysisFragment">
+    tools:context=".presentation.fragments.AnalysisFragment"
+    android:orientation="vertical">
 
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:text="Статистика"
+        android:textAlignment="center"
+        android:textSize="30sp"/>
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="50dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/books_in_library"/>
+
+        <TextView
+            android:id="@+id/totalBooksCountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
 </layout>

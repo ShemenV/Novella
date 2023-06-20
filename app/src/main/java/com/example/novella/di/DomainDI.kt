@@ -71,4 +71,8 @@ val domainModule = module {
         DeleteNoteUseCase(repository = get())
     }
 
+    factory<GetBooksCountUseCase>(){
+        GetBooksCountUseCase(repository = get(named("roomIds")))
+    }
+
 }

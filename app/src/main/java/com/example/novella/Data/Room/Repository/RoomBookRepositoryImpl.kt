@@ -3,6 +3,7 @@ package com.example.novella.Data.Room.Repository
 import android.util.Log
 import com.example.novella.Data.Room.Dao.BooksDao
 import com.example.novella.Data.Room.DbEntities.BooksDbEntity
+import com.example.novella.Data.Room.DbEntities.ReadStatusesDbEntity
 import com.example.novella.domain.Entities.Book
 import com.example.novella.domain.Repositories.BookRepository
 
@@ -38,5 +39,12 @@ class RoomBookRepositoryImpl(
 
     suspend fun getReadNowBooks(): MutableList<Book?> {
         return booksDao.getReadNowBooks().map { value -> value?.ToBook() }.toMutableList()
+    }
+
+    suspend fun getAllBooksCount(): Int{
+        return booksDao.getAllBooksCount()
+    }
+    suspend fun getBooksCountByReadStatus(readStatus: Int): Int{
+        return booksDao.getBookCountByReadStatus(readStatus)
     }
 }

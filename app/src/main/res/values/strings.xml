@@ -20,4 +20,5 @@
     <string name="readNox">Читаю сейчас</string>
     <string name="pagesCount">/%s страниц(ы)</string>
     <string name="empty">%s</string>
+    <string name="books_in_library">Книг в библиотеке - </string>
 </resources>
