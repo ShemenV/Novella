@@ -74,5 +74,8 @@ val domainModule = module {
     factory<GetBooksCountUseCase>(){
         GetBooksCountUseCase(repository = get(named("roomIds")))
     }
+    factory<GetTotalPagesCountUseCase>(){
+        GetTotalPagesCountUseCase(repositoryImpl = get(named("roomIds")))
+    }
 
 }

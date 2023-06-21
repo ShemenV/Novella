@@ -47,4 +47,8 @@ class RoomBookRepositoryImpl(
     suspend fun getBooksCountByReadStatus(readStatus: Int): Int{
         return booksDao.getBookCountByReadStatus(readStatus)
     }
+
+    suspend fun getTotalBooksCount(): Int?{
+        return booksDao.getTotalPageCount()
+    }
 }

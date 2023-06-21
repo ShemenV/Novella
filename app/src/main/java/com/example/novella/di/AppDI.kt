@@ -70,7 +70,9 @@ var appModule = module {
 
     viewModel<AnalysisFragmentViewModel>{
         AnalysisFragmentViewModel(
-            getBooksCountUseCase = get()
+            getBooksCountUseCase = get(),
+            getTotalPagesCountUseCase = get(),
+            getReadBooksListUseCase = get(named("getFromRoom")),
         )
     }
 }

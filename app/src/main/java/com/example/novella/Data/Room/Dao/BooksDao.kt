@@ -23,6 +23,9 @@ interface BooksDao {
     suspend fun deleteBook(id: String)
     @Query("SELECT COUNT(*) FROM books")
     suspend fun getAllBooksCount(): Int
-    @Query("SELECT COUNT(*) FROM books WHERE id = :readStatus")
+    @Query("SELECT COUNT(*) FROM books WHERE readStatus = :readStatus")
     suspend fun getBookCountByReadStatus(readStatus: Int): Int
+    @Query("SELECT SUM(ReadedPage) FROM books")
+    suspend fun getTotalPageCount(): Int
+
 }

@@ -63,10 +63,10 @@ data class BooksDbEntity(
             readedPages = readedPages
         )
 
-        if (startReadDate != "null") {
+        if (startReadDate != "null" && startReadDate != null) {
             book.startReadDate = LocalDate.parse(startReadDate)
         }
-        if (finishReadDate != "null") {
+        if (finishReadDate != "null" && finishReadDate != null) {
             book.finishReadDate = LocalDate.parse(finishReadDate)
         }
 
