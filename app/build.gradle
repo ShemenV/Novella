@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.novella"
-        minSdk 24
+        minSdk 26
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -40,6 +40,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions{
+        exclude "com/itextpdf/io/font/cmap_info.txt"
+        exclude "com/itextpdf/io/font/cmap/*"
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -58,6 +64,8 @@ android {
 }
 
 dependencies {
+
+    implementation 'com.itextpdf:itext7-core:7.1.3'
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
