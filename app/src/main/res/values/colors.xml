@@ -12,4 +12,5 @@
     <color name="wantRead">#FFEFBB54</color>
     <color name="readNow">#FF51F876</color>
     <color name="select">#807958A5</color>
+    <color name="checkColor">#489376</color>
 </resources>

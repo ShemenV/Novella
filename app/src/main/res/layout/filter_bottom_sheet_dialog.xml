@@ -31,13 +31,16 @@
             android:id="@+id/titleSortButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="true"
+
+
             android:text="Названию" />
 
         <RadioButton
             android:id="@+id/pageCountSortButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:buttonTint="#489376"
+            android:checked="true"
             android:text="Количеству страниц" />
 
     </RadioGroup>

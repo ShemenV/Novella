@@ -93,7 +93,7 @@ class LibraryFragment : Fragment(),
             binding.librarySearchView.setOnQueryTextListener(object : OnQueryTextListener{
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     if (query != null) {
-                        vm.searchBooks(query)
+                        vm.search.value = query
                     }
                     return true
                 }

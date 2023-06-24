@@ -47,7 +47,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="370dp"
-                        android:backgroundTint="#A782D6"
+                        android:backgroundTint="#489376"
                         app:cardCornerRadius="20dp">
 
                         <LinearLayout
@@ -60,9 +60,10 @@
                                 android:id="@+id/titleTextView"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/merriweather_bold"
                                 android:text="@{vm.selectedBookMutable.title}"
                                 android:textAlignment="center"
-                                android:textSize="23sp" />
+                                android:textSize="25sp" />
 
                             <TextView
                                 android:id="@+id/authorTextView"
@@ -72,6 +73,7 @@
                                 android:paddingLeft="20dp"
                                 android:text="@{@string/author_name(vm.selectedBookMutable.author)}"
                                 android:textAlignment="textStart"
+                                android:fontFamily="@font/merriweather_bold"
                                 android:textSize="17sp" />
 
                             <TextView
@@ -80,6 +82,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:paddingLeft="20dp"
+                                android:fontFamily="@font/merriweather_bold"
                                 android:text="@{@string/page_count_name(vm.selectedBookMutable.pageCount)}"
                                 android:textAlignment="textStart"
                                 android:textSize="17sp" />
@@ -90,6 +93,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:paddingLeft="20dp"
+                                android:fontFamily="@font/merriweather_bold"
                                 android:text="@{@string/publisher_name(vm.selectedBookMutable.publisher)}"
                                 android:textAlignment="textStart"
                                 android:textSize="17sp" />
@@ -102,6 +106,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginVertical="10dp"
                                 android:backgroundTint="#51F876"
+                                android:fontFamily="@font/lora"
                                 android:text="Прочитано"
                                 app:icon="@drawable/_23bookmark_99967" />
 
@@ -109,37 +114,43 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
                                     android:text="Начало чтения: "
-                                    android:textSize="20sp"
-                                    android:layout_gravity="center_vertical"/>
+                                    android:fontFamily="@font/merriweather_bold"
+                                    android:textColor="#121723"
+                                    android:textSize="20sp" />
 
                                 <EditText
                                     android:id="@+id/startReadDateEditText"
                                     android:layout_width="wrap_content"
+                                    android:fontFamily="@font/merriweather_bold"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:editable="false"/>
                             </LinearLayout>
 
 
+
                             <TextView
                                 android:id="@+id/descriptionTextView"
                                 android:layout_width="match_parent"
-                                android:layout_height="140dp"
+                                android:layout_height="0dp"
                                 android:layout_marginTop="20dp"
                                 android:paddingLeft="20dp"
-                                android:text="@{@string/description(vm.selectedBookMutable.description)}"
+                                android:text="@{vm.selectedBookMutable.description}"
                                 android:textAlignment="textStart"
                                 android:textSize="17sp" />
 
                             <Button
                                 android:id="@+id/readMoreButton"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Читать больше" />
+                                android:layout_width="300dp"
+                                android:layout_gravity="center"
+                                android:layout_height="60dp"
+                                android:text="Развернуть описание" />
 
 
                             <LinearLayout
@@ -179,7 +190,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Жанры"
+                                android:fontFamily="@font/merriweather_bold"
                                 android:layout_gravity="center"
+                                android:layout_marginTop="20dp"
                                 android:textSize="21sp"/>
 
                             <com.google.android.material.chip.ChipGroup
@@ -194,6 +207,7 @@
                                 android:layout_width="150dp"
                                 android:layout_height="60dp"
                                 android:layout_gravity="center"
+                                android:layout_marginTop="20dp"
                                 android:text="Изменить"/>
 
 

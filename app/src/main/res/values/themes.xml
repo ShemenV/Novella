@@ -12,7 +12,9 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-
+        <item name="android:fontFamily">@font/merriweather</item>
+        <item name="android:buttonTint">@color/checkColor</item>
+        <item name="android:textColor">#121723</item>
 
     </style>
 

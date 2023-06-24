@@ -1,8 +1,11 @@
 package com.example.novella.presentation.fragments.viewModels
 
 
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.os.Environment
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,22 +14,21 @@ import com.example.novella.domain.usecases.GetBooksCountUseCase
 import com.example.novella.domain.usecases.GetReadBooksListUseCase
 import com.example.novella.domain.usecases.GetTotalPagesCountUseCase
 import com.itextpdf.io.font.PdfEncodings
+import com.itextpdf.io.image.ImageDataFactory
 import com.itextpdf.kernel.font.PdfFontFactory
 import com.itextpdf.kernel.pdf.PdfDocument
-import com.itextpdf.kernel.pdf.PdfName.BaseFont
-import com.itextpdf.kernel.pdf.PdfName.Document
 import com.itextpdf.kernel.pdf.PdfWriter
 import com.itextpdf.layout.Document
-import com.itextpdf.layout.element.Cell
 import com.itextpdf.layout.element.Paragraph
 import com.itextpdf.layout.element.Table
 import com.itextpdf.layout.property.HorizontalAlignment
 import com.itextpdf.layout.property.TextAlignment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.FileOutputStream
+import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class AnalysisFragmentViewModel(
     private val getBooksCountUseCase: GetBooksCountUseCase,
@@ -67,12 +69,12 @@ class AnalysisFragmentViewModel(
         }
     }
 
-    fun generatePdf() {
+    fun generateLibraryPdf() {
         viewModelScope.launch(Dispatchers.IO) {
 
             val fileName = SimpleDateFormat("yyyMMdd_HHmmss", Locale.getDefault())
                 .format(System.currentTimeMillis())
-            val filePath = "${Environment.getExternalStorageDirectory()}/${fileName}.pdf"
+            val filePath = "${Environment.getExternalStorageDirectory()}/${fileName}-library.pdf"
 
             try {
 
@@ -139,6 +141,60 @@ class AnalysisFragmentViewModel(
         }
 
 
+    }
+
+    fun generateAnalysisPdf(viewArray: Array<View>) {
+        viewModelScope.launch(Dispatchers.IO) {
+
+            val fileName = SimpleDateFormat("yyyMMdd_HHmmss", Locale.getDefault())
+                .format(System.currentTimeMillis())
+            val filePath = "${Environment.getExternalStorageDirectory()}/${fileName}-analysis.pdf"
+
+            try {
+
+                val booksList = getReadBooksListUseCase.execute()
+
+                val pdfWriter: PdfWriter = PdfWriter(filePath)
+                val pdfDocument = PdfDocument(pdfWriter)
+
+                val document = Document(pdfDocument)
+                val data = "Статистика из приложениея Novella"
+
+                val baseFont = PdfFontFactory.createFont(FONT, PdfEncodings.IDENTITY_H)
+                val boldFont = PdfFontFactory.createFont("/assets/Roboto-Bold.ttf", PdfEncodings.IDENTITY_H)
+
+                document.add(
+                    Paragraph(data)
+                        .setFont(boldFont)
+                        .setBold()
+                        .setFontSize(30f)
+                        .setTextAlignment(TextAlignment.CENTER)
+                        .setHorizontalAlignment(HorizontalAlignment.CENTER)
+                )
+
+                for(view in viewArray){
+                    val bitmap = Bitmap.createBitmap(view.width,view.height, Bitmap.Config.ARGB_8888)
+                    val canvas = Canvas(bitmap)
+                    view.draw(canvas)
+
+                    val stream3 = ByteArrayOutputStream()
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream3)
+                    val iamgeData = ImageDataFactory.createPng(stream3.toByteArray())
+                    val image = com.itextpdf.layout.element.Image(iamgeData)
+                    image.setHeight(700f)
+                    image.setWidth(370f)
+                    image.setHorizontalAlignment(HorizontalAlignment.CENTER)
+
+                    document.add(image)
+
+                }
+
+                document.close()
+
+            } catch (e: Exception) {
+                Log.e("EXCEPTION", e.toString())
+            }
+        }
     }
 
 }

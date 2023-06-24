@@ -1,21 +1,21 @@
 package com.example.novella.presentation.fragments
 
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
+import androidx.core.view.drawToBitmap
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.example.novella.R
 import com.example.novella.databinding.FragmentAnalysisBinding
-import com.example.novella.domain.Entities.BookPage
 import com.example.novella.presentation.fragments.viewModels.AnalysisFragmentViewModel
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
@@ -23,9 +23,6 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.utils.ColorTemplate
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.io.FileOutputStream
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
 class AnalysisFragment : Fragment() {
@@ -134,7 +131,7 @@ class AnalysisFragment : Fragment() {
             binding.pageCountPieChart.extraBottomOffset = -50f
         })
 
-        binding.createAnalysisPdf.setOnClickListener {
+        binding.createLibraryAnalysisPdf.setOnClickListener {
             if(requireActivity().checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
             == PackageManager.PERMISSION_DENIED
             ){
@@ -142,7 +139,22 @@ class AnalysisFragment : Fragment() {
                 requestPermissions(permission, STORAGE_CODE )
             }
             else{
-                viewModel.generatePdf()
+                viewModel.generateLibraryPdf()
+            }
+        }
+
+        binding.createAnalysisPdf.setOnClickListener {
+
+
+            if(requireActivity().checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_DENIED
+            ){
+
+                val permission = arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                requestPermissions(permission, STORAGE_CODE )
+            }
+            else{
+                viewModel.generateAnalysisPdf(arrayOf(binding.booksCountPieChart, binding.pageCountPieChart))
             }
         }
 
@@ -158,7 +170,7 @@ class AnalysisFragment : Fragment() {
        when(requestCode){
            STORAGE_CODE -> {
                if(grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    viewModel.generatePdf()
+                    viewModel.generateLibraryPdf()
                }else{
                    Toast.makeText(requireContext(), "No permissions", Toast.LENGTH_SHORT).show()
                }

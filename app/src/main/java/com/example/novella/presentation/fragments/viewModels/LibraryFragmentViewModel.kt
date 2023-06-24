@@ -44,7 +44,7 @@ class LibraryFragmentViewModel(
         viewModelScope.launch {
             val allBooks = getReadBooksListUseCase.execute()
             readBookList.value =
-                allBooks.filter { it?.title?.lowercase()?.contains(filter.lowercase()) ?: false }
+                allBooks.filter { it?.title?.lowercase()?.contains(filter.lowercase())!! }
                     .toMutableList()
             Log.e("hhghghgh",
                 readBookList.value?.filter {
@@ -102,6 +102,9 @@ class LibraryFragmentViewModel(
                     Log.e("sort", "NOTHING ")
                 }
             }
+
+            books = books.filter { it?.title?.lowercase()?.contains(search.value!!.lowercase())!! }
+                .toMutableList()
             saveSortParamsUseCase.execute(sortParams.value!!)
             readBookList.value = books
         }
