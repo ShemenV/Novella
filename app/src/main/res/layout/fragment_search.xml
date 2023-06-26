@@ -14,14 +14,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addNewBookButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/add_book_icon"/>
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/addNewBookButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            style="@style/ButtonStyle"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            app:icon="@drawable/add_book_icon"
+            android:text="Добавить вою книгу"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,34 +37,34 @@
             android:layout_marginEnd="4dp"
             android:layout_marginStart="4dp"
             android:layout_marginTop="3dp">
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/outlinedTextField"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:hint="Поиск"
-                android:layout_weight="0.8"
-                android:background="@color/white"
-                android:backgroundTint="@color/white"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/searchEditText"
+            <com.google.android.material.appbar.AppBarLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/app_bar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:background="@color/white">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <SearchView
+                        android:id="@+id/booksSearchView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:iconifiedByDefault="false"
+                        android:queryHint="Поиск"
+                        android:backgroundTint="@color/white"
+                        android:layout_centerHorizontal="true" />
 
-            <Button
-                android:id="@+id/searchButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.2"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="0dp"
+                </androidx.appcompat.widget.Toolbar>
 
-                />
+            </com.google.android.material.appbar.AppBarLayout>
+
+
+
 
 
 

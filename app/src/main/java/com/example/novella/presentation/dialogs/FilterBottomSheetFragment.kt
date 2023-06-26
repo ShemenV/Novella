@@ -31,7 +31,7 @@ class FilterBottomSheetFragment(val listener: FilterDialogListener, private val 
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.filter_bottom_sheet_dialog,container,false)
 
-
+    override fun getTheme(): Int = R.style.AppBottomSheetDialogTheme
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         val titleSortButton = view.findViewById<RadioButton>(R.id.titleSortButton)

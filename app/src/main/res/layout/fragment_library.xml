@@ -17,14 +17,16 @@
 
     tools:context=".presentation.fragments.LibraryFragment">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/addBoookButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
+        style="@style/ButtonStyle"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:src="@drawable/add_book_icon"/>
+        app:icon="@drawable/add_book_icon"
+        android:text="Добавить книгу"/>
 
   <LinearLayout
       android:layout_width="match_parent"

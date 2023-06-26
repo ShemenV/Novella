@@ -2,9 +2,8 @@ package com.example.novella.Data.Room.Repository
 
 import com.example.novella.Data.Room.Dao.BooksGenresDao
 import com.example.novella.Data.Room.DbEntities.BooksGenresDbEntity
-import java.util.StringTokenizer
 
-class RoomBooksGenresRepository(private val booksGenresDao: BooksGenresDao) {
+class RoomBooksGenresRepositoryImpl(private val booksGenresDao: BooksGenresDao) {
 
     suspend fun addBookGenres(bookId: String, genreId:Int){
         val bookGenre = BooksGenresDbEntity(bookId = bookId, genreId = genreId)

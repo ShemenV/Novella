@@ -9,9 +9,9 @@ import com.example.novella.Data.Room.Dao.BooksGenresDao
 import com.example.novella.Data.Room.Dao.GenresDao
 import com.example.novella.Data.Room.Dao.NotesDao
 import com.example.novella.Data.Room.Repository.RoomBookRepositoryImpl
-import com.example.novella.Data.Room.Repository.RoomBooksGenresRepository
-import com.example.novella.Data.Room.Repository.RoomGenresRepository
-import com.example.novella.Data.Room.Repository.RoomNotesRepository
+import com.example.novella.Data.Room.Repository.RoomBooksGenresRepositoryImpl
+import com.example.novella.Data.Room.Repository.RoomGenresRepositoryImpl
+import com.example.novella.Data.Room.Repository.RoomNotesRepositoryImpl
 import com.example.novella.Data.sharedPreferences.SortParamsRepositoryImpl
 import com.example.novella.domain.Repositories.BookRepository
 import com.example.novella.domain.Repositories.SortParamsRepository
@@ -21,7 +21,6 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import kotlin.math.sin
 
 var dataModule = module {
 
@@ -70,16 +69,16 @@ var dataModule = module {
         RetrofitBookRepositoryImpl(bookApi = get())
     }
 
-    single<RoomGenresRepository>(){
-        RoomGenresRepository(genresDao = get())
+    single<RoomGenresRepositoryImpl>(){
+        RoomGenresRepositoryImpl(genresDao = get())
     }
 
-    single<RoomBooksGenresRepository>(){
-        RoomBooksGenresRepository(booksGenresDao = get())
+    single<RoomBooksGenresRepositoryImpl>(){
+        RoomBooksGenresRepositoryImpl(booksGenresDao = get())
     }
 
-    single<RoomNotesRepository>(){
-        RoomNotesRepository(notesDao = get(), booksDao = get())
+    single<RoomNotesRepositoryImpl>(){
+        RoomNotesRepositoryImpl(notesDao = get(), booksDao = get())
     }
 
 

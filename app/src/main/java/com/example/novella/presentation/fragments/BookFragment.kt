@@ -124,17 +124,17 @@ SetGenresDialogListener{
 
 
         binding.readMoreButton.setOnClickListener {
-            if(binding.readMoreButton.text == "Читать больше"){
+            if(binding.readMoreButton.text == "Развернуть описание"){
                 binding.descriptionTextView.updateLayoutParams {
                     height = WRAP_CONTENT
                 }
-                binding.readMoreButton.text = "Скрыть"
+                binding.readMoreButton.text = "Скрыть описание"
             }
-            else if(binding.readMoreButton.text == "Скрыть"){
+            else if(binding.readMoreButton.text == "Скрыть описание"){
                 binding.descriptionTextView.updateLayoutParams {
-                    height = 380
+                    height = 0
                 }
-                binding.readMoreButton.text = "Читать больше"
+                binding.readMoreButton.text = "Развернуть описание"
             }
 
         }

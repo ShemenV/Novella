@@ -17,4 +17,11 @@
         <item name="android:textSize">11sp</item>
     </style>
 
+    <style name="ButtonStyle" parent="ThemeOverlay.Material3.Button">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="backgroundTint">#36715A</item>
+        <item name="iconTint">#FFFFFF</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+
 </resources>

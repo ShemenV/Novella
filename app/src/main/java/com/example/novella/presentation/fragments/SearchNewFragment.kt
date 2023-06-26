@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
@@ -32,7 +33,7 @@ import retrofit2.HttpException
 class SearchNewFragment : Fragment() {
     lateinit var binding: FragmentSearchBinding
     private val viewModel by viewModel<SearchNewFragmentViewModel>()
-    lateinit var adapter:BRVAHAdapter
+    lateinit var adapter: BRVAHAdapter
     private val customLoadMoreView = LoadMoreView()
 
 
@@ -40,16 +41,18 @@ class SearchNewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(layoutInflater,R.layout.fragment_search, container, false)
+        binding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.fragment_search, container, false)
         binding.vm = viewModel
         return binding.root
-}
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 
-        val manager: LayoutManager =GridLayoutManager(activity,2)
+        val manager: LayoutManager = GridLayoutManager(activity, 2)
         adapter = BRVAHAdapter(mutableListOf())
         binding.recyclerView.layoutManager = manager
         binding.recyclerView.adapter = adapter
@@ -57,42 +60,61 @@ class SearchNewFragment : Fragment() {
         adapter.loadMoreModule.loadMoreView = customLoadMoreView
         adapter.loadMoreModule.setOnLoadMoreListener {
             val handler = android.os.Handler()
-            handler.postDelayed({ loadMore() }, 10) }
+            handler.postDelayed({ loadMore() }, 10)
+        }
 
         adapter.setOnItemClickListener { _, view, position ->
             val selectedBook = adapter.getItem(position)
-            if(selectedBook != null){
-                val action = SearchNewFragmentDirections.actionAddBookFragmentToBookFragment2(selectedBook)
+            if (selectedBook != null) {
+                val action =
+                    SearchNewFragmentDirections.actionAddBookFragmentToBookFragment2(selectedBook)
                 MAIN.navController.navigate(action)
             }
 
         }
 
         lifecycleScope.launch {
-            viewModel.booksList.observe(viewLifecycleOwner, Observer{ books ->
-                Log.e("_____________________",books.toString())
+            viewModel.booksList.observe(viewLifecycleOwner, Observer { books ->
+                Log.e("_____________________", books.toString())
 
-                if(books?.size== 1 && books[0]?.title == "Exception"){
-                    Toast.makeText(activity?.applicationContext,"Проверьте соединение с сетью",Toast.LENGTH_SHORT).show()
+                if (books?.size == 1 && books[0]?.title == "Exception") {
+                    Toast.makeText(
+                        activity?.applicationContext,
+                        "Проверьте соединение с сетью",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     return@Observer
                 }
-            adapter.setNewInstance(books)
+                adapter.setNewInstance(books)
+            })
+        }
+
+        binding.booksSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query != null) {
+                    try {
+                        val handler = android.os.Handler()
+
+                        handler.postDelayed(
+                            {
+                                binding.recyclerView.scrollToPosition(0)
+                                adapter.data.clear()
+                                viewModel.getBooksByName(query)
+                            },
+                            100
+                        )
+                    } catch (e: Exception) {
+                        Log.e("_________________________________________________", e.toString())
+                    }
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+
+                return true
+            }
         })
-        }
-
-        binding.searchButton.setOnClickListener {
-            try {
-            val handler = android.os.Handler()
-
-            handler.postDelayed({
-                binding.recyclerView.scrollToPosition(0)
-                adapter.data.clear()
-                viewModel.getBooksByName(binding.searchEditText.text.toString()) }, 100)
-            }
-            catch (e: Exception){
-                Log.e("_________________________________________________",e.toString())
-            }
-        }
 
         binding.addNewBookButton.setOnClickListener {
             val action = SearchNewFragmentDirections.actionAddBookFragmentToAddBookFragment3()
@@ -100,31 +122,27 @@ class SearchNewFragment : Fragment() {
         }
 
 
-
     }
 
 
-    private fun loadMore(){
+    private fun loadMore() {
         try {
             val data = viewModel.getNextPageBook()
 
             if (!data.isNullOrEmpty() && data.last() != adapter.data.last()) {
                 adapter.addData(data)
-            }
-            else if(!data.isNullOrEmpty() && data.size < 10){
+            } else if (!data.isNullOrEmpty() && data.size < 10) {
                 adapter.addData(data)
                 adapter.loadMoreModule.loadMoreEnd()
                 return
-            }
-            else if(data?.size== 1 && data.get(0)?.title == "Exception"){
-               adapter.loadMoreModule.loadMoreFail()
+            } else if (data?.size == 1 && data.get(0)?.title == "Exception") {
+                adapter.loadMoreModule.loadMoreFail()
                 return
             }
             adapter.loadMoreModule.isEnableLoadMore = true
             adapter.loadMoreModule.loadMoreComplete()
+        } catch (e: Exception) {
+            Log.e("RetrofitHTTPexception", e.toString())
         }
-      catch (e: Exception){
-          Log.e("RetrofitHTTPexception", e.toString())
-      }
     }
 }

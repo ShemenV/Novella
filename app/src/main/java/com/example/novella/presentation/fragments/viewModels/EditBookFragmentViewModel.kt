@@ -15,51 +15,45 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
-class EditBookFragmentViewModel(private val saveBookUseCase: SaveBookUseCase,
-private val getBooksByIdUseCase: GetBooksByIdUseCase,
-private val getBooksIdsUseCase: GetBooksIdsUseCase):ViewModel() {
+class EditBookFragmentViewModel(
+    private val saveBookUseCase: SaveBookUseCase,
+    private val getBooksByIdUseCase: GetBooksByIdUseCase,
+    private val getBooksIdsUseCase: GetBooksIdsUseCase
+) : ViewModel() {
     val editableBookMutable: MutableLiveData<Book> = MutableLiveData()
-    val editableBookPageCountStringMutable:MutableLiveData<String> = MutableLiveData()
+    val editableBookPageCountStringMutable: MutableLiveData<String> = MutableLiveData()
     val imageMutable: MutableLiveData<Bitmap> = MutableLiveData()
 
 
     init {
-        if(editableBookMutable.value?.pageCount != null){
-            editableBookPageCountStringMutable.value = editableBookMutable.value!!.pageCount!!.toString()
+        if (editableBookMutable.value?.pageCount != null) {
+            editableBookPageCountStringMutable.value =
+                editableBookMutable.value!!.pageCount!!.toString()
         }
     }
 
-    fun setPageCount(){
+    fun setPageCount() {
 
-            if(editableBookPageCountStringMutable.value.equals("")){
-                editableBookPageCountStringMutable.value = "0"
-            }
+        if (editableBookPageCountStringMutable.value.equals("")) {
+            editableBookPageCountStringMutable.value = "0"
+        }
 
         editableBookMutable.value!!.pageCount = editableBookPageCountStringMutable.value?.toInt()!!
     }
 
     fun updateBook() {
         viewModelScope.launch {
-//            var newId:String = ""
-//            if(editableBookMutable.value!!.id == null){
-//                newId = generateId()
-//                Log.e("tt",newId)
-//                Log.e("ABOBA", getBooksByIdUseCase.execute("ZxlkehxIZmAC").toString())
-//                while(getBooksByIdUseCase.execute(newId) != 0 && !getBooksIdsUseCase.execute().contains(newId)){
-//                    newId = generateId()
-//                }
-//            }
-//            editableBookMutable.value!!.id = newId
-            if(imageMutable.value != null){
+
+            if (imageMutable.value != null) {
                 saveImage(bitmap = imageMutable.value!!)
             }
-            Log.e("EditBook",editableBookMutable.value.toString())
+
             saveBookUseCase.execute(editableBookMutable.value)
         }
     }
 
-    fun saveImage(bitmap: Bitmap){
-        viewModelScope.launch(Dispatchers.IO){
+    fun saveImage(bitmap: Bitmap) {
+        viewModelScope.launch(Dispatchers.IO) {
             val mFolder = File("/data/data/com.example.novella/files/images")
             val imgFile = File(mFolder.absolutePath + "/" + "${editableBookMutable.value?.id}.png")
 
@@ -77,9 +71,11 @@ private val getBooksIdsUseCase: GetBooksIdsUseCase):ViewModel() {
                 fos.flush()
                 fos.close()
             } catch (e: IOException) {
-                e.printStackTrace()
+               Log.e("EXCEPTION", e.toString())
             }
-            editableBookMutable.value?.coverString = "/data/data/com.example.novella/files/images/${editableBookMutable.value?.id}.png"
+
         }
+        editableBookMutable.value?.coverString =
+            "/data/data/com.example.novella/files/images/${editableBookMutable.value?.id}.png"
     }
 }

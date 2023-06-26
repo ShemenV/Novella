@@ -21,6 +21,8 @@ class ModalBottomSheetFragment(val listener: ModalBottomListener, val status:Int
         chooseReadStatusListener = listener
     }
 
+    override fun getTheme(): Int  = R.style.AppBottomSheetDialogTheme
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

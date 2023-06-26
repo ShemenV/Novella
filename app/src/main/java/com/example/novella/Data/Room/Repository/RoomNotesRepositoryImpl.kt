@@ -8,7 +8,7 @@ import com.example.novella.Data.Room.Dao.NotesDao
 import com.example.novella.Data.Room.DbEntities.NoteDbEntity
 import com.example.novella.domain.Entities.Note
 
-class RoomNotesRepository(private val notesDao: NotesDao, private val booksDao: BooksDao) {
+class RoomNotesRepositoryImpl(private val notesDao: NotesDao, private val booksDao: BooksDao) {
 
     @RequiresApi(Build.VERSION_CODES.O)
     suspend fun getAllNotes(): MutableList<Note>{
@@ -26,10 +26,6 @@ class RoomNotesRepository(private val notesDao: NotesDao, private val booksDao: 
         Log.e("ABOBA",NoteDbEntity.fromNote(note).toString())
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    suspend fun getNoteById(noteId: Int): Note?{
-        return notesDao.getNoteById(noteId)?.toNote()
-    }
 
     suspend fun updateNote(note: Note){
         notesDao.updateNote(NoteDbEntity.fromNote(note))

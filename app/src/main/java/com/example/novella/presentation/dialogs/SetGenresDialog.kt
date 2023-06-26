@@ -21,6 +21,7 @@ class SetGenresDialog(private val listener: SetGenresDialogListener,private val 
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.set_genres_dialog_layout, container, false)
 
+    override fun getTheme(): Int  = R.style.AppBottomSheetDialogTheme
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 

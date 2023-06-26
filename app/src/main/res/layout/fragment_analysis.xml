@@ -89,14 +89,14 @@
 
             <Button
                 android:id="@+id/createAnalysisPdf"
-                android:layout_width="170dp"
+                android:layout_width="300dp"
                 android:layout_height="70dp"
                 android:text="Сохранить статистику PDF"
                 android:layout_gravity="center"/>
 
             <Button
                 android:id="@+id/createLibraryAnalysisPdf"
-                android:layout_width="170dp"
+                android:layout_width="300dp"
                 android:layout_height="70dp"
                 android:text="Сохранить библиотеку в PDF"
                 android:layout_gravity="center"/>

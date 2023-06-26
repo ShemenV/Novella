@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+
+<FrameLayout android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/Widget.Design.BottomSheet.Modal">
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/standard_bottom_sheet"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-        android:paddingVertical="20dp">
+    android:id="@+id/standard_bottom_sheet"
+    android:paddingVertical="30dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -45,4 +40,3 @@
         </RadioGroup>
 
 </FrameLayout>
-</androidx.cardview.widget.CardView>

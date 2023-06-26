@@ -21,6 +21,7 @@ class SetReadPageDialogFragment(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.set_read_page_dialog, container, false)
+    override fun getTheme(): Int  = R.style.AppBottomSheetDialogTheme
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
