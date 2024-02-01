@@ -5,9 +5,9 @@
 
 
 
-![photo_2023-06-27_15-05-47](https://github.com/ShemenV/Novella/assets/103890522/9227708e-686e-421d-9d65-aa25bf239e0b)
 
 
+![281160350-9227708e-686e-421d-9d65-aa25bf239e0b](https://github.com/ShemenV/Novella/assets/103890522/b47da38c-a904-41f2-af30-8bec78fdbd29)
 
 
 
